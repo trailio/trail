@@ -5,10 +5,10 @@ import {
   Text,
   View
 } from 'react-native';
-import Camera from './components/Camera';
-import Inbox from './components/Inbox';
-import Landing from './components/Landing';
-import TrailMap from './components/TrailMap';
+import Camera from './components/Camera/Camera';
+import Inbox from './components/Messaging/Inbox';
+import Landing from './components/Auth/Landing';
+import TrailMap from './components/Map/TrailMap';
 
 const styles = StyleSheet.create({
   wrapper: {

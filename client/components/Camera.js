@@ -5,6 +5,7 @@ import {
   View
 } from 'react-native';
 import Swiper from 'react-native-swiper';
+import CameraReview from './CameraReview';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -57,6 +58,9 @@ export default class Camera extends Component {
         </View>
         <View style={styles.slide2}>
           <Text style={styles.text}>AR View</Text>
+        </View>
+        <View style={styles.slide3}>
+          <CameraReview />
         </View>
       </Swiper>
     )

@@ -5,7 +5,6 @@ import {
   View
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import ViewContent from './ViewContent';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class TrailMap extends Component {
+export default class ViewContent extends Component {
   constructor(props) {
     super(props);
 
@@ -46,20 +45,7 @@ export default class TrailMap extends Component {
 
   render () {
     return (
-      <Swiper
-        style={styles.wrapper}
-        showsButtons={false}
-        showsPagination={false}
-        loop={false}
-        horizontal={false}
-      >
-        <View>
-          <Text style={styles.text}>TrailMap</Text>
-        </View>
-        <View>
-          <ViewContent />
-        </View>
-      </Swiper>
+      <Text style={styles.text}>ViewContent</Text>
     )
   }
 };

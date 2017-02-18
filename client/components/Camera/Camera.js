@@ -5,6 +5,7 @@ import {
   View
 } from 'react-native';
 import Swiper from 'react-native-swiper';
+import AR from './AR';
 import CameraReview from './CameraReview';
 import DropPin from './DropPin';
 import FriendSelect from './FriendSelect';
@@ -59,7 +60,7 @@ export default class Camera extends Component {
           <Text style={styles.text}>Camera</Text>
         </View>
         <View style={styles.slide2}>
-          <Text style={styles.text}>AR View</Text>
+          <AR />
         </View>
         <View style={styles.slide3}>
           <CameraReview />

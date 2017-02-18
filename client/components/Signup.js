@@ -5,8 +5,6 @@ import {
   View
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import Login from './Login';
-import Signup from './Signup';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -36,7 +34,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Landing extends Component {
+export default class Signup extends Component {
   constructor(props) {
     super(props);
 
@@ -47,23 +45,7 @@ export default class Landing extends Component {
 
   render () {
     return (
-      <Swiper
-        style={styles.wrapper}
-        showsButtons={false}
-        showsPagination={false}
-        loop={false}
-        horizontal={false}
-      >
-        <View style={styles.slide1}>
-          <Text style={styles.text}>Landing</Text>
-        </View>
-        <View style={styles.slide2}>
-          <Login />
-        </View>
-        <View style={styles.slide3}>
-          <Signup />
-        </View>
-      </Swiper>
+      <Text style={styles.text}>Signup</Text>
     )
   }
 };

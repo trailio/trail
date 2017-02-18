@@ -7,6 +7,7 @@ import {
 import Swiper from 'react-native-swiper';
 import CameraReview from './CameraReview';
 import DropPin from './DropPin';
+import FriendSelect from './FriendSelect';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -63,7 +64,10 @@ export default class Camera extends Component {
         <View style={styles.slide3}>
           <CameraReview />
         </View>
-        <View>
+        <View style={styles.slide1}>
+          <FriendSelect />
+        </View>
+        <View style={styles.slide2}>
           <DropPin />
         </View>
       </Swiper>

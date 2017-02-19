@@ -19,5 +19,4 @@ app.use(cookieParser());
 app.post('/signup', auth.signup);
 app.get('/getUsers', auth.getAll);
 
-
 module.exports = app;

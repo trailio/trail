@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Login from './Login';
@@ -33,19 +34,26 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold',
+  },
+  button: {
+    width: 100,
+    height: 30,
+    padding: 10,
+    backgroundColor: 'lightgray',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 3
   }
 });
 
 export default class Landing extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-
-    };
   }
 
   render () {
+    const { count, increment, decrement } = this.props;
+
     return (
       <Swiper
         style={styles.wrapper}
@@ -55,7 +63,19 @@ export default class Landing extends Component {
         horizontal={false}
       >
         <View style={styles.slide1}>
-          <Text style={styles.text}>Landing</Text>
+          <Text style={styles.text}>{ count }</Text>
+          <TouchableOpacity
+            onPress={increment}
+            style={styles.button}
+          >
+            <Text>UP</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={decrement}
+            style={styles.button}
+          >
+            <Text>DOWN</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.slide2}>
           <Login />

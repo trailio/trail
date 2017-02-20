@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import {
-  Text
+  Text,
+  StyleSheet
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 
+const styles = StyleSheet.create({
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  }
+});
 
 export default class CameraReview extends Component {
   constructor(props) {
@@ -16,7 +24,9 @@ export default class CameraReview extends Component {
 
   render () {
     return (
-      <Text>Camera Review</Text>
+      <Text style={styles.text}>
+        Camera Review
+      </Text>
     )
   }
 };

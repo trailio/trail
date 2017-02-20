@@ -51,13 +51,14 @@ export default class Inbox extends Component {
         showsButtons={false}
         showsPagination={false}
         loop={false}
+        index={1}
         horizontal={false}
       >
-        <View>
-          <Text style={styles.text}>Inbox</Text>
-        </View>
-        <View>
+        <View style={styles.slide1}>
           <AddFriend />
+        </View>
+        <View style={styles.slide1}>
+          <Text style={styles.text}>Inbox</Text>
         </View>
       </Swiper>
     )

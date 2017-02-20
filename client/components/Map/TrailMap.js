@@ -53,10 +53,10 @@ export default class TrailMap extends Component {
         loop={false}
         horizontal={false}
       >
-        <View>
+        <View style={styles.slide1}>
           <Text style={styles.text}>TrailMap</Text>
         </View>
-        <View>
+        <View style={styles.slide1}>
           <ViewContent />
         </View>
       </Swiper>

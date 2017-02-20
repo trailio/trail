@@ -55,12 +55,13 @@ export default class Camera extends Component {
         showsPagination={false}
         loop={false}
         horizontal={false}
+        index={1}
       >
-        <View style={styles.slide1}>
-          <Text style={styles.text}>Camera</Text>
-        </View>
         <View style={styles.slide2}>
           <AR />
+        </View>
+        <View style={styles.slide1}>
+          <Text style={styles.text}>Camera</Text>
         </View>
         <View style={styles.slide3}>
           <CameraReview />

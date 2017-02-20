@@ -14,7 +14,7 @@ module.exports = {
 				next(new Error('User already exits'));
 			}
 			console.log('signup response: ', rows);
-			res.end(rows);
+			res.end(JSON.stringify(rows));
 		})
 	},
 	getAll: function(req, res, next) {
@@ -24,7 +24,7 @@ module.exports = {
 				console.log('err', err)
 			}
 			console.log('getAll response: ', rows);
-			res.end(rows);
+			res.end(JSON.stringify(rows));
 		})
 	}
 }

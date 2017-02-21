@@ -15,3 +15,17 @@ export function backClicked () {
     type: 'BACK_CLICKED'
   };
 }
+
+export function usernameChanged (text) {
+  return {
+    type: 'USERNAME_CHANGED',
+    payload: text
+  }
+};
+
+export function passwordChanged (text) {
+  return {
+    type: 'PASSWORD_CHANGED',
+    payload: text
+  }
+};

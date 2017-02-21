@@ -3,8 +3,6 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import styles from '../../styles';
-import Login from './Login';
-import Signup from './Signup';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -13,6 +11,14 @@ import * as authActions from '../../actions/authActions';
 class Landing extends Component {
   constructor(props) {
     super(props);
+  }
+
+  onUsernameChange(text) {
+    this.props.usernameChanged(text);
+  }
+
+  onPasswordChange(text) {
+    this.props.passwordChanged(text);
   }
 
   render () {
@@ -24,10 +30,14 @@ class Landing extends Component {
           <Text>Username</Text>
           <TextInput
             style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            value={this.props.username}
+            onChangeText={this.onUsernameChange.bind(this)}
           />
           <Text>Password</Text>
           <TextInput
             style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            value={this.props.password}
+            onChangeText={this.onPasswordChange.bind(this)}
           />
         </View>
       );
@@ -38,11 +48,11 @@ class Landing extends Component {
           <Text style={styles.text}>Signup</Text>
           <Text>Username</Text>
           <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            style={{height: 40, width:100, borderColor: 'gray', borderWidth: 0.5}}
           />
           <Text>Password</Text>
           <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            style={{height: 40, width:100, borderColor: 'gray', borderWidth: 0.5}}
           />
         </View>
       );
@@ -50,8 +60,8 @@ class Landing extends Component {
       return (
         <View>
           <Text style={styles.text}>TRAIL</Text>
-          <Text style={styles.text} onPress={this.props.handleLoginClick}>LOGIN</Text>
-          <Text style={styles.text} onPress={this.props.handleSignupClick}>SIGNUP</Text>
+          <Text style={styles.text2} onPress={this.props.handleLoginClick}>LOGIN</Text>
+          <Text style={styles.text2} onPress={this.props.handleSignupClick}>SIGNUP</Text>
         </View>
       );
     }
@@ -60,12 +70,17 @@ class Landing extends Component {
 
 function mapStateToProps(state) {
   console.log('STATE IN STORE ==> ', state);
+  const { loginClicked, signupClicked, username, password } = state.authReducers;
   return {
-    loginClicked: state.authReducers.loginClicked,
-    signupClicked: state.authReducers.signupClicked
+    loginClicked,
+    signupClicked,
+    username,
+    password
   };
 }
+
 var bundledActionCreators = Object.assign({}, authActions);
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(bundledActionCreators, dispatch);
 }

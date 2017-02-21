@@ -9,7 +9,7 @@ import * as appActions from '../actions/appActions';
 import styles from '../styles';
 import Camera from './Camera/Camera';
 import Inbox from './Messaging/Inbox';
-import Landing from './Auth/Landing';
+import LoginSignup from './Auth/LoginSignup';
 import TrailMap from './Map/TrailMap';
 
 class TrailApp extends Component {
@@ -40,7 +40,7 @@ class TrailApp extends Component {
         </View>
 
         <View style={styles.slide3}>
-          <Landing />
+          <LoginSignup />
         </View>
 
       </Swiper>
@@ -48,16 +48,18 @@ class TrailApp extends Component {
   }
 }
 
-function mapStateToProps(state) {
+var mapStateToProps = (state) => {
   console.log('STATE IN STORE ==> ', state);
+  const { isLoggedIn } = state.appReducers;
   return {
-    isLoggedIn: state.appReducers.isLoggedIn
+    isLoggedIn
   };
-}
+};
 
 var bundledActionCreators = Object.assign({}, appActions);
-function mapDispatchToProps(dispatch) {
+
+var mapDispatchToProps = (dispatch) => {
   return bindActionCreators(bundledActionCreators, dispatch);
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TrailApp);

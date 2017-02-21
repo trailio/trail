@@ -26,8 +26,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
   },
+  text2: {
+    color: '#000',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
   button: {
-    width: 100,
+    width: 400,
     height: 30,
     padding: 10,
     backgroundColor: 'lightgray',

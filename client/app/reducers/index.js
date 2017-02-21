@@ -4,6 +4,6 @@ import appReducers from './appReducers.js';
 import authReducers from './authReducers.js';
 
 export default combineReducers({
-  appReducers,
-  authReducers
+  app: appReducers,
+  auth: authReducers
 });

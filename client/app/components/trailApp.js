@@ -48,17 +48,16 @@ class TrailApp extends Component {
   }
 }
 
-var mapStateToProps = (state) => {
-  console.log('STATE IN STORE ==> ', state);
-  const { isLoggedIn } = state.appReducers;
+const mapStateToProps = ({app}) => {
+  const { isLoggedIn } = app;
   return {
     isLoggedIn
   };
 };
 
-var bundledActionCreators = Object.assign({}, appActions);
+const bundledActionCreators = Object.assign({}, appActions);
 
-var mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(bundledActionCreators, dispatch);
 };
 

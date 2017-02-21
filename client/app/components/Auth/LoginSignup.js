@@ -48,11 +48,11 @@ class Landing extends Component {
           <Text style={styles.text}>Signup</Text>
           <Text>Username</Text>
           <TextInput
-            style={{height: 40, width:100, borderColor: 'gray', borderWidth: 0.5}}
+            style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
           />
           <Text>Password</Text>
           <TextInput
-            style={{height: 40, width:100, borderColor: 'gray', borderWidth: 0.5}}
+            style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
           />
         </View>
       );
@@ -68,21 +68,20 @@ class Landing extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  console.log('STATE IN STORE ==> ', state);
-  const { loginClicked, signupClicked, username, password } = state.authReducers;
+const mapStateToProps = ({auth}) => {
+  const { loginClicked, signupClicked, username, password } = auth;
   return {
     loginClicked,
     signupClicked,
     username,
     password
   };
-}
+};
 
-var bundledActionCreators = Object.assign({}, authActions);
+const bundledActionCreators = Object.assign({}, authActions);
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(bundledActionCreators, dispatch);
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

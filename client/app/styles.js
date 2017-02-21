@@ -1,10 +1,4 @@
-import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import Swiper from 'react-native-swiper';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -31,21 +25,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold',
+  },
+  button: {
+    width: 100,
+    height: 30,
+    padding: 10,
+    backgroundColor: 'lightgray',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 3
   }
 });
 
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-
-    };
-  }
-
-  render () {
-    return (
-      <Text style={styles.text}>Login</Text>
-    )
-  }
-};
+export default styles;

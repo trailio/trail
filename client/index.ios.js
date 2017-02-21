@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import Base from './components/Base.js';
+import app from './app/components/app';
 
-AppRegistry.registerComponent('client', () => Base);
+AppRegistry.registerComponent('client', () => app);

@@ -18,7 +18,6 @@ class TrailApp extends Component {
   }
 
   render() {
-    const {state, actions} = this.props;
     return (
       <Swiper
         style={styles.wrapper}
@@ -30,13 +29,6 @@ class TrailApp extends Component {
 
         <View style={styles.slide1}>
           <Inbox />
-        </View>
-
-        <View style={styles.slide1}>
-          <Text onPress={actions.default}>
-            {state.testingRedux}
-          </Text>
-          <Text onPress={actions.changeAgain}>SWITCH</Text>
         </View>
 
         <View style={styles.slide2}>
@@ -52,14 +44,20 @@ class TrailApp extends Component {
         </View>
 
       </Swiper>
-    )
+    );
   }
 }
 
-export default connect(state => ({
-    state: state.appReducers
-  }),
-  (dispatch) => ({
-    actions: bindActionCreators(appActions, dispatch)
-  })
-)(TrailApp);
+function mapStateToProps(state) {
+  console.log('STATE IN STORE ==> ', state);
+  return {
+    isLoggedIn: state.appReducers.isLoggedIn
+  };
+}
+
+var bundledActionCreators = Object.assign({}, appActions);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(bundledActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TrailApp);

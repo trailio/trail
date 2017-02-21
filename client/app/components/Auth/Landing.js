@@ -16,14 +16,10 @@ class Landing extends Component {
   }
 
   render () {
-    const {state, actions} = this.props;
-    console.log('Landing state === ', state);
-    console.log('Landing actions === ', actions);
-
-    if (state.loginClicked === true) {
+    if (this.props.loginClicked === true) {
       return (
         <View>
-          <Text onPress={actions.backClicked}>Back</Text>
+          <Text onPress={this.props.backClicked}>Back</Text>
           <Text style={styles.text}>Login</Text>
           <Text>Username</Text>
           <TextInput
@@ -35,10 +31,10 @@ class Landing extends Component {
           />
         </View>
       );
-    } else if (state.signupClicked === true) {
+    } else if (this.props.signupClicked === true) {
       return (
         <View>
-          <Text onPress={actions.backClicked}>Back</Text>
+          <Text onPress={this.props.backClicked}>Back</Text>
           <Text style={styles.text}>Signup</Text>
           <Text>Username</Text>
           <TextInput
@@ -54,18 +50,24 @@ class Landing extends Component {
       return (
         <View>
           <Text style={styles.text}>TRAIL</Text>
-          <Text style={styles.text} onPress={actions.loginClicked}>LOGIN</Text>
-          <Text style={styles.text} onPress={actions.signupClicked}>SIGNUP</Text>
+          <Text style={styles.text} onPress={this.props.handleLoginClick}>LOGIN</Text>
+          <Text style={styles.text} onPress={this.props.handleSignupClick}>SIGNUP</Text>
         </View>
       );
     }
   }
 }
 
-export default connect(state => ({
-  state: state.authReducers
-}),
-  (dispatch) => ({
-    actions: bindActionCreators(authActions, dispatch)
-  })
-)(Landing);
+function mapStateToProps(state) {
+  console.log('STATE IN STORE ==> ', state);
+  return {
+    loginClicked: state.authReducers.loginClicked,
+    signupClicked: state.authReducers.signupClicked
+  };
+}
+var bundledActionCreators = Object.assign({}, authActions);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(bundledActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

@@ -1,10 +1,10 @@
-export function loginClicked () {
+export function handleLoginClick () {
   return {
     type: 'LOGIN_CLICKED'
   };
 }
 
-export function signupClicked () {
+export function handleSignupClick () {
   return {
     type: 'SIGNUP_CLICKED'
   };

@@ -73,6 +73,6 @@ export default class Camera extends Component {
           <DropPin />
         </View>
       </Swiper>
-    )
+    );
   }
-};
+}

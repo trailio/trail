@@ -61,6 +61,6 @@ export default class Inbox extends Component {
           <Text style={styles.text}>Inbox</Text>
         </View>
       </Swiper>
-    )
+    );
   }
-};
+}

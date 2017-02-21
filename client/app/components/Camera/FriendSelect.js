@@ -27,6 +27,6 @@ export default class FriendSelect extends Component {
       <Text style={styles.text}>
         Friend Select
       </Text>
-    )
+    );
   }
-};
+}

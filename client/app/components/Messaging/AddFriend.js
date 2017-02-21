@@ -46,6 +46,6 @@ export default class AddFriend extends Component {
   render () {
     return (
       <Text style={styles.text}>Add Friend</Text>
-    )
+    );
   }
-};
+}

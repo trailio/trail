@@ -60,6 +60,6 @@ export default class TrailMap extends Component {
           <ViewContent />
         </View>
       </Swiper>
-    )
+    );
   }
-};
+}

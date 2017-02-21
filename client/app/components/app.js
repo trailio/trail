@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import TrailApp from './trailApp';
 import store from '../store.js';
 

@@ -27,6 +27,6 @@ export default class CameraReview extends Component {
       <Text style={styles.text}>
         Camera Review
       </Text>
-    )
+    );
   }
-};
+}

@@ -27,6 +27,6 @@ export default class DropPin extends Component {
       <Text style={styles.text}>
         Drop Pin
       </Text>
-    )
+    );
   }
-};
+}

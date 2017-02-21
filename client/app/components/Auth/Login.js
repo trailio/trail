@@ -20,6 +20,6 @@ export default class Login extends Component {
           style={{height: 40, borderColor: 'gray', borderWidth: 1}}
         />
       </View>
-    )
+    );
   }
-};
+}

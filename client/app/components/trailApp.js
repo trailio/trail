@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appActions from '../actions/appActions';
 

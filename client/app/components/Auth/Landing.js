@@ -6,7 +6,7 @@ import styles from '../../styles';
 import Login from './Login';
 import Signup from './Signup';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as authActions from '../../actions/authActions';
 
@@ -57,14 +57,14 @@ class Landing extends Component {
           <Text style={styles.text} onPress={actions.loginClicked}>LOGIN</Text>
           <Text style={styles.text} onPress={actions.signupClicked}>SIGNUP</Text>
         </View>
-      )
+      );
     }
   }
-};
+}
 
 export default connect(state => ({
-    state: state.authReducers
-  }),
+  state: state.authReducers
+}),
   (dispatch) => ({
     actions: bindActionCreators(authActions, dispatch)
   })

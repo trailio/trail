@@ -46,6 +46,6 @@ export default class AR extends Component {
   render () {
     return (
       <Text style={styles.text}>AR Component</Text>
-    )
+    );
   }
-};
+}

@@ -46,6 +46,6 @@ export default class ViewContent extends Component {
   render () {
     return (
       <Text style={styles.text}>ViewContent</Text>
-    )
+    );
   }
-};
+}

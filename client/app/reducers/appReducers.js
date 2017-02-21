@@ -3,9 +3,10 @@ export default function reducer ( state = {
 }, action) {
   switch (action.type) {
   case 'LOGIN_USER': {
-    return Object.assign({}, state, {
+    return {
+      ...state,
       isLoggedIn: true
-    });
+    }
   }
   default:
     return state;

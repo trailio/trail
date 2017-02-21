@@ -1,11 +1,7 @@
-export default function testRedux () {
-  return {
-    type: 'TEST_REDUX'
-  };
-}
+import types from './types';
 
-export function changeAgain () {
+export function loginUser () {
   return {
-    type: 'CHANGE_AGAIN'
+    type: types.LoginUser
   };
 }

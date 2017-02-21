@@ -12,16 +12,20 @@ export default function reducer ( state = {
     });
   }
   case 'SIGNUP_CLICKED': {
-    return Object.assign({}, state, {
+    return {
+      ...state,
       loginClicked: false,
       signupClicked: true
-    });
+    };
   }
   case 'BACK_CLICKED': {
-    return Object.assign({}, state, {
+    return {
+      ...state,
       loginClicked: false,
-      signupClicked: false
-    });
+      signupClicked: false,
+      username: '',
+      password: ''
+    };
   }
   case 'USERNAME_CHANGED': {
     return {

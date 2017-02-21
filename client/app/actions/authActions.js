@@ -1,31 +1,33 @@
+import types from './types';
+
 export function handleLoginClick () {
   return {
-    type: 'LOGIN_CLICKED'
+    type: types.ClickedLogin
   };
 }
 
 export function handleSignupClick () {
   return {
-    type: 'SIGNUP_CLICKED'
+    type: types.ClickedSignin
   };
 }
 
 export function backClicked () {
   return {
-    type: 'BACK_CLICKED'
+    type: types.ClickedBack
   };
 }
 
 export function usernameChanged (text) {
   return {
-    type: 'USERNAME_CHANGED',
+    type: types.UsernameChanged,
     payload: text
-  }
-};
+  };
+}
 
 export function passwordChanged (text) {
   return {
-    type: 'PASSWORD_CHANGED',
+    type: types.PasswordChanged,
     payload: text
-  }
-};
+  };
+}

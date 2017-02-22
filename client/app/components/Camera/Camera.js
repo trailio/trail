@@ -3,13 +3,17 @@ import { StyleSheet, Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ReactNativeCamera from 'react-native-camera';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as cameraActions from '../../actions/cameraActions';
+
 import styles from '../../styles';
 import AR from './AR';
 import CameraReview from './CameraReview';
 import DropPin from './DropPin';
 import FriendSelect from './FriendSelect';
 
-export default class Camera extends Component {
+class Camera extends Component {
   constructor(props) {
     super(props);
   }
@@ -22,6 +26,7 @@ export default class Camera extends Component {
   }
 
   render () {
+    console.log('Camera Props === ', this.props);
     return (
       <Swiper
         style={styles.wrapper}
@@ -57,3 +62,18 @@ export default class Camera extends Component {
     );
   }
 }
+
+const mapStateToProps = ({camera}) => {
+  const { captureMode } = camera;
+  return {
+    captureMode
+  };
+};
+
+const bundledActionCreators = Object.assign({}, cameraActions);
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(bundledActionCreators, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Camera);

@@ -7,7 +7,9 @@ const types = {
   ClickedBack: 'BACK_CLICKED',
 
   UsernameChanged: 'USERNAME_CHANGED',
-  PasswordChanged: 'PASSWORD_CHANGED'
+  PasswordChanged: 'PASSWORD_CHANGED',
+
+  ToggleCaptureMode: 'TOGGLE_CAPTURE_MODE'
 
 };
 

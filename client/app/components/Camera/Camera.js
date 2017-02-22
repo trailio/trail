@@ -25,8 +25,14 @@ class Camera extends Component {
     console.log('Picture Taken');
   }
 
+  toggleMode() {
+    this.props.toggleCaptureMode();
+    console.log('mode == ', this.props.captureMode);
+  }
+
   render () {
     console.log('Camera Props === ', this.props);
+    console.log('Capture Mode === ', this.props.captureMode);
     return (
       <Swiper
         style={styles.wrapper}
@@ -45,8 +51,10 @@ class Camera extends Component {
             this.camera = cam;
           }}
           style={styles.preview}
-          aspect={ReactNativeCamera.constants.Aspect.fill}>
+          aspect={ReactNativeCamera.constants.Aspect.fill}
+          captureMode={this.props.captureMode}>
           <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
+          <Text style={styles.capture} onPress={this.toggleMode.bind(this)}>[MODE]</Text>
         </ReactNativeCamera>
         </View>
         <View style={styles.slide3}>

@@ -1,50 +1,24 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
+import ReactNativeCamera from 'react-native-camera';
+
+import styles from '../../styles';
 import AR from './AR';
 import CameraReview from './CameraReview';
 import DropPin from './DropPin';
 import FriendSelect from './FriendSelect';
 
-const styles = StyleSheet.create({
-  wrapper: {
-  },
-  slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB',
-  },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5',
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
-  }
-});
-
 export default class Camera extends Component {
   constructor(props) {
     super(props);
+  }
 
-    this.state = {
-
-    };
+  takePicture() {
+    this.camera.capture()
+      .then((data) => console.log(data))
+      .catch(err => console.error(err));
+    console.log('Picture Taken');
   }
 
   render () {
@@ -61,7 +35,14 @@ export default class Camera extends Component {
           <AR />
         </View>
         <View style={styles.slide1}>
-          <Text style={styles.text}>Camera</Text>
+          <ReactNativeCamera
+          ref={(cam) => {
+            this.camera = cam;
+          }}
+          style={styles.preview}
+          aspect={ReactNativeCamera.constants.Aspect.fill}>
+          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
+        </ReactNativeCamera>
         </View>
         <View style={styles.slide3}>
           <CameraReview />

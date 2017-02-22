@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ReactNativeCamera from 'react-native-camera';
 
@@ -51,14 +51,15 @@ class Camera extends Component {
           <AR />
         </View>
         <View style={styles.slide1}>
-          <ReactNativeCamera
-          ref={(cam) => {
-            this.camera = cam;
-          }}
-          style={styles.preview}
-          aspect={ReactNativeCamera.constants.Aspect.fill}
-          captureMode={this.props.captureMode}
-          type={this.props.captureSide}>
+        <ReactNativeCamera
+        ref={(cam) => {
+          this.camera = cam;
+        }}
+        style={styles.preview}
+        aspect={ReactNativeCamera.constants.Aspect.fill}
+        captureMode={this.props.captureMode}
+        flashMode={this.props.flashMode}
+        type={this.props.captureSide}>
           <Text style={styles.flashButton} onPress={this.toggleFlash.bind(this)}>
             {(this.props.flashMode === 'Camera.constants.FlashMode.off') ? ('[OFF]')
               : (this.props.flashMode === 'Camera.constants.FlashMode.on') ? ('[ON]')

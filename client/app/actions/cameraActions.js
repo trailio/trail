@@ -11,3 +11,9 @@ export function toggleCaptureSide () {
     type: types.ToggleCaptureSide
   };
 }
+
+export function toggleFlashMode () {
+  return {
+    type: types.ToggleFlashMode
+  };
+}

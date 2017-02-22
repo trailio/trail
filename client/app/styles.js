@@ -74,6 +74,12 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     textAlign: 'center'
+  },
+  flashButton: {
+    top: 30,
+    left: 10,
+    position: 'absolute',
+    backgroundColor: '#fff'
   }
 });
 

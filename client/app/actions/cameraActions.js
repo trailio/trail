@@ -5,3 +5,9 @@ export function toggleCaptureMode () {
     type: types.ToggleCaptureMode
   };
 }
+
+export function toggleCaptureSide () {
+  return {
+    type: types.ToggleCaptureSide
+  };
+}

@@ -27,12 +27,15 @@ class Camera extends Component {
 
   toggleMode() {
     this.props.toggleCaptureMode();
-    console.log('mode == ', this.props.captureMode);
+  }
+
+  toggleSide() {
+    this.props.toggleCaptureSide();
+    console.log('captureSide == ', this.props.captureSide);
   }
 
   render () {
-    console.log('Camera Props === ', this.props);
-    console.log('Capture Mode === ', this.props.captureMode);
+    console.log('Capture Mode === ', this.props.captureSide);
     return (
       <Swiper
         style={styles.wrapper}
@@ -55,6 +58,7 @@ class Camera extends Component {
           captureMode={this.props.captureMode}>
           <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
           <Text style={styles.capture} onPress={this.toggleMode.bind(this)}>[MODE]</Text>
+          <Text style={styles.capture} onPress={this.toggleSide.bind(this)}>[FRONT/BACK]</Text>
         </ReactNativeCamera>
         </View>
         <View style={styles.slide3}>
@@ -72,9 +76,10 @@ class Camera extends Component {
 }
 
 const mapStateToProps = ({camera}) => {
-  const { captureMode } = camera;
+  const { captureMode, captureSide } = camera;
   return {
-    captureMode
+    captureMode,
+    captureSide
   };
 };
 

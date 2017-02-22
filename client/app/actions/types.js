@@ -9,7 +9,8 @@ const types = {
   UsernameChanged: 'USERNAME_CHANGED',
   PasswordChanged: 'PASSWORD_CHANGED',
 
-  ToggleCaptureMode: 'TOGGLE_CAPTURE_MODE'
+  ToggleCaptureMode: 'TOGGLE_CAPTURE_MODE',
+  ToggleCaptureSide: 'TOGGLE_CAPTURE_SIDE'
 
 };
 

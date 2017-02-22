@@ -24,7 +24,7 @@ class TrailApp extends Component {
         showsButtons={false}
         showsPagination={false}
         loop={false}
-        index={4}
+        index={1}
       >
 
         <View style={styles.slide1}>

@@ -1,31 +1,38 @@
+const constants = {
+  still: 'Camera.constants.CaptureMode.still',
+  video: 'Camera.constants.CaptureMode.video',
+  front: 'Camera.constants.Type.front',
+  back: 'Camera.constants.Type.back'
+}
+
 export default function reducer ( state = {
-  captureMode: 'Camera.constants.CaptureMode.video',
-  captureSide: 'Camera.constants.Type.front'
+  captureMode: constants.video,
+  captureSide: constants.front
 }, action) {
   switch (action.type) {
   case 'TOGGLE_CAPTURE_MODE': {
-    if (state.captureMode === 'Camera.constants.CaptureMode.video') {
+    if (state.captureMode === constants.video) {
       return {
         ...state,
-        captureMode: 'Camera.constants.CaptureMode.still'
+        captureMode: constants.still
       }
     } else {
       return {
         ...state,
-        captureMode: 'Camera.constants.CaptureMode.video'
+        captureMode: constants.video
       }
     }
   }
   case 'TOGGLE_CAPTURE_SIDE': {
-    if (state.captureSide === 'Camera.constants.Type.front') {
+    if (state.captureSide === constants.front) {
       return {
         ...state,
-        captureSide: 'Camera.constants.Type.back'
+        captureSide: constants.back
       }
     } else {
       return {
         ...state,
-        captureSide: 'Camera.constants.Type.front'
+        captureSide: constants.front
       }
     }
   }

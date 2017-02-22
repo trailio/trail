@@ -25,17 +25,15 @@ class Camera extends Component {
     console.log('Picture Taken');
   }
 
-  toggleMode() {
+  toggleCameraMode() {
     this.props.toggleCaptureMode();
   }
 
-  toggleSide() {
+  toggleCameraSide() {
     this.props.toggleCaptureSide();
-    console.log('captureSide == ', this.props.captureSide);
   }
 
   render () {
-    console.log('Capture Mode === ', this.props.captureSide);
     return (
       <Swiper
         style={styles.wrapper}
@@ -55,10 +53,15 @@ class Camera extends Component {
           }}
           style={styles.preview}
           aspect={ReactNativeCamera.constants.Aspect.fill}
-          captureMode={this.props.captureMode}>
-          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
-          <Text style={styles.capture} onPress={this.toggleMode.bind(this)}>[MODE]</Text>
-          <Text style={styles.capture} onPress={this.toggleSide.bind(this)}>[FRONT/BACK]</Text>
+          captureMode={this.props.captureMode}
+          type={this.props.captureSide}>
+          <Text style={styles.captureModeButton} onPress={this.toggleCameraMode.bind(this)}>
+            {(this.props.captureMode === 'Camera.constants.CaptureMode.still') ? ('[PHOTO]') : ('[VIDEO]')}
+          </Text>
+          <Text style={styles.captureButton} onPress={this.takePicture.bind(this)}>[X]</Text>
+          <Text style={styles.cameraSideButton} onPress={this.toggleCameraSide.bind(this)}>
+            {(this.props.captureSide === 'Camera.constants.Type.front') ? ('[FRONT]') : ('[BACK]')}
+          </Text>
         </ReactNativeCamera>
         </View>
         <View style={styles.slide3}>

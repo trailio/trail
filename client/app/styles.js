@@ -54,6 +54,26 @@ const styles = StyleSheet.create({
     color: '#000',
     padding: 10,
     margin: 40
+  },
+  cameraSideButton: {
+    top: 30,
+    right: 10,
+    position: 'absolute',
+    backgroundColor: '#fff'
+  },
+  captureModeButton: {
+    backgroundColor: '#fff',
+    position: 'absolute',
+    bottom: 10,
+    left: 10
+  },
+  captureButton: {
+    backgroundColor: '#fff',
+    bottom: 10,
+    padding: 10,
+    width: 50,
+    height: 50,
+    textAlign: 'center'
   }
 });
 

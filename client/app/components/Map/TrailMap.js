@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ViewContent from './ViewContent';
+import MapView from 'react-native-maps';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -32,6 +33,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold',
+  },
+  map: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'grey',
   }
 });
 
@@ -55,6 +64,12 @@ export default class TrailMap extends Component {
       >
         <View style={styles.slide1}>
           <Text style={styles.text}>TrailMap</Text>
+          <MapView style={styles.map} initialRegion={{
+            latitude: 37.7836966,
+            longitude: -122.4111551,
+            latitudeDelta: 0.0222,
+            longitudeDelta: 0.0201,
+          }}/>
         </View>
         <View style={styles.slide1}>
           <ViewContent />

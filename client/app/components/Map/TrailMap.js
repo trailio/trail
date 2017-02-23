@@ -49,11 +49,45 @@ export default class TrailMap extends Component {
     super(props);
 
     this.state = {
+      region: {
+        latitude: null,
+        longitude: null,
+        latitudeDelta: null,
+        longitudeDelta: null
+      }
+    }
+  }
 
-    };
+  calcDelta(lat, lon, accuracy) {
+    const oneDegreeOfLongitudeInMeters = 10000;
+    const circumference = 10000;
+
+    const latDelta = accuracy * (1 / (Math.cos(lat) * circumference));
+    const longDelta = (accuracy / oneDegreeOfLongitudeInMeters);
+
+    this.setState({
+      region: {
+        latitude: lat,
+        longitude: lon,
+        latitudeDelta: latDelta,
+        longitudeDelta: longDelta
+      },
+    })
+  }
+
+  componentWillMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude
+        const lon = position.coords.longitude
+        const accuracy = position.coords.accuracy
+        this.calcDelta(lat, lon, accuracy)
+      }
+    )
   }
 
   render () {
+    console.log('navigator.geolocation', navigator.geolocation);
     return (
       <Swiper
         style={styles.wrapper}
@@ -63,13 +97,22 @@ export default class TrailMap extends Component {
         horizontal={false}
       >
         <View style={styles.slide1}>
-          <Text style={styles.text}>TrailMap</Text>
-          <MapView style={styles.map} initialRegion={{
-            latitude: 37.7836966,
-            longitude: -122.4111551,
-            latitudeDelta: 0.0222,
-            longitudeDelta: 0.0201,
-          }}/>
+          {this.state.region.latitude ?
+            <MapView 
+              style={styles.map} 
+              initialRegion={this.state.region}
+              showsUserLocation={true}
+              followsUserLocation={true}
+              scrollEnabled={false}
+              loadingEnabled={true}
+            >
+              <MapView.Marker
+                coordinate={this.state.region}
+                title={"title"}
+                description={"description"}
+                draggable
+              />
+            </MapView> : null}
         </View>
         <View style={styles.slide1}>
           <ViewContent />

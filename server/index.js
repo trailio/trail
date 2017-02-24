@@ -34,12 +34,16 @@ io.on('connection', (socket) => {
 	socket.on('message', (message) => {
 		console.log('message received:', message);
 	});
-	socket.on('login', (credentials) => {
-
-	});
-	socket.on('signup', (credentials) => {
-
-	});
+	socket.on('action', (action) => {
+		if (action.type === 'socket/hello') {
+      	  console.log('Got hello data!', action.foodtype);
+     	  socket.emit('action', {type:'message', foodtype:'good day!'});
+    	}
+    	if (action.type === 'socket/signin') {
+    	  console.log('got username & password', action.payload)
+    	  socket.emit('action', {type:'message', data:'good day!'});
+    	}
+  	});
 	io.emit('message2', 'xxxxxxxx received from server: connection established');
 });
 

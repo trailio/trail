@@ -31,3 +31,14 @@ export function passwordChanged (text) {
     payload: text
   };
 }
+
+export function SubmitSignin (username, password) {
+  return {
+    type: types.SocketSignIn,
+    payload: {
+      username: username,
+      password: password
+    }
+  }
+}
+

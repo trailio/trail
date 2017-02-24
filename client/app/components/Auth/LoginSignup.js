@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableHighlight} from 'react-native';
+// import {Button from 'react-native-button'};
 import Swiper from 'react-native-swiper';
 
 import styles from '../../styles';
@@ -25,6 +26,7 @@ class Landing extends Component {
 
   onSubmitSignin() {
     console.log('signing in using username & password', this.props.username, this.props.password);
+    this.props.SubmitSignin(this.props.username, this.props.password);
   }
 
   onSubmitSignup() {
@@ -51,7 +53,7 @@ class Landing extends Component {
             onChangeText={this.onPasswordChange.bind(this)}
           />
           <Text/>
-          <Text onPress={this.onSubmitSignin.bind(this)}>Sign In</Text>
+          <TouchableHighlight onPress={this.onSubmitSignin.bind(this)}><Text>Sign In</Text></TouchableHighlight>
         </View>
       );
     } else if (this.props.signupClicked === true) {
@@ -73,7 +75,7 @@ class Landing extends Component {
             onChangeText={this.onPasswordChange.bind(this)}
           />
           <Text/>
-          <Text onPress={this.onSubmitSignup.bind(this)}>Sign Up</Text>
+          <TouchableHighlight onPress={this.onSubmitSignUp.bind(this)}><Text>Sign Up</Text></TouchableHighlight>
         </View>
       );
     } else {

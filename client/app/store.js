@@ -7,12 +7,21 @@ import ReduxPromise from 'redux-promise-middleware';
 
 import reducers from "./reducers"
 
-// let socket = io('http://localhost:8000');
-// let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
+let socket = io('http://localhost:8000');
+let socketIoMiddleware = createSocketIoMiddleware(socket, "socket/");
 
-const middleware = applyMiddleware(ReduxPromise(), ReduxThunk, ReduxLogger());
+const middleware = applyMiddleware(ReduxPromise(), socketIoMiddleware, ReduxThunk, ReduxLogger());
 
-export default createStore(reducers, {}, middleware);
+let store = createStore(reducers, {}, middleware);
+
+// console.log('hahahahhaahhah');
+// store.subscribe(()=>{
+//   console.log('new client state', store.getState());
+// });
+
+// store.dispatch({type:'socket/hello', foodtype:'Hello!'});
+
+export default store;
 
 
 

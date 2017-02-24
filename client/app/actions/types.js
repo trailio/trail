@@ -11,8 +11,11 @@ const types = {
 
   ToggleCaptureMode: 'TOGGLE_CAPTURE_MODE',
   ToggleCaptureSide: 'TOGGLE_CAPTURE_SIDE',
-  ToggleFlashMode: 'TOGGLE_FLASH_MODE'
+  ToggleFlashMode: 'TOGGLE_FLASH_MODE',
 
+  SocketSignIn: 'socket/signin'
+  // SocketHello: 'socket/hello'
+  // SocketReceiveMessage: 'server/receiveMessage'
 };
 
 export default types;

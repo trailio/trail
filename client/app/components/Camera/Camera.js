@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, NativeModules } from 'react';
 import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ReactNativeCamera from 'react-native-camera';
@@ -19,10 +19,29 @@ class Camera extends Component {
   }
 
   takePicture() {
-    this.camera.capture()
-      .then((data) => console.log(data))
-      .catch(err => console.error(err));
-    console.log('Picture Taken');
+    // this.camera.capture()
+    //   .then((data) => console.log(data))
+    //   .catch(err => console.error(err));
+    // console.log('Picture Taken');
+    this.refs.cam.capture(function(err, path) {
+      alert('Picture Taken!');
+      var obj = {
+        uri: path,
+        uploadUrl: 'config/serverURL/api/media/',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        data: {}
+      };
+      NativeModules.FileTransfer.upload(obj, (err, res) => {
+        if (res) {
+          console.log('File Transfer Response:', res);
+        } else if (err) {
+          console.log('File Transfer Error:', err);
+        }
+      });
+    });
   }
 
   toggleCameraMode() {
@@ -58,7 +77,7 @@ class Camera extends Component {
         style={styles.preview}
         aspect={ReactNativeCamera.constants.Aspect.fill}
         captureMode={this.props.captureMode}
-        captureTarget={Camera.constants.CaptureTarget.disk}
+        captureTarget={ReactNativeCamera.constants.CaptureTarget.disk}
         flashMode={this.props.flashMode}
         type={this.props.captureSide}>
           <Text style={styles.flashButton} onPress={this.toggleFlash.bind(this)}>

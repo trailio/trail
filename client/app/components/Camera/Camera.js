@@ -61,17 +61,17 @@ class Camera extends Component {
         flashMode={this.props.flashMode}
         type={this.props.captureSide}>
           <Text style={styles.flashButton} onPress={this.toggleFlash.bind(this)}>
-            {(this.props.flashMode === 'Camera.constants.FlashMode.off') ? ('[OFF]')
-              : (this.props.flashMode === 'Camera.constants.FlashMode.on') ? ('[ON]')
-              : (this.props.flashMode === 'Camera.constants.FlashMode.auto') ? ('[AUTO]')
+            {(this.props.flashMode === ReactNativeCamera.constants.FlashMode.off) ? ('[OFF]')
+              : (this.props.flashMode === ReactNativeCamera.constants.FlashMode.on) ? ('[ON]')
+              : (this.props.flashMode === ReactNativeCamera.constants.FlashMode.auto) ? ('[AUTO]')
               : ('[ERROR]')}
           </Text>
           <Text style={styles.captureButton} onPress={this.takePicture.bind(this)}>[X]</Text>
           <Text style={styles.cameraSideButton} onPress={this.toggleCameraSide.bind(this)}>
-            {(this.props.captureSide === 'Camera.constants.Type.front') ? ('[FRONT]') : ('[BACK]')}
+            {(this.props.captureSide === ReactNativeCamera.constants.Type.front) ? ('[FRONT]') : ('[BACK]')}
           </Text>
           <Text style={styles.captureModeButton} onPress={this.toggleCameraMode.bind(this)}>
-            {(this.props.captureMode === 'Camera.constants.CaptureMode.still') ? ('[PHOTO]') : ('[VIDEO]')}
+            {(this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still) ? ('[PHOTO]') : ('[VIDEO]')}
           </Text>
         </ReactNativeCamera>
         </View>

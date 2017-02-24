@@ -1,16 +1,18 @@
+import ReactNativeCamera from 'react-native-camera';
+
 const constants = {
-  still: 'Camera.constants.CaptureMode.still',
-  video: 'Camera.constants.CaptureMode.video',
-  front: 'Camera.constants.Type.front',
-  back: 'Camera.constants.Type.back',
-  flashOn: 'Camera.constants.FlashMode.on',
-  flashOff: 'Camera.constants.FlashMode.off',
-  flashAuto: 'Camera.constants.FlashMode.auto'
+  still: ReactNativeCamera.constants.CaptureMode.still,
+  video: ReactNativeCamera.constants.CaptureMode.video,
+  front: ReactNativeCamera.constants.Type.front,
+  back: ReactNativeCamera.constants.Type.back,
+  flashOn: ReactNativeCamera.constants.FlashMode.on,
+  flashOff: ReactNativeCamera.constants.FlashMode.off,
+  flashAuto: ReactNativeCamera.constants.FlashMode.auto
 };
 
 export default function reducer ( state = {
   captureMode: constants.video,
-  captureSide: constants.front,
+  captureSide: constants.back,
   flashMode: constants.flashOff
 }, action) {
   switch (action.type) {

@@ -2,6 +2,7 @@ import React, { Component, NativeModules } from 'react';
 import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ReactNativeCamera from 'react-native-camera';
+import { RNS3 } from 'react-native-aws3';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -19,29 +20,33 @@ class Camera extends Component {
   }
 
   takePicture() {
-    // this.camera.capture()
-    //   .then((data) => console.log(data))
-    //   .catch(err => console.error(err));
-    // console.log('Picture Taken');
-    this.refs.cam.capture(function(err, path) {
-      alert('Picture Taken!');
-      var obj = {
-        uri: path,
-        uploadUrl: 'config/serverURL/api/media/',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        data: {}
-      };
-      NativeModules.FileTransfer.upload(obj, (err, res) => {
-        if (res) {
-          console.log('File Transfer Response:', res);
-        } else if (err) {
-          console.log('File Transfer Error:', err);
-        }
-      });
-    });
+    // Current method: https://medium.com/@knowbody/react-native-image-upload-to-s3-bucket-5220941bfea2#.pw9qgho27
+    this.camera.capture()
+      .then(data => {
+        const file = {
+          uri: data.path,
+          name: 'photo.jpg',
+          type: 'image/jpeg'
+        };
+
+        const options = {
+          keyPrefix: 'photos/',
+          bucket: '<bucket_name>',
+          region: 'eu-west-1',
+          accessKey: '<your_access_key>',
+          secretKey: '<your_secret_key>',
+          successActionStatus: 201
+        };
+
+        RNS3.put(file, options)
+          .then(response => {
+            if (response.status !== 201) {
+              throw new Error('Failed to upload image to S3', response);
+            }
+            console.log('*** BODY ***', response.body);
+          });
+      })
+      .catch(error => console.log('ERROR: ', error));
   }
 
   toggleCameraMode() {

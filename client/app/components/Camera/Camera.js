@@ -81,8 +81,8 @@ class Camera extends Component {
         <View style={styles.slide1}>
           <FriendSelect />
         </View>
-        <View style={styles.slide2}>
-          <DropPin />
+        <View>
+          <DropPin style={styles.slide2}/>
         </View>
       </Swiper>
     );

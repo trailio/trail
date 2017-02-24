@@ -104,7 +104,6 @@ export default class TrailMap extends Component {
               showsUserLocation={true}
               followsUserLocation={true}
               scrollEnabled={false}
-              loadingEnabled={true}
             >
               <MapView.Marker
                 coordinate={this.state.region}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View, AsyncStorage } from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import styles from '../../styles';

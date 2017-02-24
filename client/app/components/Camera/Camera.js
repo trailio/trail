@@ -31,10 +31,10 @@ class Camera extends Component {
 
         const options = {
           keyPrefix: 'photos/',
-          bucket: '<bucket_name>',
-          region: 'eu-west-1',
-          accessKey: '<your_access_key>',
-          secretKey: '<your_secret_key>',
+          bucket: 'trail-media',
+          region: 'us-west-1',
+          accessKey: 'AKIAI35BFOIBXDCCR7NA',
+          secretKey: 's4NDJdcDegOjL6feZdAcKWVxbzT1xEZaj+mViUQ4',
           successActionStatus: 201
         };
 

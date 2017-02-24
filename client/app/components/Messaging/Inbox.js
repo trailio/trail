@@ -7,6 +7,7 @@ import {
 import Swiper from 'react-native-swiper';
 import AddFriend from './AddFriend';
 
+
 const styles = StyleSheet.create({
   wrapper: {
   },
@@ -38,10 +39,7 @@ const styles = StyleSheet.create({
 export default class Inbox extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-
-    };
+    this.state = {};
   }
 
   render () {

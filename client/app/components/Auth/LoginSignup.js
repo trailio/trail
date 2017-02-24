@@ -15,10 +15,20 @@ class Landing extends Component {
 
   onUsernameChange(text) {
     this.props.usernameChanged(text);
+    console.log('username submitted', text)
   }
 
   onPasswordChange(text) {
     this.props.passwordChanged(text);
+    console.log('password submitted', text)
+  }
+
+  onSubmitSignin() {
+    console.log('signing in using username & password', this.props.username, this.props.password);
+  }
+
+  onSubmitSignup() {
+    console.log('signup in using username & password & no email for now', this.props.username, this.props.password);
   }
 
   render () {
@@ -26,6 +36,7 @@ class Landing extends Component {
       return (
         <View>
           <Text onPress={this.props.backClicked}>Back</Text>
+          <Text/>
           <Text style={styles.text}>Login</Text>
           <Text>Username</Text>
           <TextInput
@@ -39,21 +50,30 @@ class Landing extends Component {
             value={this.props.password}
             onChangeText={this.onPasswordChange.bind(this)}
           />
+          <Text/>
+          <Text onPress={this.onSubmitSignin.bind(this)}>Sign In</Text>
         </View>
       );
     } else if (this.props.signupClicked === true) {
       return (
         <View>
           <Text onPress={this.props.backClicked}>Back</Text>
+          <Text/>
           <Text style={styles.text}>Signup</Text>
           <Text>Username</Text>
           <TextInput
             style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
+            value={this.props.username}
+            onChangeText={this.onUsernameChange.bind(this)}
           />
           <Text>Password</Text>
           <TextInput
             style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
+            value={this.props.password}
+            onChangeText={this.onPasswordChange.bind(this)}
           />
+          <Text/>
+          <Text onPress={this.onSubmitSignup.bind(this)}>Sign Up</Text>
         </View>
       );
     } else {

@@ -11,13 +11,19 @@ import Camera from './Camera/Camera';
 import Inbox from './Messaging/Inbox';
 import LoginSignup from './Auth/LoginSignup';
 import TrailMap from './Map/TrailMap';
+import io from 'socket.io-client';
 
 class TrailApp extends Component {
   constructor(props) {
     super(props);
+    this.socket = io('http://localhost:8000');
   }
 
   render() {
+  	this.socket.emit('message', 'hello world!')
+    this.socket.on('message2', function(msg) {
+      console.log('message2 received', msg)
+    })
     return (
       <Swiper
         style={styles.wrapper}

@@ -14,3 +14,17 @@ CREATE TABLE testing (
 	email VARCHAR(255) NOT NULL,
 	PRIMARY KEY (id)	
 )
+
+CREATE TABLE user (
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  username VARCHAR(255) NOT NULL,
+  password TEXT NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);
+
+
+-- ---
+-- Foreign Keys Undefined
+-- ---

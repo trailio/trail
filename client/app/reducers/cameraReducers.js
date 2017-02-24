@@ -11,7 +11,7 @@ const constants = {
 };
 
 export default function reducer ( state = {
-  captureMode: constants.video,
+  captureMode: constants.still,
   captureSide: constants.back,
   flashMode: constants.flashOff
 }, action) {

@@ -27,7 +27,7 @@ class TrailApp extends Component {
     return (
       <Swiper
         style={styles.wrapper}
-        showsButtons={false}
+        showsButtons={true}
         showsPagination={false}
         loop={false}
         index={3}

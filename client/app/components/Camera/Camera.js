@@ -58,6 +58,7 @@ class Camera extends Component {
         style={styles.preview}
         aspect={ReactNativeCamera.constants.Aspect.fill}
         captureMode={this.props.captureMode}
+        captureTarget={Camera.constants.CaptureTarget.disk}
         flashMode={this.props.flashMode}
         type={this.props.captureSide}>
           <Text style={styles.flashButton} onPress={this.toggleFlash.bind(this)}>

@@ -42,3 +42,13 @@ export function SubmitSignin (username, password) {
   }
 }
 
+export function SubmitSignup (username, password, email) {
+  return {
+    type: types.SocketSignUp,
+    payload: {
+      username: username,
+      password: password,
+      email: email
+    }
+  }
+}

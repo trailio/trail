@@ -37,9 +37,13 @@ io.on('connection', (socket) => {
      	  socket.emit('action', {type:'message', foodtype:'good day!'});
     	}
     	if (action.type === 'socket/signin') {
-    	  console.log('got username & password', action.payload)
+    	  console.log('got signin request for username & password', action.payload)
     	  socket.emit('action', {type:'LOGIN_RESPONSE', data:'x000000000xx here is your token'});
     	}
+      if (action.type === 'socket/signup') {
+        console.log('got signup requests for username & password & email', action.payload)
+        socket.emit('action', {type:'LOGIN_RESPONSE', data:'x000000000xx here is your token'});
+      }
   	});
 	io.emit('message2', 'xxxxxxxx received from server: connection established');
 });

@@ -13,7 +13,8 @@ const types = {
   ToggleCaptureSide: 'TOGGLE_CAPTURE_SIDE',
   ToggleFlashMode: 'TOGGLE_FLASH_MODE',
 
-  SocketSignIn: 'socket/signin'
+  SocketSignIn: 'socket/signin',
+  SocketSignUp: 'socket/signup'
   // SocketHello: 'socket/hello'
   // SocketReceiveMessage: 'server/receiveMessage'
 };

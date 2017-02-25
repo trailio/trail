@@ -12,6 +12,8 @@ import * as authActions from '../../actions/authActions';
 class Landing extends Component {
   constructor(props) {
     super(props);
+    this.state = {email: ''};
+    //set email to local state instead of redux since it's relatively private information
   }
 
   onUsernameChange(text) {
@@ -24,14 +26,20 @@ class Landing extends Component {
     console.log('password submitted', text)
   }
 
+  onEmailChange(event) {
+    this.setState({email: event});
+  }
+
   onSubmitSignin() {
     console.log('signing in using username & password', this.props.username, this.props.password);
     this.props.SubmitSignin(this.props.username, this.props.password);
   }
 
   onSubmitSignup() {
-    console.log('signup in using username & password & no email for now', this.props.username, this.props.password);
+    console.log('signup in using username & password & no email for now', this.props.username, this.props.password, this.state.email);
+    this.props.SubmitSignup(this.props.username, this.props.password, this.state.email);
   }
+
 
   render () {
     if (this.props.loginClicked === true) {
@@ -74,8 +82,14 @@ class Landing extends Component {
             value={this.props.password}
             onChangeText={this.onPasswordChange.bind(this)}
           />
+          <Text>Email</Text>
+          <TextInput
+            style={{height: 40, width: 200, borderColor: 'gray', borderWidth: 0.5}}
+            value={this.state.email}
+            onChangeText={this.onEmailChange.bind(this)}
+          />
           <Text/>
-          <TouchableHighlight onPress={this.onSubmitSignUp.bind(this)}><Text>Sign Up</Text></TouchableHighlight>
+          <TouchableHighlight onPress={this.onSubmitSignup.bind(this)}><Text>Sign Up</Text></TouchableHighlight>
         </View>
       );
     } else {

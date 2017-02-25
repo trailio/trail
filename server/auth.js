@@ -1,5 +1,8 @@
+var jwt = require('jwt-simple');
 var db = require('./db/helpers');
-require('body-parser');
+var Promise = require('bluebird');
+var bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'));
+// require('body-parser');
 
 module.exports = {
 	signup: function(req, res, next) {

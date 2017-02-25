@@ -1,9 +1,6 @@
 //install and save to package json
 //window.navigator.userAgent = 'react-native';
 
-//index.js
-
-
 var express = require('express');
 var http = require('http');
 var app = express();
@@ -26,8 +23,8 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 
-app.post('/signup', auth.signup);
-app.get('/getUsers', auth.getAll);
+// app.post('/signup', auth.signup);
+// app.get('/getUsers', auth.getAll);
 
 io.on('connection', (socket) => {
 	console.log('a client just joined', socket.id);
@@ -41,7 +38,7 @@ io.on('connection', (socket) => {
     	}
     	if (action.type === 'socket/signin') {
     	  console.log('got username & password', action.payload)
-    	  socket.emit('action', {type:'message', data:'good day!'});
+    	  socket.emit('action', {type:'LOGIN_RESPONSE', data:'x000000000xx here is your token'});
     	}
   	});
 	io.emit('message2', 'xxxxxxxx received from server: connection established');

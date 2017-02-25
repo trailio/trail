@@ -2,12 +2,12 @@ var db = require('./db');
 
 module.exports = {
 	user: {
-		signup: function(username, password, email, cb) {
-			db.query(`INSERT INTO user (USERNAME, PASSWORD) VALUES ("${username}", "${password}", "${email}")`, cb);
-		},
-		get: function(username, cb) {
-			db.query(`SELECT * FROM user WHERE username = "${username}"`, cb);
-		} 
+		get: function (username, cb) {
+	    db.query(`SELECT * FROM user WHERE username = "${username}"`, cb);
+	  },
+	  signup: function(username, password, email, cb) {
+		  db.query(`INSERT INTO user (USERNAME, PASSWORD, EMAIL) VALUES ("${username}", "${password}", "${email}")`, cb);
+		}
 	},
 	publicPosts: {
 		post: function(longitude, latitude, imageURL) {
@@ -18,3 +18,4 @@ module.exports = {
 		} 
 	}
 };
+

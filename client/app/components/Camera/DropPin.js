@@ -30,7 +30,9 @@ export default class DropPin extends Component {
         longitude: null,
         latitudeDelta: null,
         longitudeDelta: null
-      }
+      },
+      pinDropLong: null,
+      pinDropLat: null
     }
   }
 
@@ -63,8 +65,9 @@ export default class DropPin extends Component {
   }
 
   render () {
+    console.log('this.state.pinDropLong', this.state.pinDropLong)
+    console.log('this.state.pinDropLat', this.state.pinDropLat)
     return (
-
     <View>
       {this.state.region.latitude ?
         <MapView 
@@ -79,13 +82,12 @@ export default class DropPin extends Component {
             title={"title"}
             description={"description"}
             draggable
+            onDragEnd={(e) => this.setState({ pinDropLong: e.nativeEvent.coordinate.longitude, pinDropLat: e.nativeEvent.coordinate.latitude})}
           />
         </MapView> : null
       }
       <Text style={styles.text}>Drop Pin</Text>
     </View>
-
-
     );
   }
 }

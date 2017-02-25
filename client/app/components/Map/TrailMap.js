@@ -87,7 +87,6 @@ export default class TrailMap extends Component {
   }
 
   render () {
-    console.log('navigator.geolocation', navigator.geolocation);
     return (
       <Swiper
         style={styles.wrapper}

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { AsyncStorage } from 'react-native'
+import store  from '../store'
 
 export default function reducer ( state = {
   loginClicked: false,
   signupClicked: false,
   username: '',
-  password: '',
-  message: ''
+  password: ''
 }, action) {
   switch (action.type) {
   case 'LOGIN_CLICKED': {
@@ -44,25 +44,14 @@ export default function reducer ( state = {
     }
   }
   case 'LOGIN_RESPONSE': {
-    //use action.data as json token, store it in async storage
-    // try {
-    //   await AsyncStorage.setItem(STORAGE_KEY, action.data);
-    // } catch (error) {
-    //   console.log('AsyncStorage error: ' + error.message);
-    // }
-    // var DEMO_TOKEN = await AsyncStorage.getItem(STORAGE_KEY);
-    // console.log(DEMO_TOKEN);
     AsyncStorage.setItem('STORAGE_KEY', action.data).then((value) => {
-      console.log("xxxxxxxx item set for value ", value);
-      AsyncStorage.getItem('STORAGE_KEY').then((value) => {
-        console.log('xxxxxxxx storage key is ', value);
-      })
-    })
+      store.dispatch({type: 'LOGIN_USER'});
+    }); 
     return {
-      ...state,
-      message: action.data
+      ...state
     }
   }
+
   default:
     return state;
   }

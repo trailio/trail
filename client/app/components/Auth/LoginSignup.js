@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableHighlight} from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableHighlight, AsyncStorage } from 'react-native';
 // import {Button from 'react-native-button'};
 import Swiper from 'react-native-swiper';
 
@@ -8,6 +8,8 @@ import styles from '../../styles';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as authActions from '../../actions/authActions';
+import * as appActions from '../../actions/appActions';
+import TrailApp from '../trailApp';
 
 class Landing extends Component {
   constructor(props) {
@@ -42,79 +44,90 @@ class Landing extends Component {
 
 
   render () {
-    if (this.props.loginClicked === true) {
+    if (this.props.isLoggedIn) {
       return (
-        <View>
-          <Text onPress={this.props.backClicked}>Back</Text>
-          <Text/>
-          <Text style={styles.text}>Login</Text>
-          <Text>Username</Text>
-          <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-            value={this.props.username}
-            onChangeText={this.onUsernameChange.bind(this)}
-          />
-          <Text>Password</Text>
-          <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-            value={this.props.password}
-            onChangeText={this.onPasswordChange.bind(this)}
-          />
-          <Text/>
-          <TouchableHighlight onPress={this.onSubmitSignin.bind(this)}><Text>Sign In</Text></TouchableHighlight>
-        </View>
-      );
-    } else if (this.props.signupClicked === true) {
-      return (
-        <View>
-          <Text onPress={this.props.backClicked}>Back</Text>
-          <Text/>
-          <Text style={styles.text}>Signup</Text>
-          <Text>Username</Text>
-          <TextInput
-            style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
-            value={this.props.username}
-            onChangeText={this.onUsernameChange.bind(this)}
-          />
-          <Text>Password</Text>
-          <TextInput
-            style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
-            value={this.props.password}
-            onChangeText={this.onPasswordChange.bind(this)}
-          />
-          <Text>Email</Text>
-          <TextInput
-            style={{height: 40, width: 200, borderColor: 'gray', borderWidth: 0.5}}
-            value={this.state.email}
-            onChangeText={this.onEmailChange.bind(this)}
-          />
-          <Text/>
-          <TouchableHighlight onPress={this.onSubmitSignup.bind(this)}><Text>Sign Up</Text></TouchableHighlight>
-        </View>
+        <TrailApp />
       );
     } else {
-      return (
-        <View>
-          <Text style={styles.text}>TRAIL</Text>
-          <Text style={styles.text2} onPress={this.props.handleLoginClick}>LOGIN</Text>
-          <Text style={styles.text2} onPress={this.props.handleSignupClick}>SIGNUP</Text>
-        </View>
-      );
+      console.log('xxxxxxxx rendering - this.props.tokenReceived', this.props.tokenReceived);
+      console.log('xxxxxxxx rendering - this.props.isLoggedIn', this.props.isLoggedIn);
+      if (this.props.loginClicked === true) {
+        return (
+          <View>
+            <Text onPress={this.props.backClicked}>Back</Text>
+            <Text/>
+            <Text style={styles.text}>Login</Text>
+            <Text>Username</Text>
+            <TextInput
+              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              value={this.props.username}
+              onChangeText={this.onUsernameChange.bind(this)}
+            />
+            <Text>Password</Text>
+            <TextInput
+              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              value={this.props.password}
+              onChangeText={this.onPasswordChange.bind(this)}
+            />
+            <Text/>
+            <TouchableHighlight onPress={this.onSubmitSignin.bind(this)}><Text>Sign In</Text></TouchableHighlight>
+          </View>
+        );
+      } else if (this.props.signupClicked === true) {
+        return (
+          <View>
+            <Text onPress={this.props.backClicked}>Back</Text>
+            <Text/>
+            <Text style={styles.text}>Signup</Text>
+            <Text>Username</Text>
+            <TextInput
+              style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
+              value={this.props.username}
+              onChangeText={this.onUsernameChange.bind(this)}
+            />
+            <Text>Password</Text>
+            <TextInput
+              style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
+              value={this.props.password}
+              onChangeText={this.onPasswordChange.bind(this)}
+            />
+            <Text>Email</Text>
+            <TextInput
+              style={{height: 40, width: 200, borderColor: 'gray', borderWidth: 0.5}}
+              value={this.state.email}
+              onChangeText={this.onEmailChange.bind(this)}
+            />
+            <Text/>
+            <TouchableHighlight onPress={this.onSubmitSignup.bind(this)}><Text>Sign Up</Text></TouchableHighlight>
+          </View>
+        );
+      } else {
+        return (
+          <View>
+            <Text style={styles.text}>TRAIL</Text>
+            <Text style={styles.text2} onPress={this.props.handleLoginClick}>LOGIN</Text>
+            <Text style={styles.text2} onPress={this.props.handleSignupClick}>SIGNUP</Text>
+          </View>
+        );
+      }
     }
   }
 }
 
-const mapStateToProps = ({auth}) => {
-  const { loginClicked, signupClicked, username, password } = auth;
+const mapStateToProps = ({auth, app}) => {
+  const { loginClicked, signupClicked, username, password} = auth;
+  const { isLoggedIn } = app;
+  // console.log('mapStateToProps app in LoginSignup', app)
   return {
     loginClicked,
     signupClicked,
     username,
-    password
+    password,
+    isLoggedIn
   };
 };
 
-const bundledActionCreators = Object.assign({}, authActions);
+const bundledActionCreators = Object.assign({}, authActions, appActions);
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(bundledActionCreators, dispatch);

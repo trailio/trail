@@ -32,21 +32,17 @@ io.on('connection', (socket) => {
 		console.log('message received:', message);
 	});
 	socket.on('action', (action) => {
-		// if (action.type === 'socket/hello') {
-  //     	  console.log('Got hello data!', action.foodtype);
-  //    	  socket.emit('action', {type:'message', foodtype:'good day!'});
-  //   	}
     	if (action.type === 'socket/signin') {
-
-    	  // console.log('got signin request for username & password', action.payload)
-    	  socket.emit('action', {type:'LOGIN_RESPONSE', data:'x000000000xx here is your token'});
+    	  auth.signin(action.payload, function(token){
+          console.log('index.js socket/signin - got token, emitting action with token back to app for token', token);
+          socket.emit('action', {type:'LOGIN_RESPONSE', data: token});   
+        })  
     	}
       if (action.type === 'socket/signup') {
         auth.signup(action.payload, function(token){
-          console.log('index.js - got token, emitting action with token back to app for token', token);
+          console.log('index.js socket/signup - got token, emitting action with token back to app for token', token);
           socket.emit('action', {type:'LOGIN_RESPONSE', data: token});          
         })
-        // console.log('got signup requests for username & password & email', action.payload)
       }
   	});
 	io.emit('message2', 'xxxxxxxx received from server: connection established');

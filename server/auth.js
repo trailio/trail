@@ -6,8 +6,6 @@ var bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'));
 
 module.exports = {
   signup: function({username, password, email}, cb) {
-	console.log('signup request received for username' + username + 'password' + password + 'email'+email);
-		
     db.user.get(username, function (err, rows) {
       if (err) {
         console.log('Failed to connect to database');
@@ -21,8 +19,6 @@ module.exports = {
               if (err) {
                 console.log('Failed to create user');
               } else {
-              	console.log('xxxx signed up user ', rows);
-
               	//this section is to populate the other database tables using insertID at this account's userID
                 // req.body.userID = rows.insertId;
                 // db.profile.post(req.body, function (err, rows) {
@@ -37,9 +33,9 @@ module.exports = {
                     } else if (rows.length === 0) {
                       console.log('User does not exist');
                     } else {
-                      console.log('user details xxxxxx', rows[0]);
+                      // console.log('user details xxxxxx', rows[0]);
                       var user = rows[0];
-                      var token = jwt.encode(user, 'secret');
+                      var token = jwt.encode(user, '53cr3t');
                       cb(token);
                     }
                   });
@@ -52,32 +48,45 @@ module.exports = {
       }
     })
   },
-
-
-		// db.user.signup(username, password, email, function(err, rows) {
-		// 	if (err) {
-		// 		console.log('User already exits');
-		// 	}
-		// 	console.log('signup response: ', rows);
-		// 	res.end(JSON.stringify(rows));
-		// })
-	getAll: function(req, res, next) {
-		db.user.getAll(function(err, rows) {
-			if (err) {
-				// console.log('User already exits');
-				console.log('err', err)
-			}
-			console.log('getAll response: ', rows);
-			res.end(JSON.stringify(rows));
-		})
-	}
-
-
-
-
-
-
-
+  signin: function({username, password}, cb){
+  	db.user.get(username, function(err, rows) {
+	    if (err) {
+	      console.log('Failed to connect to database');
+	    } else if (rows.length === 0) {
+	      console.log('User does not exist');
+	    } else {
+	      // console.log('user details xxxxxx', rows[0]);
+	      var user = rows[0];
+				bcrypt.compareAsync(password, user.password).then(result => {
+          if (result) {	
+          	var token = jwt.encode(user, '53cr3t');
+          	cb(token);      
+          } else {
+          	console.log('invalid password for username: ', username);
+          }
+	    	}).catch(err => {
+	    		console.log('Invalid password')
+	    	})
+	    }
+	  });
+  },
+  check: function(token, cb) {  
+  	//checks for authentication, implement this is any other route helper files so at the beginning of the function
+  	//so that the function is only executed if token is provided
+  	//when implementing this function in other files, make sure the client side sends a token for every socket connection it makes
+    if ((token !== undefined) && (token !== 'undefined')) {
+      var user = jwt.decode(token, '53cr3t');
+      db.user.get(user.username, function (err, rows) {
+        if (rows.length === 1) {
+          cb(rows[0]);
+        } else {
+          cb(null);
+        }
+      });
+    } else {
+      console.log('No token provided');
+    }
+  }
 }
 
 

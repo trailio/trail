@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, AsyncStorage } from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import { connect } from 'react-redux';
@@ -11,46 +11,52 @@ import Camera from './Camera/Camera';
 import Inbox from './Messaging/Inbox';
 import LoginSignup from './Auth/LoginSignup';
 import TrailMap from './Map/TrailMap';
-// import io from 'socket.io-client';
 
 class TrailApp extends Component {
   constructor(props) {
     super(props);
-    // this.socket = io('http://localhost:8000');
   }
 
   render() {
-  	// this.socket.emit('message', 'hello world!')
-   //  this.socket.on('message2', function(msg) {
-   //    console.log('message2 received', msg)
-    // })
-    return (
-      <Swiper
-        style={styles.wrapper}
-        showsButtons={true}
-        showsPagination={false}
-        loop={false}
-        index={3}
-      >
-
-        <View style={styles.slide1}>
-          <Inbox />
-        </View>
-
-        <View style={styles.slide2}>
-          <Camera />
-        </View>
-
-        <View style={styles.slide3}>
-          <TrailMap />
-        </View>
-
+    // AsyncStorage.removeItem('STORAGE_KEY');
+    if (!this.props.isLoggedIn) {
+      return (
         <View style={styles.slide3}>
           <LoginSignup />
         </View>
+      );
+    } else {
+      return (
+        <Swiper
+          style={styles.wrapper}
+          showsButtons={false}
+          showsPagination={false}
+          loop={false}
+          index={1}
+        >
+          <View style={styles.slide1}>
+            <Inbox />
+          </View>
 
-      </Swiper>
-    );
+          <View style={styles.slide2}>
+            <Camera />
+          </View>
+
+          <View style={styles.slide3}>
+            <TrailMap />
+          </View>
+
+        </Swiper>
+      );
+    }
+  }
+
+  componentWillMount() {
+    AsyncStorage.getItem('STORAGE_KEY').then((value) => {
+      if (value) {
+        this.props.loginUser();
+      }
+    })
   }
 }
 

@@ -16,6 +16,14 @@ module.exports = {
 		get: function(cb) {
 			db.query(`SELECT * FROM posts`, cb);
 		} 
+	},
+	publicPosts: {
+		post: function(longitude, latitude, imageURL) {
+			db.query(`INSERT INTO publicPosts (LONGITUDE, LATITUDE, IMAGEURL) VALUES ("${longitude}", "${latitude}", "${imageURL}")`, cb);
+		},
+		get: function(cb) {
+			db.query(`SELECT * FROM publicPosts`, cb);
+		} 
 	}
 };
 

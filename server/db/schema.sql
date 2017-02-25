@@ -26,12 +26,14 @@ CREATE TABLE user (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE publicPosts (
+CREATE TABLE posts (
   id INTEGER NOT NULL AUTO_INCREMENT,
   userID INTEGER,
+  recipientUserID INTEGER,
   longitude TEXT NOT NULL,
   latitude TEXT NOT NULL,
   imageURL VARCHAR(255) NOT NULL,
+  public BOOLEAN NOT NULL,
   timePosted TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   timeExpired TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
@@ -40,5 +42,4 @@ CREATE TABLE publicPosts (
 -- ---
 -- Foreign Keys Undefined
 -- ---
-
-ALTER TABLE publicPosts ADD FOREIGN KEY (userID) REFERENCES user (id);
+ALTER TABLE posts ADD FOREIGN KEY (userID) REFERENCES user (id);

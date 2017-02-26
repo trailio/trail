@@ -17,3 +17,15 @@ export function toggleFlashMode () {
     type: types.ToggleFlashMode
   };
 }
+
+export function postPhoto(latitude, longitude, imageURL, publicPost) {
+  return {
+    type: types.PostPhoto,
+    payload: {
+      latitude: latitude,
+      longitude: longitude,
+      imageURL: imageURL,
+      publicPost: publicPost
+    }
+  };
+}

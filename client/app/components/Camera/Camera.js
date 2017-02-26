@@ -46,6 +46,9 @@ class Camera extends Component {
             }
             console.log('*** BODY ***', response.body);
             // photo url = response.body.location
+            // postPhoto(latitude, longitude, imageURL, publicPost)
+            this.props.postPhoto('testlat', 'testlong', response.body.postResponse.location, true);
+            return response;
           });
       })
       .catch(error => console.log('ERROR: ', error));

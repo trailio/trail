@@ -14,7 +14,9 @@ const types = {
   ToggleFlashMode: 'TOGGLE_FLASH_MODE',
 
   SocketSignIn: 'socket/signin',
-  SocketSignUp: 'socket/signup'
+  SocketSignUp: 'socket/signup',
+
+  PostPhoto: 'socket/postPhoto'
   // SocketHello: 'socket/hello'
   // SocketReceiveMessage: 'server/receiveMessage'
 };

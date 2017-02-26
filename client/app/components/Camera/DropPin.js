@@ -7,6 +7,10 @@ import {
 import Swiper from 'react-native-swiper';
 import MapView from 'react-native-maps';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as mapActions from '../../actions/mapActions';
+
 const styles = StyleSheet.create({
   map: {
     height: 600, margin: 0
@@ -20,17 +24,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class DropPin extends Component {
+class DropPin extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      region: {
-        latitude: null,
-        longitude: null,
-        latitudeDelta: null,
-        longitudeDelta: null
-      },
+      // region: {
+      //   latitude: null,
+      //   longitude: null,
+      //   latitudeDelta: null,
+      //   longitudeDelta: null
+      // },
       pinDropLong: null,
       pinDropLat: null
     }
@@ -43,14 +47,16 @@ export default class DropPin extends Component {
     const latDelta = accuracy * (1 / (Math.cos(lat) * circumference));
     const longDelta = (accuracy / oneDegreeOfLongitudeInMeters);
 
-    this.setState({
-      region: {
-        latitude: lat,
-        longitude: lon,
-        latitudeDelta: latDelta,
-        longitudeDelta: longDelta
-      }
-    })
+    this.props.currentCoordsFound(lat, lon, latDelta, longDelta);
+
+    // this.setState({
+    //   region: {
+    //     latitude: lat,
+    //     longitude: lon,
+    //     latitudeDelta: latDelta,
+    //     longitudeDelta: longDelta
+    //   }
+    // })
   }
 
   componentWillMount() {
@@ -67,18 +73,28 @@ export default class DropPin extends Component {
   render () {
     console.log('this.state.pinDropLong', this.state.pinDropLong)
     console.log('this.state.pinDropLat', this.state.pinDropLat)
+    console.log('this.props.latitude', this.props.latitude)
+    console.log('this.props.longitude', this.props.longitude)
     return (
     <View>
-      {this.state.region.latitude ?
+      {this.props.latitude ?
         <MapView 
           style={styles.map} 
-          initialRegion={this.state.region}
+          initialRegion={{
+            latitude: this.props.latitude,
+            longitude: this.props.longitude,
+            latitudeDelta: this.props.latitudeDelta,
+            longitudeDelta: this.props.longitudeDelta
+          }}
           showsUserLocation={true}
           followsUserLocation={true}
           scrollEnabled={false}
         >
           <MapView.Marker
-            coordinate={this.state.region}
+            coordinate={{
+            latitude: this.props.latitude,
+            longitude: this.props.longitude
+            }}
             title={"title"}
             description={"description"}
             draggable
@@ -91,3 +107,22 @@ export default class DropPin extends Component {
     );
   }
 }
+
+const mapStateToProps = ({map}) => {
+  const { latitude, longitude, latitudeDelta, longitudeDelta } = map;
+  return {
+    latitude,
+    longitude,
+    latitudeDelta,
+    longitudeDelta
+  };
+};
+
+const bundledActionCreators = Object.assign({}, mapActions);
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(bundledActionCreators, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DropPin);
+

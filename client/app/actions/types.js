@@ -16,7 +16,9 @@ const types = {
   SocketSignIn: 'socket/signin',
   SocketSignUp: 'socket/signup',
 
-  PostPhoto: 'socket/postPhoto'
+  PostPhoto: 'socket/postPhoto',
+
+  CurrentCoordsFound: 'CURRENT_COORDS_FOUND'
   // SocketHello: 'socket/hello'
   // SocketReceiveMessage: 'server/receiveMessage'
 };

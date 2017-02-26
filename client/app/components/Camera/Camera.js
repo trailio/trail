@@ -7,6 +7,7 @@ import { RNS3 } from 'react-native-aws3';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as cameraActions from '../../actions/cameraActions';
+import config from '../../../config';
 
 import styles from '../../styles';
 import AR from './AR';
@@ -33,8 +34,8 @@ class Camera extends Component {
           keyPrefix: 'photos/',
           bucket: 'trail-media',
           region: 'us-west-1',
-          accessKey: 'AKIAI35BFOIBXDCCR7NA',
-          secretKey: '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',
+          accessKey: config.AWSAccessKeyID,
+          secretKey: config.AWSSecretAccessKey,
           successActionStatus: 201
         };
 
@@ -44,6 +45,7 @@ class Camera extends Component {
               throw new Error('Failed to upload image to S3', response);
             }
             console.log('*** BODY ***', response.body);
+            // photo url = response.body.location
           });
       })
       .catch(error => console.log('ERROR: ', error));

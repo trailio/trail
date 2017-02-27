@@ -7,6 +7,7 @@ import {
 import Swiper from 'react-native-swiper';
 import ViewContent from './ViewContent';
 import MapView from 'react-native-maps';
+import store from '../../store.js';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -40,7 +41,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'grey',
   }
 });
 
@@ -54,7 +54,28 @@ export default class TrailMap extends Component {
         longitude: null,
         latitudeDelta: null,
         longitudeDelta: null
-      }
+      },
+      friendMarkers: [{
+        title: 'Jimothy',
+        coordinates: {
+          latitude: 37.78728814970013,
+          longitude: -122.40743033333337
+        },
+      },
+      {
+        title: 'Andrew',
+        coordinates: {
+          latitude: 37.78541777072449,
+          longitude: -122.40435033333334
+        },  
+      },
+      {
+        title: 'Jen',
+        coordinates: {
+          latitude: 37.784332402346976,
+          longitude: -122.40630366666669
+        },  
+      }]
     }
   }
 
@@ -87,6 +108,8 @@ export default class TrailMap extends Component {
   }
 
   render () {
+    console.log('trailmap!!!!!!!!this.props.latitude', this.props.latitude)
+    console.log('trailmap!!!!!!!!store.getState()', store.getState())
     return (
       <Swiper
         style={styles.wrapper}
@@ -106,10 +129,17 @@ export default class TrailMap extends Component {
             >
               <MapView.Marker
                 coordinate={this.state.region}
-                title={"title"}
-                description={"description"}
+                title={"Alfred"}
                 draggable
               />
+            {this.state.friendMarkers.map((marker,i) => (
+              <MapView.Marker 
+                coordinate={marker.coordinates}
+                title={marker.title}
+                key={i}
+                pinColor={"aqua"}
+              />
+            ))}
             </MapView> : null}
         </View>
         <View style={styles.slide1}>

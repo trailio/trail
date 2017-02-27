@@ -639,7 +639,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 23USSU42AV;
+						DevelopmentTeam = 493W973M85;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -1149,7 +1149,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 23USSU42AV;
+				DEVELOPMENT_TEAM = 493W973M85;
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1157,7 +1157,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jimothy-trail";
+				PRODUCT_BUNDLE_IDENTIFIER = trailio;
 				PRODUCT_NAME = client;
 				USE_HEADERMAP = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1173,7 +1173,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 23USSU42AV;
+				DEVELOPMENT_TEAM = 493W973M85;
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1181,7 +1181,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jimothy-trail";
+				PRODUCT_BUNDLE_IDENTIFIER = trailio;
 				PRODUCT_NAME = client;
 				USE_HEADERMAP = YES;
 				VERSIONING_SYSTEM = "apple-generic";

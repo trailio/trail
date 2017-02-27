@@ -5,7 +5,8 @@ import {
   View,
   Image,
   TouchableHighlight,
-  Dimensions
+  Dimensions,
+  Modal
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ViewContent from './ViewContent';
@@ -51,8 +52,13 @@ const styles = StyleSheet.create({
   },
   calloutText: {
     flex: 1,
-    alignItems: 'stretch'
-  }
+    alignItems: 'stretch',
+    backgroundColor: '#92BBD9',
+    color: '#000',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  modalVisible: false
 });
 
 class TrailMap extends Component {
@@ -109,6 +115,7 @@ class TrailMap extends Component {
 
   onMarkerPress(imageURL) {
     this.props.imageURLChanged(imageURL);
+    this.setState({modalVisible: true});
   }
 
   componentWillMount() {
@@ -171,12 +178,15 @@ class TrailMap extends Component {
                   }}
               >
                 <MapView.Callout tooltip style={styles.customView}>
-                  <TouchableHighlight onPress= {()=>this.onMarkerPress()} underlayColor='#dddddd'>
+                  <Modal onPress= {()=>this.onMarkerPress()} underlayColor='#dddddd' visible={this.state.modalVisible}>
                       <View style={styles.calloutText}>
-                          <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height }}
+                          <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height - 100}}
                           source={{uri: marker.imageURL}}/> 
+                          <TouchableHighlight onPress = {()=>this.setState({modalVisible: !this.state.modalVisible})}>
+                            <Text >Close Image</Text>
+                          </TouchableHighlight>
                       </View>
-                  </TouchableHighlight>
+                  </Modal>
                 </MapView.Callout>
               </MapView.Marker>
             ))}

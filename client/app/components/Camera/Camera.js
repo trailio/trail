@@ -18,6 +18,8 @@ import FriendSelect from './FriendSelect';
 import cameraFrontIcon from '../../../assets/ic_camera_front_white.png';
 import cameraRearIcon from '../../../assets/ic_camera_rear_white.png';
 import cameraIcon from '../../../assets/ic_camera_white_48pt.png';
+import setCameraMode from '../../../assets/ic_photo_camera_white_36pt.png';
+import setVideoMode from '../../../assets/ic_camera_roll_white_36pt.png';
 
 
 class Camera extends Component {
@@ -71,6 +73,7 @@ class Camera extends Component {
 
   render () {
     var cameraSide = this.props.captureSide === ReactNativeCamera.constants.Type.front ? cameraFrontIcon : cameraRearIcon;
+    var cameraMode = this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still ? setCameraMode : setVideoMode;
 
     return (
       <Swiper
@@ -107,9 +110,9 @@ class Camera extends Component {
           <TouchableHighlight style={styles.cameraSideButton} onPress={this.toggleCameraSide.bind(this)}>
             <Image source={cameraSide} />
           </TouchableHighlight>
-          <Text style={styles.cameraSideButton} style={styles.captureModeButton} onPress={this.toggleCameraMode.bind(this)}>
-            {(this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still) ? ('[PHOTO]') : ('[VIDEO]')}
-          </Text>
+          <TouchableHighlight style={styles.captureModeButton} onPress={this.toggleCameraMode.bind(this)}>
+            <Image source={cameraMode} />
+          </TouchableHighlight>
         </ReactNativeCamera>
         </View>
         <View style={styles.slide3}>

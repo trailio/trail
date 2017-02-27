@@ -7,12 +7,21 @@ export default function reducer ( state = {
   switch (action.type) {
   case 'LOGIN_USER': {
     console.log('!!!!!!!!!!!!', action.payload)
-    return {
-      ...state,
-      isLoggedIn: true,
-      sentPosts: action.payload.sent,
-      receivedPosts: action.payload.received
+    var sentPosts, receivedPosts;
+    if (action.payload) {
+      return {
+        ...state,
+        isLoggedIn: true,
+        sentPosts: action.payload.sent,
+        receivedPosts: action.payload.received
+      }
+    } else {
+      return {
+        ...state,
+        isLoggedIn: true,
+      }
     }
+    
   }
   case 'IMAGEURL_CHANGED': {
     console.log('!!!!!!!!!!!!', action.payload)

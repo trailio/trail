@@ -3,7 +3,9 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  TouchableHighlight,
+  Dimensions
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ViewContent from './ViewContent';
@@ -46,6 +48,10 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  calloutText: {
+    flex: 1,
+    alignItems: 'stretch'
   }
 });
 
@@ -163,7 +169,16 @@ class TrailMap extends Component {
                 onPress={function(){
                   console.log('im in the func!!!!!!!!!!!!!!!!!')
                   }}
-              />
+              >
+                <MapView.Callout tooltip style={styles.customView}>
+                  <TouchableHighlight onPress= {()=>this.onMarkerPress()} underlayColor='#dddddd'>
+                      <View style={styles.calloutText}>
+                          <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height }}
+                          source={{uri: marker.imageURL}}/> 
+                      </View>
+                  </TouchableHighlight>
+                </MapView.Callout>
+              </MapView.Marker>
             ))}
             </MapView> : null}
             <View>

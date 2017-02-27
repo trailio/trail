@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, AsyncStorage } from 'react-native';
+import { Text, View, AsyncStorage, Dimensions } from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import { connect } from 'react-redux';

@@ -20,6 +20,9 @@ import cameraRearIcon from '../../../assets/ic_camera_rear_white.png';
 import cameraIcon from '../../../assets/ic_camera_white_48pt.png';
 import setCameraMode from '../../../assets/ic_photo_camera_white_36pt.png';
 import setVideoMode from '../../../assets/ic_camera_roll_white_36pt.png';
+import flashOff from '../../../assets/ic_flash_off_white.png';
+import flashOn from '../../../assets/ic_flash_on_white.png';
+import flashAuto from '../../../assets/ic_flash_auto_white.png';
 
 
 class Camera extends Component {
@@ -74,6 +77,7 @@ class Camera extends Component {
   render () {
     var cameraSide = this.props.captureSide === ReactNativeCamera.constants.Type.front ? cameraFrontIcon : cameraRearIcon;
     var cameraMode = this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still ? setCameraMode : setVideoMode;
+    var flashMode = this.props.flashMode === ReactNativeCamera.constants.FlashMode.off ? flashOff : this.props.flashMode === ReactNativeCamera.constants.FlashMode.on ? flashOn : flashAuto;
 
     return (
       <Swiper
@@ -98,12 +102,9 @@ class Camera extends Component {
         captureTarget={ReactNativeCamera.constants.CaptureTarget.disk}
         flashMode={this.props.flashMode}
         type={this.props.captureSide}>
-          <Text style={styles.flashButton} onPress={this.toggleFlash.bind(this)}>
-            {(this.props.flashMode === ReactNativeCamera.constants.FlashMode.off) ? ('[OFF]')
-              : (this.props.flashMode === ReactNativeCamera.constants.FlashMode.on) ? ('[ON]')
-              : (this.props.flashMode === ReactNativeCamera.constants.FlashMode.auto) ? ('[AUTO]')
-              : ('[ERROR]')}
-          </Text>
+          <TouchableHighlight style={styles.flashButton} onPress={this.toggleFlash.bind(this)}>
+            <Image source={flashMode} />
+          </TouchableHighlight>
           <TouchableHighlight style={styles.captureButton} onPress={this.takePicture.bind(this)}>
             <Image source={cameraIcon} />
           </TouchableHighlight>

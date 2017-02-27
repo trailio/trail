@@ -24,9 +24,10 @@ class Camera extends Component {
     // Current method: https://medium.com/@knowbody/react-native-image-upload-to-s3-bucket-5220941bfea2#.pw9qgho27
     this.camera.capture()
       .then(data => {
+        const dateString = (new Date()).toISOString().replace(/\.|:|-/g,'');
         const file = {
           uri: data.path,
-          name: 'photo.jpg',
+          name: 'user' + dateString + '.jpg',
           type: 'image/jpeg'
         };
 

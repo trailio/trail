@@ -1,5 +1,5 @@
 import React, { Component, NativeModules } from 'react';
-import { Text, View } from 'react-native';
+import { Image, Text, TouchableHighlight, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ReactNativeCamera from 'react-native-camera';
 import { RNS3 } from 'react-native-aws3';
@@ -14,6 +14,10 @@ import AR from './AR';
 import CameraReview from './CameraReview';
 import DropPin from './DropPin';
 import FriendSelect from './FriendSelect';
+
+import cameraFrontIcon from '../../../assets/ic_camera_front_white.png';
+import cameraRearIcon from '../../../assets/ic_camera_rear_white.png';
+
 
 class Camera extends Component {
   constructor(props) {
@@ -46,10 +50,7 @@ class Camera extends Component {
               throw new Error('Failed to upload image to S3', response);
             }
             console.log('*** BODY ***', response.body);
-            // photo url = response.body.location
-            // postPhoto(latitude, longitude, imageURL, publicPost)
             this.props.postPhoto('testlat', 'testlong', response.body.postResponse.location, true);
-            return response;
           });
       })
       .catch(error => console.log('ERROR: ', error));
@@ -68,6 +69,8 @@ class Camera extends Component {
   }
 
   render () {
+    var cameraSide = this.props.captureSide === ReactNativeCamera.constants.Type.front ? cameraFrontIcon : cameraRearIcon;
+    
     return (
       <Swiper
         style={styles.wrapper}
@@ -98,10 +101,10 @@ class Camera extends Component {
               : ('[ERROR]')}
           </Text>
           <Text style={styles.captureButton} onPress={this.takePicture.bind(this)}>[X]</Text>
-          <Text style={styles.cameraSideButton} onPress={this.toggleCameraSide.bind(this)}>
-            {(this.props.captureSide === ReactNativeCamera.constants.Type.front) ? ('[FRONT]') : ('[BACK]')}
-          </Text>
-          <Text style={styles.captureModeButton} onPress={this.toggleCameraMode.bind(this)}>
+          <TouchableHighlight style={styles.cameraSideButton} onPress={this.toggleCameraSide.bind(this)}>
+            <Image source={cameraSide} />
+          </TouchableHighlight>
+          <Text style={styles.cameraSideButton} style={styles.captureModeButton} onPress={this.toggleCameraMode.bind(this)}>
             {(this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still) ? ('[PHOTO]') : ('[VIDEO]')}
           </Text>
         </ReactNativeCamera>

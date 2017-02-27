@@ -62,18 +62,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0)'
   },
   captureModeButton: {
-    backgroundColor: '#fff',
     position: 'absolute',
     bottom: 10,
     left: 10
   },
   captureButton: {
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(0,0,0,0)',
     bottom: 10,
     padding: 10,
-    width: 50,
-    height: 50,
-    textAlign: 'center'
   },
   flashButton: {
     top: 30,

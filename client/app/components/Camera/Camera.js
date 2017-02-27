@@ -17,6 +17,7 @@ import FriendSelect from './FriendSelect';
 
 import cameraFrontIcon from '../../../assets/ic_camera_front_white.png';
 import cameraRearIcon from '../../../assets/ic_camera_rear_white.png';
+import cameraIcon from '../../../assets/ic_camera_white_48pt.png';
 
 
 class Camera extends Component {
@@ -70,7 +71,7 @@ class Camera extends Component {
 
   render () {
     var cameraSide = this.props.captureSide === ReactNativeCamera.constants.Type.front ? cameraFrontIcon : cameraRearIcon;
-    
+
     return (
       <Swiper
         style={styles.wrapper}
@@ -100,7 +101,9 @@ class Camera extends Component {
               : (this.props.flashMode === ReactNativeCamera.constants.FlashMode.auto) ? ('[AUTO]')
               : ('[ERROR]')}
           </Text>
-          <Text style={styles.captureButton} onPress={this.takePicture.bind(this)}>[X]</Text>
+          <TouchableHighlight style={styles.captureButton} onPress={this.takePicture.bind(this)}>
+            <Image source={cameraIcon} />
+          </TouchableHighlight>
           <TouchableHighlight style={styles.cameraSideButton} onPress={this.toggleCameraSide.bind(this)}>
             <Image source={cameraSide} />
           </TouchableHighlight>

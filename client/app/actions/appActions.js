@@ -5,3 +5,10 @@ export function loginUser () {
     type: types.LoginUser
   };
 }
+
+export function imageURLChanged (imageURL) {
+  return {
+    type: types.ImageURLChanged,
+    payload: imageURL
+  };
+}

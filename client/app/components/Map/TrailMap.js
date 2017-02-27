@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  Image
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ViewContent from './ViewContent';
 import MapView from 'react-native-maps';
 import store from '../../store.js';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as appActions from '../../actions/appActions';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -44,7 +49,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class TrailMap extends Component {
+class TrailMap extends Component {
   constructor(props) {
     super(props);
 
@@ -80,8 +85,8 @@ export default class TrailMap extends Component {
   }
 
   calcDelta(lat, lon, accuracy) {
-    const oneDegreeOfLongitudeInMeters = 10000;
-    const circumference = 10000;
+    const oneDegreeOfLongitudeInMeters = 3000;
+    const circumference = 3000;
 
     const latDelta = accuracy * (1 / (Math.cos(lat) * circumference));
     const longDelta = (accuracy / oneDegreeOfLongitudeInMeters);
@@ -94,6 +99,10 @@ export default class TrailMap extends Component {
         longitudeDelta: longDelta
       },
     })
+  }
+
+  onMarkerPress(imageURL) {
+    this.props.imageURLChanged(imageURL);
   }
 
   componentWillMount() {
@@ -110,6 +119,16 @@ export default class TrailMap extends Component {
   render () {
     console.log('trailmap!!!!!!!!this.props.latitude', this.props.latitude)
     console.log('trailmap!!!!!!!!store.getState()', store.getState())
+    var image = () => { 
+      if (this.props.renderImageURL.length) {
+      return (
+        <Image
+          style={{width: 500, height: 500}}
+          source={{uri: this.props.renderImageURL}}
+        />
+        )
+      }
+    };
     return (
       <Swiper
         style={styles.wrapper}
@@ -132,15 +151,24 @@ export default class TrailMap extends Component {
                 title={"Alfred"}
                 draggable
               />
-            {this.state.friendMarkers.map((marker,i) => (
+            {this.props.receivedPosts.map((marker,i) => (
               <MapView.Marker 
-                coordinate={marker.coordinates}
-                title={marker.title}
+                coordinate={{
+                  latitude: Number(marker.latitude),
+                  longitude: Number(marker.longitude)
+                }}
+                title={marker.username}
                 key={i}
                 pinColor={"aqua"}
+                onPress={function(){
+                  console.log('im in the func!!!!!!!!!!!!!!!!!')
+                  }}
               />
             ))}
             </MapView> : null}
+            <View>
+              {image()}
+            </View>
         </View>
         <View style={styles.slide1}>
           <ViewContent />
@@ -149,3 +177,21 @@ export default class TrailMap extends Component {
     );
   }
 }
+
+const mapStateToProps = ({app}) => {
+  const { isLoggedIn, sentPosts, receivedPosts, renderImageURL } = app;
+  return {
+    isLoggedIn, 
+    sentPosts, 
+    receivedPosts,
+    renderImageURL
+  };
+};
+
+const bundledActionCreators = Object.assign({}, appActions);
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(bundledActionCreators, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TrailMap);

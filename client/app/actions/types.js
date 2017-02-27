@@ -1,6 +1,7 @@
 const types = {
 
   LoginUser: 'LOGIN_USER',
+  ImageURLChanged: 'IMAGEURL_CHANGED',
 
   ClickedLogin: 'LOGIN_CLICKED',
   ClickedSignin: 'SIGNUP_CLICKED',
@@ -18,7 +19,7 @@ const types = {
 
   PostPhoto: 'socket/postPhoto',
 
-  CurrentCoordsFound: 'CURRENT_COORDS_FOUND'
+  CurrentCoordsFound: 'CURRENT_COORDS_FOUND',
   // SocketHello: 'socket/hello'
   // SocketReceiveMessage: 'server/receiveMessage'
 };

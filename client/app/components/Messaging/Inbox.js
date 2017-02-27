@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  ScrollView
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import AddFriend from './AddFriend';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as appActions from '../../actions/appActions';
+import TrailApp from '../trailApp';
 
 
 const styles = StyleSheet.create({
@@ -36,13 +42,23 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Inbox extends Component {
+class Inbox extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   render () {
+    var that = this
+    var receivedMessages = function() {
+      return (
+        <View>
+        { that.props.receivedPosts.map(function(post){
+          return (<Text style={styles.text2}> {post.username}...long: {post.longitude}, lat: {post.latitude} </Text>)
+        })}
+        </View>
+      )
+    };
+
     return (
       <Swiper
         style={styles.wrapper}
@@ -57,8 +73,29 @@ export default class Inbox extends Component {
         </View>
         <View style={styles.slide1}>
           <Text style={styles.text}>Inbox</Text>
+          <ScrollView>
+            { receivedMessages() }
+          </ScrollView>
         </View>
       </Swiper>
     );
   }
 }
+
+
+const mapStateToProps = ({app}) => {
+  const { isLoggedIn, sentPosts, receivedPosts } = app;
+  return {
+    isLoggedIn,
+    sentPosts,
+    receivedPosts
+  };
+};
+
+const bundledActionCreators = Object.assign({}, appActions);
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(bundledActionCreators, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Inbox);

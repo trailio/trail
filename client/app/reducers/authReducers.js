@@ -44,8 +44,11 @@ export default function reducer ( state = {
     }
   }
   case 'LOGIN_RESPONSE': {
-    AsyncStorage.setItem('STORAGE_KEY', action.data).then((value) => {
-      store.dispatch({type: 'LOGIN_USER'});
+    console.log('LOGIN_RESPONSE from authReducer messages posts sent', action.data.posts.sent);
+    console.log('LOGIN_RESPONSE from authReducer messages posts received', action.data.posts.received);
+    console.log('LOGIN_RESPONSE from authReducer messages token', action.data.token);
+    AsyncStorage.setItem('STORAGE_KEY', action.data.token).then((value) => {
+      store.dispatch({type: 'LOGIN_USER', payload: action.data.posts});
     }); 
     return {
       ...state

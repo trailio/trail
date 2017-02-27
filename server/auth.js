@@ -60,7 +60,16 @@ module.exports = {
 				bcrypt.compareAsync(password, user.password).then(result => {
           if (result) {	
           	var token = jwt.encode(user, '53cr3t');
-          	cb(token);      
+            var posts = {};
+          	db.posts.getSentPosts(user.id, function(err, sentPosts) {
+              console.log('sentPosts', sentPosts);
+              posts.sent = sentPosts;
+              db.posts.getReceivedPosts(user.id, function(err, receivedPosts) {
+                console.log('receivedPosts', receivedPosts)
+               posts.received = receivedPosts;
+                cb(token, posts);  
+              })
+            })  
           } else {
           	console.log('invalid password for username: ', username);
           }

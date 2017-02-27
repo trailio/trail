@@ -34,15 +34,15 @@ io.on('connection', (socket) => {
 	});
 	socket.on('action', (action) => {
     	if (action.type === 'socket/signin') {
-    	  auth.signin(action.payload, function(token){
+    	  auth.signin(action.payload, function(token, posts){
           console.log('index.js socket/signin - got token, emitting action with token back to app for token', token);
-          socket.emit('action', {type:'LOGIN_RESPONSE', data: token});
+          socket.emit('action', {type:'LOGIN_RESPONSE', data: {token: token, posts: posts || {}}});
         })
     	}
       if (action.type === 'socket/signup') {
         auth.signup(action.payload, function(token){
           console.log('index.js socket/signup - got token, emitting action with token back to app for token', token);
-          socket.emit('action', {type:'LOGIN_RESPONSE', data: token});
+          socket.emit('action', {type:'LOGIN_RESPONSE', data: JSON.stringify({token: token, posts: {}})});
         })
       }
 			if (action.type === 'socket/postPhoto') {

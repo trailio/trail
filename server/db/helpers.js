@@ -1,5 +1,6 @@
 var db = require('./db');
 
+
 module.exports = {
 	user: {
 		get: function (username, cb) {
@@ -15,6 +16,12 @@ module.exports = {
 		},
 		get: function(cb) {
 			db.query(`SELECT * FROM posts`, cb);
+		},
+		getSentPosts: function(userID, cb) {
+			db.query(`SELECT p.recipientUserID as recipientUserID, u.username as recipientUsername, p.longitude as longitude, p.latitude as latitude, p.imageURL as imageURL, p.publicPost as publicPost, p.timePosted as timePosted, p.timeExpired as timeExpired FROM posts p JOIN user u on p.recipientUserID = u.id WHERE p.userID = ${userID}`, cb)
+		},
+		getReceivedPosts: function(userID, cb) {
+			db.query(`SELECT p.userID as userID, u.username as username, p.longitude as longitude, p.latitude as latitude, p.imageURL as imageURL, p.publicPost as publicPost, p.timePosted as timePosted, p.timeExpired as timeExpired FROM posts p JOIN user u on p.userID = u.id WHERE p.recipientUserID = ${userID}`, cb)
 		}
 	}
 };

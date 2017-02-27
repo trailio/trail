@@ -9,6 +9,7 @@ import reducers from "./reducers"
 
 // let socket = io('http://localhost:8000');
 let socket = io('http://6538119a.ngrok.io');
+
 let socketIoMiddleware = createSocketIoMiddleware(socket, "socket/");
 
 const middleware = applyMiddleware(ReduxPromise(), socketIoMiddleware, ReduxThunk, ReduxLogger());

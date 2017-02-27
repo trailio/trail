@@ -3,7 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView
+  ScrollView,
+  TouchableHighlight
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import AddFriend from './AddFriend';
@@ -47,13 +48,17 @@ class Inbox extends Component {
     super(props);
   }
 
+  onReceivedPostPress(imageURL) {
+    this.props.imageURLChanged(imageURL);
+  }
+
   render () {
     var that = this
     var receivedMessages = function() {
       return (
         <View>
         { that.props.receivedPosts.map(function(post){
-          return (<Text style={styles.text2}> {post.username}...long: {post.longitude}, lat: {post.latitude} </Text>)
+          return (<TouchableHighlight onPress={that.onReceivedPostPress(post.imageURL)}><Text style={styles.text2}> {post.username}...long: {post.longitude}, lat: {post.latitude} </Text></TouchableHighlight>)
         })}
         </View>
       )

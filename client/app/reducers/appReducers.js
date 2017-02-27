@@ -21,6 +21,12 @@ export default function reducer ( state = {
       renderImageURL: action.payload
     }
   }
+  case 'IMAGE_CLOSED': {
+    return {
+      ...state,
+      renderImageURL: ''
+    }
+  }
   default:
     return state;
   }

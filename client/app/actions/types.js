@@ -2,6 +2,7 @@ const types = {
 
   LoginUser: 'LOGIN_USER',
   ImageURLChanged: 'IMAGEURL_CHANGED',
+  ImageClosed: 'IMAGE_CLOSED',
 
   ClickedLogin: 'LOGIN_CLICKED',
   ClickedSignin: 'SIGNUP_CLICKED',

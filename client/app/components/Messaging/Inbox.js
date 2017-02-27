@@ -4,7 +4,8 @@ import {
   Text,
   View,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
+  Image
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import AddFriend from './AddFriend';
@@ -49,7 +50,12 @@ class Inbox extends Component {
   }
 
   onReceivedPostPress(imageURL) {
+    console.log("HIIIIIII imageURL changed to: ", imageURL)
     this.props.imageURLChanged(imageURL);
+  }
+
+  onImagePressed(){
+    this.props.imageClosed();
   }
 
   render () {
@@ -58,42 +64,56 @@ class Inbox extends Component {
       return (
         <View>
         { that.props.receivedPosts.map(function(post){
-          return (<TouchableHighlight onPress={that.onReceivedPostPress(post.imageURL)}><Text style={styles.text2}> {post.username}...long: {post.longitude}, lat: {post.latitude} </Text></TouchableHighlight>)
+          return (<TouchableHighlight onPress={function(){that.onReceivedPostPress(post.imageURL)}}><Text style={styles.text2}> {post.username}...long: {post.longitude}, lat: {post.latitude} </Text></TouchableHighlight>)
         })}
         </View>
       )
     };
-
-    return (
-      <Swiper
-        style={styles.wrapper}
-        showsButtons={false}
-        showsPagination={false}
-        loop={false}
-        index={1}
-        horizontal={false}
-      >
-        <View style={styles.slide1}>
-          <AddFriend />
+    if (this.props.renderImageURL) {
+      console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL)
+      return(
+        <View>
+          <TouchableHighlight onPress={function(){that.onImagePressed()}}>
+            <Image
+              style={{width: 500, height: 500}}
+              source={{uri: that.props.renderImageURL}}
+            />
+          </TouchableHighlight>
         </View>
-        <View style={styles.slide1}>
-          <Text style={styles.text}>Inbox</Text>
-          <ScrollView>
-            { receivedMessages() }
-          </ScrollView>
-        </View>
-      </Swiper>
-    );
+      )
+    } else {
+      return (
+        <Swiper
+          style={styles.wrapper}
+          showsButtons={false}
+          showsPagination={false}
+          loop={false}
+          index={1}
+          horizontal={false}
+        >
+          <View style={styles.slide1}>
+            <AddFriend />
+          </View>
+          <View style={styles.slide1}>
+            <Text style={styles.text}>Inbox</Text>
+            <ScrollView>
+              { receivedMessages() }
+            </ScrollView>
+          </View>
+        </Swiper>
+      );
+    }
   }
 }
 
 
 const mapStateToProps = ({app}) => {
-  const { isLoggedIn, sentPosts, receivedPosts } = app;
+  const { isLoggedIn, sentPosts, receivedPosts, renderImageURL } = app;
   return {
     isLoggedIn,
     sentPosts,
-    receivedPosts
+    receivedPosts,
+    renderImageURL
   };
 };
 

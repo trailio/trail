@@ -12,3 +12,9 @@ export function imageURLChanged (imageURL) {
     payload: imageURL
   };
 }
+
+export function imageClosed () {
+  return {
+    type: types.ImageClosed
+  };
+}

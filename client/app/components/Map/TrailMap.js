@@ -50,14 +50,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-  calloutText: {
-    flex: 1,
-    alignItems: 'stretch',
-    backgroundColor: '#92BBD9',
-    color: '#000',
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
   modalVisible: false
 });
 
@@ -97,18 +89,18 @@ class TrailMap extends Component {
   }
 
   calcDelta(lat, lon, accuracy) {
-    const oneDegreeOfLongitudeInMeters = 3000;
-    const circumference = 3000;
+    // const oneDegreeOfLongitudeInMeters = 3000;
+    // const circumference = 3000;
 
-    const latDelta = accuracy * (1 / (Math.cos(lat) * circumference));
-    const longDelta = (accuracy / oneDegreeOfLongitudeInMeters);
+    // const latDelta = accuracy * (1 / (Math.cos(lat) * circumference));
+    // const longDelta = (accuracy / oneDegreeOfLongitudeInMeters);
 
     this.setState({
       region: {
         latitude: lat,
         longitude: lon,
-        latitudeDelta: latDelta,
-        longitudeDelta: longDelta
+        latitudeDelta: 0.03,
+        longitudeDelta: 0.03
       },
     })
   }
@@ -156,7 +148,7 @@ class TrailMap extends Component {
               style={styles.map} 
               initialRegion={this.state.region}
               showsUserLocation={true}
-              followsUserLocation={true}
+              // followsUserLocation={true}
               scrollEnabled={false}
             >
               <MapView.Marker
@@ -178,11 +170,11 @@ class TrailMap extends Component {
                   }}
               >
                 <MapView.Callout tooltip style={styles.customView}>
-                  <Modal onPress= {()=>this.onMarkerPress()} underlayColor='#dddddd' visible={this.state.modalVisible}>
-                      <View style={styles.calloutText}>
+                  <Modal onPress={()=>this.onMarkerPress()} underlayColor='#dddddd' visible={this.state.modalVisible}>
+                      <View>
                           <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height - 100}}
                           source={{uri: marker.imageURL}}/> 
-                          <TouchableHighlight onPress = {()=>this.setState({modalVisible: !this.state.modalVisible})}>
+                          <TouchableHighlight onPress={()=>this.setState({modalVisible: !this.state.modalVisible})}>
                             <Text >Close Image</Text>
                           </TouchableHighlight>
                       </View>

@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 
+<<<<<<< HEAD
 io.on('connection', function(socket) {
   console.log('a client just joined', socket.id);
   socket.on('message', function (message) {
@@ -60,6 +61,11 @@ io.on('connection', function(socket) {
       camera.post(action.payload, function(data) {
         console.log('Post photo return: ', data);
       });
+    }
+    if (action.type === 'socket/addFriend') {
+      console.log('socket/addFriend payload ==== ', action.payload);
+      //action.payload should be 
+      //call routeHelper.addfriend(action.payload)
     }
   });
   io.emit('message2', 'xxxxxxxx received from server: connection established');

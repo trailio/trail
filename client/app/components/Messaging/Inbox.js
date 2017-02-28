@@ -63,8 +63,8 @@ class Inbox extends Component {
     var receivedMessages = function() {
       return (
         <View>
-        { that.props.receivedPosts.map(function(post){
-          return (<TouchableHighlight onPress={function(){that.onReceivedPostPress(post.imageURL)}}><Text style={styles.text2}> {post.username}...long: {post.longitude}, lat: {post.latitude} </Text></TouchableHighlight>)
+        { that.props.receivedPosts.map(function(post, i){
+          return (<TouchableHighlight onPress={function(){that.onReceivedPostPress(post.imageURL)}} key={i}><Text style={styles.text2}> {post.username}...long: {post.longitude}, lat: {post.latitude} </Text></TouchableHighlight>)
         })}
         </View>
       )

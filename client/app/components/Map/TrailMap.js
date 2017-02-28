@@ -89,18 +89,12 @@ class TrailMap extends Component {
   }
 
   calcDelta(lat, lon, accuracy) {
-    // const oneDegreeOfLongitudeInMeters = 3000;
-    // const circumference = 3000;
-
-    // const latDelta = accuracy * (1 / (Math.cos(lat) * circumference));
-    // const longDelta = (accuracy / oneDegreeOfLongitudeInMeters);
-
     this.setState({
       region: {
         latitude: lat,
         longitude: lon,
-        latitudeDelta: 0.03,
-        longitudeDelta: 0.03
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.015
       },
     })
   }
@@ -164,10 +158,7 @@ class TrailMap extends Component {
                 }}
                 title={marker.username}
                 key={i}
-                pinColor={"aqua"}
-                onPress={function(){
-                  console.log('im in the func!!!!!!!!!!!!!!!!!')
-                  }}
+                pinColor={'aqua'}
               >
                 <MapView.Callout tooltip style={styles.customView}>
                   <Modal onPress={()=>this.onMarkerPress()} underlayColor='#dddddd' visible={this.state.modalVisible}>

@@ -18,3 +18,10 @@ export function imageClosed () {
     type: types.ImageClosed
   };
 }
+
+export function searchedUser (searchText) {
+  return {
+    type: types.SearchedUser,
+    payload: searchText
+  };
+}

@@ -20,7 +20,12 @@ export default function reducer ( state = {
         isLoggedIn: true,
       }
     }
-
+  }
+  case 'USER_SEARCHED' : {
+    console.log('user searched received from server', action.payload);
+    return {
+      ...state
+    }
   }
   case 'IMAGEURL_CHANGED': {
     console.log('!!!!!!!!!!!!', action.payload)
@@ -35,6 +40,7 @@ export default function reducer ( state = {
       renderImageURL: ''
     }
   }
+
   default:
     return state;
   }

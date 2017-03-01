@@ -20,24 +20,6 @@ import pinImg from './Pin.png'
 const styles = StyleSheet.create({
   wrapper: {
   },
-  slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB',
-  },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5',
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9',
-  },
   text: {
     color: '#fff',
     fontSize: 30,
@@ -54,7 +36,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    alignSelf: 'stretch',
     alignItems: 'center'
   },
   pinImg: {
@@ -92,7 +73,7 @@ class Inbox extends Component {
           return (
           <TouchableHighlight onPress={function(){that.onReceivedPostPress(post.imageURL)}} key={i}>
             <View style={styles.postBody}>
-              <Image source={pinImg} style={pinImg}/>
+              <Image source={pinImg}/>
               <Text style={styles.postName}> 
                 {post.username}
               </Text>
@@ -100,7 +81,7 @@ class Inbox extends Component {
                 {post.timePosted}
               </Text>
             </View>
-            </TouchableHighlight>)
+          </TouchableHighlight>)
         })}
         </View>
       )
@@ -127,7 +108,7 @@ class Inbox extends Component {
           index={1}
           horizontal={false}
         >
-          <View style={styles.slide1}>
+          <View>
             <AddFriend />
           </View>
           <View>

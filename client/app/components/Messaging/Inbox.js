@@ -50,7 +50,7 @@ class Inbox extends Component {
   }
 
   onReceivedPostPress(imageURL) {
-    console.log("HIIIIIII imageURL changed to: ", imageURL)
+    console.log("HIIIIIII imageURL changed to: ", imageURL);
     this.props.imageURLChanged(imageURL);
   }
 
@@ -59,7 +59,7 @@ class Inbox extends Component {
   }
 
   render () {
-    var that = this
+    var that = this;
     // var receivedMessages = function() {
     //   return (
     //     <View>
@@ -70,17 +70,17 @@ class Inbox extends Component {
     //   )
     // };
     if (this.props.renderImageURL) {
-      console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL)
+      console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL);
       return(
         <View>
-          <TouchableHighlight onPress={function(){that.onImagePressed()}}>
+          <TouchableHighlight onPress={function() { that.onImagePressed() }}>
             <Image
               style={{width: 500, height: 500}}
               source={{uri: that.props.renderImageURL}}
             />
           </TouchableHighlight>
         </View>
-      )
+      );
     } else {
       return (
         <Swiper

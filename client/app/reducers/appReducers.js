@@ -6,9 +6,8 @@ export default function reducer ( state = {
 }, action) {
   switch (action.type) {
   case 'LOGIN_USER': {
-    console.log('!!!!!!!!!!!!', action.payload)
-    var sentPosts, receivedPosts;
-    if (action.payload.sent || action.payload.received) {
+    if (typeof action.payload === 'Object') {
+      console.log('Action.payload is an object');
       return {
         ...state,
         isLoggedIn: true,

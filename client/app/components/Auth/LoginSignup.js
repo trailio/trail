@@ -20,12 +20,10 @@ class Landing extends Component {
 
   onUsernameChange(text) {
     this.props.usernameChanged(text);
-    console.log('username submitted', text)
   }
 
   onPasswordChange(text) {
     this.props.passwordChanged(text);
-    console.log('password submitted', text)
   }
 
   onEmailChange(event) {
@@ -49,8 +47,6 @@ class Landing extends Component {
         <TrailApp />
       );
     } else {
-      console.log('xxxxxxxx rendering - this.props.tokenReceived', this.props.tokenReceived);
-      console.log('xxxxxxxx rendering - this.props.isLoggedIn', this.props.isLoggedIn);
       if (this.props.loginClicked === true) {
         return (
           <View>

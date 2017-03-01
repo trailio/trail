@@ -5,7 +5,7 @@ var options = {
 var pgp = require('pg-promise')(options);
 var config = require('../config.js');
 
-var db_config = {
+var dbConfig = {
   user: config.AWSRDSUser, //env var: PGUSER
   password: config.AWSRDSPassword, //env var: PGPASSWORD
   host: config.AWSRDSHost,
@@ -15,6 +15,6 @@ var db_config = {
   idleTimeoutMillis: 30000
 };
 
-var db = pgp(db_config);
+var db = pgp(dbConfig);
 
 module.exports = db;

@@ -39,7 +39,7 @@ export function SubmitSignin (username, password) {
       username: username,
       password: password
     }
-  }
+  };
 }
 
 export function SubmitSignup (username, password, email) {
@@ -50,6 +50,5 @@ export function SubmitSignup (username, password, email) {
       password: password,
       email: email
     }
-  }
+  };
 }
-

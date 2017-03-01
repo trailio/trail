@@ -4,12 +4,12 @@ import io from 'socket.io-client';
 import ReduxThunk from 'redux-thunk';
 import ReduxPromise from 'redux-promise-middleware';
 
-import reducers from "./reducers"
+import reducers from './reducers';
 
 let socket = io('http://localhost:8000');
 // let socket = io('http://6538119a.ngrok.io');
 
-let socketIoMiddleware = createSocketIoMiddleware(socket, "socket/");
+let socketIoMiddleware = createSocketIoMiddleware(socket, 'socket/');
 
 const middleware = applyMiddleware(ReduxPromise(), socketIoMiddleware, ReduxThunk);
 

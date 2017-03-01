@@ -97,6 +97,7 @@ class Inbox extends Component {
           <View style={styles.slide1}>
             <Text style={styles.text}>Inbox</Text>
             <ScrollView>
+              { receivedMessages() }
             </ScrollView>
           </View>
         </Swiper>

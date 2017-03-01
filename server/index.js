@@ -56,6 +56,7 @@ io.on('connection', function(socket) {
       });
     }
     if (action.type === 'socket/postPhoto') {
+      console.log('postPhoto action.payload === ', action.payload);
       camera.post(action.payload, function(data) {
         console.log('Post photo return: ', data);
       });

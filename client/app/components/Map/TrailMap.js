@@ -297,7 +297,32 @@ class TrailMap extends Component {
         longitude: null,
         latitudeDelta: null,
         longitudeDelta: null
+<<<<<<< HEAD
       }
+=======
+      },
+      friendMarkers: [{
+        title: 'Jimothy',
+        coordinates: {
+          latitude: 37.78728814970013,
+          longitude: -122.40743033333337
+        },
+      },
+      {
+        title: 'Andrew',
+        coordinates: {
+          latitude: 37.78541777072449,
+          longitude: -122.40435033333334
+        },
+      },
+      {
+        title: 'Jen',
+        coordinates: {
+          latitude: 37.784332402346976,
+          longitude: -122.40630366666669
+        },
+      }]
+>>>>>>> Set component changes before resolving rebase and refactor changes
     }
   }
 
@@ -331,7 +356,7 @@ class TrailMap extends Component {
   render () {
     console.log('trailmap!!!!!!!!this.props.latitude', this.props.latitude)
     console.log('trailmap!!!!!!!!store.getState()', store.getState())
-    var image = () => { 
+    var image = () => {
       if (this.props.renderImageURL.length) {
       return (
         <Image
@@ -351,8 +376,8 @@ class TrailMap extends Component {
       >
         <View style={styles.slide1}>
           {this.state.region.latitude ?
-            <MapView 
-              style={styles.map} 
+            <MapView
+              style={styles.map}
               initialRegion={this.state.region}
               showsUserLocation={true}
               // followsUserLocation={true}
@@ -367,7 +392,7 @@ class TrailMap extends Component {
                 draggable
               />
             {this.props.receivedPosts.map((marker,i) => (
-              <MapView.Marker 
+              <MapView.Marker
                 coordinate={{
                   latitude: Number(marker.latitude),
                   longitude: Number(marker.longitude)
@@ -395,8 +420,8 @@ class TrailMap extends Component {
 const mapStateToProps = ({app}) => {
   const { isLoggedIn, sentPosts, receivedPosts, renderImageURL } = app;
   return {
-    isLoggedIn, 
-    sentPosts, 
+    isLoggedIn,
+    sentPosts,
     receivedPosts,
     renderImageURL
   };

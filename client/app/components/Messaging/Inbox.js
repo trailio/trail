@@ -60,15 +60,15 @@ class Inbox extends Component {
 
   render () {
     var that = this
-    var receivedMessages = function() {
-      return (
-        <View>
-        { that.props.receivedPosts.map(function(post){
-          return (<TouchableHighlight onPress={function(){that.onReceivedPostPress(post.imageURL)}}><Text style={styles.text2}> {post.username}...long: {post.longitude}, lat: {post.latitude} </Text></TouchableHighlight>)
-        })}
-        </View>
-      )
-    };
+    // var receivedMessages = function() {
+    //   return (
+    //     <View>
+    //     { that.props.receivedPosts.map(function(post){
+    //       return (<TouchableHighlight onPress={function(){that.onReceivedPostPress(post.imageURL)}}><Text style={styles.text2}> {post.username}...long: {post.longitude}, lat: {post.latitude} </Text></TouchableHighlight>)
+    //     })}
+    //     </View>
+    //   )
+    // };
     if (this.props.renderImageURL) {
       console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL)
       return(
@@ -97,7 +97,6 @@ class Inbox extends Component {
           <View style={styles.slide1}>
             <Text style={styles.text}>Inbox</Text>
             <ScrollView>
-              { receivedMessages() }
             </ScrollView>
           </View>
         </Swiper>

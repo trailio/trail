@@ -1,6 +1,6 @@
 export default function reducer ( state = {
   isLoggedIn: false,
-  sentPosts: [], 
+  sentPosts: [],
   receivedPosts: [],
   renderImageURL: '',
 }, action) {
@@ -21,7 +21,7 @@ export default function reducer ( state = {
         isLoggedIn: true,
       }
     }
-    
+
   }
   case 'IMAGEURL_CHANGED': {
     console.log('!!!!!!!!!!!!', action.payload)

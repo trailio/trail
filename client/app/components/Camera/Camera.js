@@ -37,7 +37,7 @@ class Camera extends Component {
         const dateString = (new Date()).toISOString().replace(/\.|:|-/g,'');
         const file = {
           uri: data.path,
-          name: 'user' + dateString + '.jpg',
+          name: this.props.username + dateString + '.jpg',
           type: 'image/jpeg'
         };
 
@@ -56,7 +56,7 @@ class Camera extends Component {
               throw new Error('Failed to upload image to S3', response);
             }
             console.log('*** BODY ***', response.body);
-            this.props.postPhoto('testlat', 'testlong', response.body.postResponse.location, true);
+            this.props.postPhoto(this.props.latitude, this.props.latitude, response.body.postResponse.location, true);
           });
       })
       .catch(error => console.log('ERROR: ', error));
@@ -130,12 +130,17 @@ class Camera extends Component {
   }
 }
 
-const mapStateToProps = ({camera}) => {
+const mapStateToProps = ({ auth, camera, map }) => {
+  const { username } = auth;
   const { captureMode, captureSide, flashMode } = camera;
+  const { latitude, longitude } = map;
   return {
     captureMode,
     captureSide,
-    flashMode
+    flashMode,
+    latitude,
+    longitude,
+    username
   };
 };
 

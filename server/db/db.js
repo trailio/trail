@@ -13,31 +13,31 @@
 // var pool = mysql.createPool(db_config);
 // module.exports = pool;
 
-var pg = require('pg');
+var promise = require('bluebird');
+var options = {
+  promiseLib: promise
+};
+var pgp = require('pg-promise')(options);
 var config = require('../config.js');
 
-var config = {
+var db_config = {
   user: config.AWSRDSUser, //env var: PGUSER
-  database: 'trail', //env var: PGDATABASE
   password: config.AWSRDSPassword, //env var: PGPASSWORD
   host: config.AWSRDSHost,
+  database: 'trail', //env var: PGDATABASE
   port: 5432, //env var: PGPORT
   max: 10,
   idleTimeoutMillis: 30000
 };
 
-var pool = new pg.Client(config);
-pool.connect();
+var db = pgp(db_config);
 
-// example query
-var query = pool.query('SELECT * from posts');
+db.any('select * from posts')
+  .then(function(data) {
+    console.log(data);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 
-query.on('row', function (row, result) {
-  result.addRow(row);
-});
-query.on('end', function (result) {
-  console.log(JSON.stringify(result.rows, null, '    '));
-  pool.end();
-});
-
-module.exports = pool;
+module.exports = db;

@@ -4,10 +4,10 @@ var db = require('./db');
 module.exports = {
 	user: {
 		get: function (username, cb) {
-	    db.query(`SELECT * FROM user WHERE username = "${username}"`, cb);
+	    db.query(`SELECT * FROM profile WHERE username = "${username}"`, cb);
 	  },
 	  signup: function(username, password, email, cb) {
-		  db.query(`INSERT INTO user (USERNAME, PASSWORD, EMAIL) VALUES ("${username}", "${password}", "${email}")`, cb);
+		  db.query(`INSERT INTO profile (USERNAME, PASSWORD, EMAIL) VALUES ("${username}", "${password}", "${email}")`, cb);
 		}
 	},
 	posts: {

@@ -14,7 +14,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appActions from '../../actions/appActions';
 import TrailApp from '../trailApp';
-
+import pinImg from './Pin.png'
+// import Inbox from './Inbox'
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -41,6 +42,30 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  postBody: {
+    // margin: .25,
+    borderColor: '#81cbe5',
+    borderWidth: .25,
+    borderRadius: 5,
+    padding: 20,
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignSelf: 'stretch',
+    alignItems: 'center'
+  },
+  pinImg: {
+  },
+  postName:  {
+    color: '#54575C',
+    fontSize: 14
+  },
+  postDate: {
+    color: '#54575C',
+    fontSize: 10
   }
 });
 
@@ -64,7 +89,18 @@ class Inbox extends Component {
       return (
         <View>
         { that.props.receivedPosts.map(function(post, i){
-          return (<TouchableHighlight onPress={function(){that.onReceivedPostPress(post.imageURL)}} key={i}><Text style={styles.text2}> {post.username}...long: {post.longitude}, lat: {post.latitude} </Text></TouchableHighlight>)
+          return (
+          <TouchableHighlight onPress={function(){that.onReceivedPostPress(post.imageURL)}} key={i}>
+            <View style={styles.postBody}>
+              <Image source={pinImg} style={pinImg}/>
+              <Text style={styles.postName}> 
+                {post.username}
+              </Text>
+              <Text style={styles.postDate}>
+                {post.timePosted}
+              </Text>
+            </View>
+            </TouchableHighlight>)
         })}
         </View>
       )
@@ -94,9 +130,9 @@ class Inbox extends Component {
           <View style={styles.slide1}>
             <AddFriend />
           </View>
-          <View style={styles.slide1}>
+          <View>
             <Text style={styles.text}>Inbox</Text>
-            <ScrollView>
+            <ScrollView bounces={true}>
               { receivedMessages() }
             </ScrollView>
           </View>
@@ -105,6 +141,7 @@ class Inbox extends Component {
     }
   }
 }
+
 
 
 const mapStateToProps = ({app}) => {

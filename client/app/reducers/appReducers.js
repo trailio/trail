@@ -8,7 +8,7 @@ export default function reducer ( state = {
   case 'LOGIN_USER': {
     console.log('!!!!!!!!!!!!', action.payload)
     var sentPosts, receivedPosts;
-    if (action.payload) {
+    if (action.payload.sent || action.payload.received) {
       return {
         ...state,
         isLoggedIn: true,

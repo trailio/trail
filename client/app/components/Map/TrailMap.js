@@ -297,28 +297,7 @@ class TrailMap extends Component {
         longitude: null,
         latitudeDelta: null,
         longitudeDelta: null
-      },
-      friendMarkers: [{
-        title: 'Jimothy',
-        coordinates: {
-          latitude: 37.78728814970013,
-          longitude: -122.40743033333337
-        },
-      },
-      {
-        title: 'Andrew',
-        coordinates: {
-          latitude: 37.78541777072449,
-          longitude: -122.40435033333334
-        },  
-      },
-      {
-        title: 'Jen',
-        coordinates: {
-          latitude: 37.784332402346976,
-          longitude: -122.40630366666669
-        },  
-      }]
+      }
     }
   }
 
@@ -380,6 +359,7 @@ class TrailMap extends Component {
               scrollEnabled={false}
               provider={'google'}
               customMapStyle={mapStyle}
+              showsScale={true}
             >
               <MapView.Marker
                 coordinate={this.state.region}
@@ -396,17 +376,7 @@ class TrailMap extends Component {
                 key={i}
                 pinColor={'aqua'}
               >
-                <MapView.Callout tooltip style={styles.customView}>
-                  <Modal onPress={()=>this.onMarkerPress()} underlayColor='#dddddd' visible={this.state.modalVisible}>
-                      <View>
-                          <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height - 100}}
-                          source={{uri: marker.imageURL}}/> 
-                          <TouchableHighlight onPress={()=>this.setState({modalVisible: !this.state.modalVisible})}>
-                            <Text >Close Image</Text>
-                          </TouchableHighlight>
-                      </View>
-                  </Modal>
-                </MapView.Callout>
+
               </MapView.Marker>
             ))}
             </MapView> : null}

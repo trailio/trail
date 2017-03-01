@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center'
   },
+   heading: {
+    padding: 20
+  },
   textInput: {
     flex: 1,
     fontSize: 22
@@ -59,7 +62,9 @@ class AddFriend extends Component {
   render () {
     return (
       <View>
-        <Text style={styles.text}>Add Friend</Text>
+        <View style = {styles.heading}>
+          <Text style={styles.text}>Add Friend</Text>
+        </View>
         <View style={styles.searchBox}>
           <Image source={searchImg}/>
           <TextInput  style={styles.textInput} onChangeText={(text)=>this.setState({text})} value={this.state.text}/>

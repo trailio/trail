@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center'
   },
+  heading: {
+    padding: 20
+  },
   postBody: {
     // margin: .25,
     borderColor: '#81cbe5',
@@ -111,7 +114,7 @@ class Inbox extends Component {
           <View>
             <AddFriend />
           </View>
-          <View>
+          <View style={styles.heading}>
             <Text style={styles.text}>Inbox</Text>
             <ScrollView bounces={true}>
               { receivedMessages() }

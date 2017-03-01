@@ -41,8 +41,9 @@ io.on('connection', (socket) => {
     	}
       if (action.type === 'socket/signup') {
         auth.signup(action.payload, function(token){
+					console.log('token', token);
           console.log('index.js socket/signup - got token, emitting action with token back to app for token', token);
-          socket.emit('action', {type:'LOGIN_RESPONSE', data: JSON.stringify({token: token, posts: {}})});
+          socket.emit('action', {type: 'LOGIN_RESPONSE', data: {token: token, posts: {}}});
         })
       }
 			if (action.type === 'socket/postPhoto') {

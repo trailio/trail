@@ -32,12 +32,12 @@ var db_config = {
 
 var db = pgp(db_config);
 
-db.any('select * from posts')
-  .then(function(data) {
-    console.log(data);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
+// db.any('select * from posts')
+//   .then(function(data) {
+//     console.log(data);
+//   })
+//   .catch(function(error) {
+//     console.log(error);
+//   });
 
 module.exports = db;

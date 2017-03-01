@@ -6,8 +6,16 @@ module.exports = {
 		get: function (username, cb) {
 	    db.query(`SELECT * FROM profile WHERE username = "${username}"`, cb);
 	  },
-	  signup: function(username, password, email, cb) {
-		  db.query(`INSERT INTO profile (USERNAME, PASSWORD, EMAIL) VALUES ("${username}", "${password}", "${email}")`, cb);
+	  signup: function(loginDetails, cb) {
+		  // db.query(`INSERT INTO profile (USERNAME, PASSWORD, EMAIL) VALUES ("${username}", "${password}", "${email}")`, cb);
+			var values = [loginDetails.username, loginDetails.password, loginDetails.email];
+			db.none('insert into profile(username, password, email) values($1, $2, $3)', values)
+				.then(function() {
+					cb();
+				})
+				.catch(function(error) {
+					console.log('ERROR: ', error);
+				});
 		}
 	},
 	posts: {

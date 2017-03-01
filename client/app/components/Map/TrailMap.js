@@ -5,14 +5,15 @@ import {
   View,
   Image,
   TouchableHighlight,
-  Dimensions,
-  Modal
+  Dimensions
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ViewContent from './ViewContent';
 import MapView from 'react-native-maps';
 import store from '../../store.js';
 import mapStyle from './mapStyle';
+import Modal from 'react-native-modalbox';
+import Button from 'react-native-button';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -51,7 +52,41 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-  modalVisible: false,
+    modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  modal2: {
+    height: 230,
+    backgroundColor: "#3B5998"
+  },
+
+  modal3: {
+    height: 300,
+    width: 300
+  },
+
+  modal4: {
+    height: 300
+  },
+
+  btn: {
+    margin: 10,
+    backgroundColor: "#3B5998",
+    color: "black",
+    padding: 10
+  },
+
+  btnModal: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    width: 50,
+    height: 50,
+    backgroundColor: "transparent"
+  },
+
 });
 
 class TrailMap extends Component {
@@ -64,9 +99,13 @@ class TrailMap extends Component {
         longitude: null,
         latitudeDelta: null,
         longitudeDelta: null
-      }
-    };
-  }
+      },
+      isOpen: false,
+      isDisabled: false,
+      swipeToClose: true,
+      sliderValue: 0.3
+    }
+  };
 
   calcDelta(lat, lon, accuracy) {
     this.setState({
@@ -79,9 +118,8 @@ class TrailMap extends Component {
     });
   }
 
-  onMarkerPress(imageURL) {
-    this.props.imageURLChanged(imageURL);
-    this.setState({modalVisible: true});
+  openModal1(id) {
+    this.refs.modal1.open();
   }
 
   componentWillMount() {
@@ -96,7 +134,13 @@ class TrailMap extends Component {
   }
 
   render () {
-    var image = () => {
+
+    console.log('trailmap!!!!!!!!this.props.latitude', this.props.latitude)
+    console.log('trailmap!!!!!!!!store.getState()', store.getState())
+
+    var BContent = <Button onPress={() => this.setState({isOpen: false})} style={[styles.btn, styles.btnModal]}>X</Button>;
+
+    var image = () => { 
       if (this.props.renderImageURL.length) {
         return (
         <Image
@@ -140,13 +184,22 @@ class TrailMap extends Component {
                 title={marker.username}
                 key={i}
                 pinColor={'aqua'}
+                onPress={() => this.refs.modal1.open()}
               >
-
               </MapView.Marker>
             ))}
             </MapView> : null}
             <View>
-              {image()}
+              <Modal
+                style={[styles.modal, styles.modal1]}
+                ref={"modal1"}
+                swipeToClose={this.state.swipeToClose}
+                onClosed={this.onClose}
+                onOpened={this.onOpen}
+                onClosingState={this.onClosingState}>
+                  <Text>Hi</Text>
+                  <Button onPress={() => this.setState({swipeToClose: !this.state.swipeToClose})} style={styles.btn}>Disable swipeToClose({this.state.swipeToClose ? "true" : "false"})</Button>
+              </Modal>
             </View>
         </View>
         <View style={styles.slide1}>

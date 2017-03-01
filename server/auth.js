@@ -61,22 +61,22 @@ module.exports = {
           });
       }
     });
+  },
+  check: function(token, cb) {
+//checks for authentication, implement this is any other route helper files so at the beginning of the function
+//so that the function is only executed if token is provided
+//when implementing this function in other files, make sure the client side sends a token for every socket connection it makes
+    if ((token !== undefined) && (token !== 'undefined')) {
+      var username = jwt.decode(token, '53cr3t');
+      db.user.get(username, function (result) {
+        if (result.length === 1) {
+          cb(result[0]);
+        } else {
+          cb(null);
+        }
+      });
+    } else {
+      console.log('No token provided');
+    }
   }
-  // check: function(token, cb) {
-  // 	//checks for authentication, implement this is any other route helper files so at the beginning of the function
-  // 	//so that the function is only executed if token is provided
-  // 	//when implementing this function in other files, make sure the client side sends a token for every socket connection it makes
-  //   if ((token !== undefined) && (token !== 'undefined')) {
-  //     var user = jwt.decode(token, '53cr3t');
-  //     db.user.get(user.username, function (err, rows) {
-  //       if (rows.length === 1) {
-  //         cb(rows[0]);
-  //       } else {
-  //         cb(null);
-  //       }
-  //     });
-  //   } else {
-  //     console.log('No token provided');
-  //   }
-  // }
-}
+};

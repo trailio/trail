@@ -285,7 +285,7 @@ const mapStyle = [
       }
     ]
   }
-]
+];
 
 class TrailMap extends Component {
   constructor(props) {
@@ -297,33 +297,8 @@ class TrailMap extends Component {
         longitude: null,
         latitudeDelta: null,
         longitudeDelta: null
-<<<<<<< HEAD
       }
-=======
-      },
-      friendMarkers: [{
-        title: 'Jimothy',
-        coordinates: {
-          latitude: 37.78728814970013,
-          longitude: -122.40743033333337
-        },
-      },
-      {
-        title: 'Andrew',
-        coordinates: {
-          latitude: 37.78541777072449,
-          longitude: -122.40435033333334
-        },
-      },
-      {
-        title: 'Jen',
-        coordinates: {
-          latitude: 37.784332402346976,
-          longitude: -122.40630366666669
-        },
-      }]
->>>>>>> Set component changes before resolving rebase and refactor changes
-    }
+    };
   }
 
   calcDelta(lat, lon, accuracy) {

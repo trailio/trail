@@ -116,14 +116,14 @@ class Camera extends Component {
           </TouchableHighlight>
         </ReactNativeCamera>
         </View>
-        <View style={styles.slide3}>
+        <View>
           <CameraReview />
         </View>
-        <View style={styles.slide1}>
+        <View>
           <FriendSelect />
         </View>
         <View>
-          <DropPin style={styles.slide2}/>
+          <DropPin />
         </View>
       </Swiper>
     );

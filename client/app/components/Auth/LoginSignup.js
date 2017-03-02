@@ -32,12 +32,12 @@ class Landing extends Component {
 
   onSubmitSignin() {
     console.log('signing in using username & password', this.props.username, this.props.password);
-    this.props.SubmitSignin(this.props.username, this.props.password);
+    this.props.submitSignin(this.props.username, this.props.password);
   }
 
   onSubmitSignup() {
     console.log('signup in using username & password & no email for now', this.props.username, this.props.password, this.state.email);
-    this.props.SubmitSignup(this.props.username, this.props.password, this.state.email);
+    this.props.submitSignup(this.props.username, this.props.password, this.state.email);
   }
 
 

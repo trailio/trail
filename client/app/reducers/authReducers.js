@@ -45,7 +45,7 @@ export default function reducer ( state = {
   }
   case 'LOGIN_RESPONSE': {
     AsyncStorage.setItem('STORAGE_KEY', action.data.token).then((value) => {
-      store.dispatch({type: 'LOGIN_USER', payload: action.data.posts});
+      store.dispatch({type: 'LOGIN_USER', payload: {posts: action.data.posts, friends: action.data.friends}});
     });
     return {
       ...state

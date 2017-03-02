@@ -32,7 +32,7 @@ export function passwordChanged (text) {
   };
 }
 
-export function SubmitSignin (username, password) {
+export function submitSignin (username, password) {
   return {
     type: types.SocketSignIn,
     payload: {
@@ -42,7 +42,7 @@ export function SubmitSignin (username, password) {
   };
 }
 
-export function SubmitSignup (username, password, email) {
+export function submitSignup (username, password, email) {
   return {
     type: types.SocketSignUp,
     payload: {

@@ -25,3 +25,10 @@ export function searchedUser (searchText) {
     payload: searchText
   };
 }
+
+export function addedFriend(friend) {
+  return {
+    type: types.AddedFriend,
+    payload: friend
+  }
+}

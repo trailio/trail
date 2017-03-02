@@ -262,6 +262,13 @@
 			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
 			remoteInfo = AirMaps;
 		};
+		FE8876391E6759F100094317 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA6386EA1E667F4C009CA150 /* AirMaps.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
+			remoteInfo = AirMaps;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -739,6 +746,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		FE8876361E6759F100094317 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FE88763A1E6759F100094317 /* libAirMaps.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -858,6 +873,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = FE8876361E6759F100094317 /* Products */;
+					ProjectRef = CA6386EA1E667F4C009CA150 /* AirMaps.xcodeproj */;
+				},
 				{
 					ProductGroup = CA6795331E5D6D8400578AB2 /* Products */;
 					ProjectRef = D7A9E880A12C42F0A08E7ACA /* AirMaps.xcodeproj */;
@@ -1109,6 +1128,13 @@
 			fileType = archive.ar;
 			path = libAirMaps.a;
 			remoteRef = CA6795361E5D6D8400578AB2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FE88763A1E6759F100094317 /* libAirMaps.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAirMaps.a;
+			remoteRef = FE8876391E6759F100094317 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

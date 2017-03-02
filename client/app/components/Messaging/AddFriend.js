@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import searchImg from './search.png'
+import addFriendImg from './addFriend.png'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appActions from '../../actions/appActions';
+
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -35,11 +37,24 @@ const styles = StyleSheet.create({
     flexDirection:'row'
   },
   searchButton: {
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end' 
   },
   searchButtonText: {
     fontSize: 14
-  }
+  },
+  username:  {
+    color: '#54575C',
+    fontSize: 20
+  },
+  friendBody: {
+    padding: 20,
+    marginHorizontal: 30,
+    backgroundColor: 'rgba(255,255,255,0)',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
 });
 
 class AddFriend extends Component {
@@ -60,33 +75,37 @@ class AddFriend extends Component {
     //upon return, add a listener to appReducers.js for returned search results in an array, then render them as a list similar to your inbox, with a button click for add friend that will change when clicked
   }
 
-/*
-var that = this
+  onFriendAdd(friend){
+    // console.log('call some function to submit add friends here for ', username);
+    this.props.addedFriend(friend);
+  }
+
+  onFriendAccept(friend) {
+    //TBD - for accpepting friend requests
+  }
+
+  render () {
+    var that = this
     var displayUsernames = function() {
       return (
         <View>
-        { that.props.receivedPosts.map(function(post, i){
-          return (
-          <TouchableHighlight onPress={function(){console.log('call some function to submit add friends here')}} key={i}>
-            <View style={styles.postBody}>
-              <Image source={pinImg}/>
-              <Text style={styles.postName}> 
-                {post.username}
+          { console.log('searchedFriends====>', that.props.searchedFriends)}
+          {
+            that.props.searchedFriends.map(function(friend, i) {
+            return (
+              <View style={styles.friendBody} key={i}>
+              <Text style={styles.username}> 
+                { friend.username }
               </Text>
-              <Text style={styles.postDate}>
-                {post.timePosted}
-              </Text>
-            </View>
-          </TouchableHighlight>)
-        })}
+              <TouchableHighlight onPress={that.onFriendAdd.bind(that, friend)} >
+                <Image source={addFriendImg}/>
+              </TouchableHighlight>
+              </View>
+            )
+          })}
         </View>
       )
-    };
-
-*/
-  render () {
-    var that = this
-    var displayUsernames = function() {}
+    }
     return (
       <View>
         <View style = {styles.heading}>
@@ -109,9 +128,11 @@ var that = this
 
 
 const mapStateToProps = ({app}) => {
-  const { searchedUser } = app;
+  const { searchedUser, searchedFriends, addedFriend} = app;
   return {
-    searchedUser
+    searchedUser,
+    searchedFriends,
+    addedFriend
   };
 };
 

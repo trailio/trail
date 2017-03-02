@@ -4,6 +4,7 @@ const types = {
   ImageURLChanged: 'IMAGEURL_CHANGED',
   ImageClosed: 'IMAGE_CLOSED',
   SearchedUser: 'socket/searchedUser',
+  AddedFriend: 'socket/addFriend',
 
   ClickedLogin: 'LOGIN_CLICKED',
   ClickedSignin: 'SIGNUP_CLICKED',

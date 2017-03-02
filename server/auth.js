@@ -46,11 +46,14 @@ module.exports = {
             if (result) {
               var token = jwt.encode(payload.username, '53cr3t');
               var posts = {};
-              db.posts.getSentPosts(user.id, function(results) {
-                posts.sent = results;
-                db.posts.getReceivedPosts(user.id, function(results) {
-                  posts.received = results;
-                  cb(token, posts);
+              db.posts.getSentPosts(user.id, function(sentResults) {
+                posts.sent = sentResults;
+                db.posts.getReceivedPosts(user.id, function(receivedResults) {
+                  posts.received = receivedResults; 
+                  db.user.getIDUsername(user.friends, function(friends){
+                    console.log(`found friends of ${payload.username}: ${friends}`);
+                    cb(token, posts, friends);
+                  })  
                 });
               });
             } else {

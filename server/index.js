@@ -30,14 +30,15 @@ io.on('connection', function(socket) {
   });
   socket.on('action', function(action) {
     if (action.type === 'socket/signin') {
-      auth.signin(action.payload, function(token, posts) {
+      auth.signin(action.payload, function(token, posts, friends) {
         console.log('index.js socket/signin - got token, emitting action with token back to app for token', token);
         socket.emit('action',
           {
             type: 'LOGIN_RESPONSE',
             data: {
               token: token,
-              posts: posts || {}
+              posts: posts || {},
+              friends: friends || [{username: 'testUser23', id: 3}, {username: 'testUser41', id: 5}, {username: 'testUser352', id: 7}, {username: 'testUser095', id: 1}]
             }
           });
       });
@@ -50,7 +51,8 @@ io.on('connection', function(socket) {
             type: 'LOGIN_RESPONSE',
             data: {
               token: token,
-              posts: {}
+              posts: {},
+              friends: []
             }
           });
       });
@@ -77,7 +79,7 @@ io.on('connection', function(socket) {
         {username: 'apprizvvvee', id: 14}, 
         {username: 'appleMusic', id: 16}
         ]
-        socket.emit('action', {type:'USER_SEARCHED', data: JSON.stringify(testData)});
+        socket.emit('action', {type:'USER_SEARCHED', data: testData});
       }
 
       if (action.type === 'socket/addFriend') {

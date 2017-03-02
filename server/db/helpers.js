@@ -21,6 +21,15 @@ module.exports = {
 				.catch(function(error) {
           console.log('user.signup ERROR: ', error);
 				});
+    },
+    getIDUsername: function(IDList, cb) {
+      db.query('SELECT username, id FROM profile WHERE id = ANY($1)', IDList)
+        .then(function(result) {
+          cb(result);
+        })
+        .catch(function(error) {
+          console.log('user.getIDUsername ERROR: ', error);
+        });
     }
   },
   posts: {

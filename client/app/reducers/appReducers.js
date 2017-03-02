@@ -1,5 +1,7 @@
 export default function reducer ( state = {
   isLoggedIn: false,
+  username: '',
+  id: '',
   sentPosts: [],
   receivedPosts: [],
   friendList: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'xxoxoxaznxo23', id: 7}, {username: 'poofzie', id: 1}],
@@ -15,6 +17,8 @@ export default function reducer ( state = {
       return {
         ...state,
         isLoggedIn: true,
+        username: action.payload.posts.username,
+        id: action.payload.posts.id,
         sentPosts: action.payload.posts.sent,
         receivedPosts: action.payload.posts.received,
         friendList: action.payload.friends

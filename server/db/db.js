@@ -17,6 +17,14 @@ var dbConfig = {
 
 var db = pgp(dbConfig);
 
+db.any('SELECT * FROM profile WHERE username=$1', 'test')
+        .then(function(result) {
+          console.log(result);
+        })
+        .catch(function(error) {
+          console.log('user.get ERROR: ', error);
+        });
+
 // values = ['Andrewregal', 'password', 'andrew.regal@gmail.com', [5, 3]];
 // db.query('insert into profile(username, password, email, friends) values ($1, $2, $3, $4)', values)
   // .then(function(result) {

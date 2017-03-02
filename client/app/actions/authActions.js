@@ -32,22 +32,22 @@ export function passwordChanged (text) {
   };
 }
 
-export function submitSignin (username, password) {
+export function submitSignin (usernameText, passwordText) {
   return {
     type: types.SocketSignIn,
     payload: {
-      username: username,
-      password: password
+      usernameText: usernameText,
+      passwordText: passwordText
     }
   };
 }
 
-export function submitSignup (username, password, email) {
+export function submitSignup (usernameText, passwordText, email) {
   return {
     type: types.SocketSignUp,
     payload: {
-      username: username,
-      password: password,
+      usernameText: usernameText,
+      passwordText: passwordText,
       email: email
     }
   };

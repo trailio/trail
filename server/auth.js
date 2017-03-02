@@ -6,24 +6,24 @@ var bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'));
 
 module.exports = {
   signup: function(payload, cb) {
-    db.user.get(payload.username, function(result) {
+    db.user.get(payload.usernameText, function(result) {
       if (result.length !== 0) {
         console.log('User already exists');
       } else {
-        bcrypt.hashAsync(payload.password, null, null)
+        bcrypt.hashAsync(payload.passwordText, null, null)
           .then(function(hash) {
             var signupWithHash = {
-              username: payload.username,
+              username: payload.usernameText,
               password: hash,
               email: payload.email
             };
             db.user.signup(signupWithHash, function(result) {
               if (result) {
-                db.user.get(payload.username, function(result) {
+                db.user.get(payload.usernameText, function(result) {
                   if (result.length === 0) {
                     console.log('User does not exist');
                   } else {
-                    cb(jwt.encode(result[0], '53cr3t'));
+                    cb(jwt.encode(result[0], '53cr3t'), result[0].username, result[0].id);
                   }
                 });
               }
@@ -36,23 +36,23 @@ module.exports = {
     });
   },
   signin: function(payload, cb) {
-    db.user.get(payload.username, function(result) {
+    db.user.get(payload.usernameText, function(result) {
       if (result.length === 0) {
         console.log('User does not exist');
       } else {
         var user = result[0];
-        bcrypt.compareAsync(payload.password, user.password)
+        bcrypt.compareAsync(payload.passwordText, user.password)
           .then(result => {
             if (result) {
-              var token = jwt.encode(payload.username, '53cr3t');
+              var token = jwt.encode(payload.usernameText, '53cr3t');
               var posts = {};
               db.posts.getSentPosts(user.id, function(sentResults) {
                 posts.sent = sentResults;
                 db.posts.getReceivedPosts(user.id, function(receivedResults) {
                   posts.received = receivedResults; 
                   db.user.getIDUsername(user.friends, function(friends){
-                    console.log(`found friends of ${payload.username}: ${friends}`);
-                    cb(token, posts, friends);
+                    console.log(`found friends of ${payload.usernameText}: ${friends}`);
+                    cb(token, user.username, user.id, posts, friends);
                   })  
                 });
               });

@@ -5,8 +5,8 @@ import store  from '../store'
 export default function reducer ( state = {
   loginClicked: false,
   signupClicked: false,
-  username: '',
-  password: ''
+  usernameText: '',
+  passwordText: ''
 }, action) {
   switch (action.type) {
   case 'LOGIN_CLICKED': {
@@ -27,25 +27,33 @@ export default function reducer ( state = {
       ...state,
       loginClicked: false,
       signupClicked: false,
-      username: '',
-      password: ''
+      usernameText: '',
+      passwordText: ''
     };
   }
   case 'USERNAME_CHANGED': {
     return {
       ...state,
-      username: action.payload
+      usernameText: action.payload
     }
   }
   case 'PASSWORD_CHANGED': {
     return {
       ...state,
-      password: action.payload
+      passwordText: action.payload
     }
   }
   case 'LOGIN_RESPONSE': {
+    var user = {
+      username: action.data.username, 
+      id: action.data.id, 
+      posts: action.data.posts, 
+      friends: action.data.friends
+    };
     AsyncStorage.setItem('STORAGE_KEY', action.data.token).then((value) => {
-      store.dispatch({type: 'LOGIN_USER', payload: {posts: action.data.posts, friends: action.data.friends}});
+      AsyncStorage.setItem('USER', JSON.stringify(user)).then((value) => {
+        store.dispatch({type: 'LOGIN_USER', payload: user});
+      })
     });
     return {
       ...state

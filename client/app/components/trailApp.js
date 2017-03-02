@@ -53,9 +53,11 @@ class TrailApp extends Component {
 
   componentWillMount() {
     AsyncStorage.getItem('STORAGE_KEY').then((value) => {
-      if (value) {
-        this.props.loginUser();
-      }
+      AsyncStorage.getItem('USER').then((user) => {
+        if (value && user) {
+          this.props.loginUser();
+        }
+      })
     });
   }
 }

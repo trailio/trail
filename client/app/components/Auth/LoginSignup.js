@@ -31,13 +31,13 @@ class Landing extends Component {
   }
 
   onSubmitSignin() {
-    console.log('signing in using username & password', this.props.username, this.props.password);
-    this.props.submitSignin(this.props.username, this.props.password);
+    console.log('signing in using username & password', this.props.usernameText, this.props.passwordText);
+    this.props.submitSignin(this.props.usernameText, this.props.passwordText);
   }
 
   onSubmitSignup() {
-    console.log('signup in using username & password & no email for now', this.props.username, this.props.password, this.state.email);
-    this.props.submitSignup(this.props.username, this.props.password, this.state.email);
+    console.log('signup in using username & password & no email for now', this.props.usernameText, this.props.passwordText, this.state.email);
+    this.props.submitSignup(this.props.usernameText, this.props.passwordText, this.state.email);
   }
 
 
@@ -56,13 +56,13 @@ class Landing extends Component {
             <Text>Username</Text>
             <TextInput
               style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-              value={this.props.username}
+              value={this.props.usernameText}
               onChangeText={this.onUsernameChange.bind(this)}
             />
             <Text>Password</Text>
             <TextInput
               style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-              value={this.props.password}
+              value={this.props.passwordText}
               onChangeText={this.onPasswordChange.bind(this)}
             />
             <Text/>
@@ -78,13 +78,13 @@ class Landing extends Component {
             <Text>Username</Text>
             <TextInput
               style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
-              value={this.props.username}
+              value={this.props.usernameText}
               onChangeText={this.onUsernameChange.bind(this)}
             />
             <Text>Password</Text>
             <TextInput
               style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
-              value={this.props.password}
+              value={this.props.passwordText}
               onChangeText={this.onPasswordChange.bind(this)}
             />
             <Text>Email</Text>
@@ -111,14 +111,14 @@ class Landing extends Component {
 }
 
 const mapStateToProps = ({auth, app}) => {
-  const { loginClicked, signupClicked, username, password} = auth;
+  const { loginClicked, signupClicked, usernameText, passwordText} = auth;
   const { isLoggedIn } = app;
   // console.log('mapStateToProps app in LoginSignup', app)
   return {
     loginClicked,
     signupClicked,
-    username,
-    password,
+    usernameText,
+    passwordText,
     isLoggedIn
   };
 };

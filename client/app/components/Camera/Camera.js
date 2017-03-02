@@ -130,8 +130,8 @@ class Camera extends Component {
   }
 }
 
-const mapStateToProps = ({ auth, camera, map }) => {
-  const { username } = auth;
+const mapStateToProps = ({ app, camera, map }) => {
+  const { username } = app;
   const { captureMode, captureSide, flashMode } = camera;
   const { latitude, longitude } = map;
   return {

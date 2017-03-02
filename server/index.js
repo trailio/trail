@@ -31,12 +31,14 @@ io.on('connection', function(socket) {
   });
   socket.on('action', function(action) {
     if (action.type === 'socket/signin') {
-      auth.signin(action.payload, function(token, posts, friends) {
+      auth.signin(action.payload, function(token, username, userID, posts, friends) {
         console.log('index.js socket/signin - got token, emitting action with token back to app for token', token);
         socket.emit('action',
           {
             type: 'LOGIN_RESPONSE',
             data: {
+              username: username,
+              id: userID,
               token: token,
               posts: posts || {},
               friends: friends || [{username: 'testUser23', id: 3}, {username: 'testUser41', id: 5}, {username: 'testUser352', id: 7}, {username: 'testUser095', id: 1}]
@@ -45,12 +47,14 @@ io.on('connection', function(socket) {
       });
     }
     if (action.type === 'socket/signup') {
-      auth.signup(action.payload, function(token) {
+      auth.signup(action.payload, function(token, username, userID) {
         console.log('index.js socket/signup - got token, emitting action with token back to app for token', token);
         socket.emit('action',
           {
             type: 'LOGIN_RESPONSE',
             data: {
+              username: username,
+              id: userID,
               token: token,
               posts: {},
               friends: []

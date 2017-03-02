@@ -17,4 +17,21 @@ var dbConfig = {
 
 var db = pgp(dbConfig);
 
+// values = ['Andrewregal', 'password', 'andrew.regal@gmail.com', [5, 3]];
+// db.query('insert into profile(username, password, email, friends) values ($1, $2, $3, $4)', values)
+  // .then(function(result) {
+  //   console.log('worked: ', result);
+  // })
+  // .catch(function(error) {
+  //   console.log('ERROR: ', error);
+  // });
+
+db.manyOrNone("SELECT * FROM profile WHERE username LIKE '%$1#%'", 'est')
+  .then(function(result) {
+    console.log('worked: ', result);
+  })
+  .catch(function(error) {
+    console.log('ERROR: ', error);
+  });
+
 module.exports = db;

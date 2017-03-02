@@ -10,6 +10,7 @@ var io = require('socket.io')(server);
 var db = require('./db/db');
 var auth = require('./auth');
 var camera = require('./camera');
+var friends = require('./friends');
 var cors = require('cors');
 
 //Middleware
@@ -64,30 +65,26 @@ io.on('connection', function(socket) {
       });
     }
     if (action.type === 'socket/searchedUser') {
-        console.log('socket/searchedUser payload ==== ', action.payload);
+      console.log('socket/searchedUser payload ==== ', action.payload);
         //action.payload should be a string that we want to search for by username in our database
         //create a friend.js file and make a routeHelper called searchUser(searchText)
           //friend.searchUser should take a searchText and return an array of all username & ID's that begin with the searchText(pattern match)
-        var testData = [
-        {username: 'app', id: 3}, 
-        {username: 'applik', id: 5}, 
-        {username: 'applied', id: 10},
-        {username: 'applod', id: 7}, 
-        {username: 'applinmz', id: 1}, 
-        {username: 'appleofmyeye', id: 2},
-        {username: 'application', id: 12}, 
-        {username: 'apprizvvvee', id: 14}, 
-        {username: 'appleMusic', id: 16}
-        ]
-        socket.emit('action', {type:'USER_SEARCHED', data: testData});
-      }
+        // action.payload should be the string to be searched
+      friends.search(action.payload, function(data) {
+        // sends back all user details
+        socket.emit('action', {
+          type: 'USER_SEARCHED',
+          data: data
+        });
+      });
+    }
 
-      if (action.type === 'socket/addFriend') {
-        console.log('socket/addFriend payload ==== ', action.payload);
-        //action.payload should be a username or a userID, undecided yet
-        //in friend.js, create a routeHelper called addFriend(user)
-          //friend.addFriend should take a friend and create the proper database logs for friend request / friend connection
-      }
+    if (action.type === 'socket/addFriend') {
+      console.log('socket/addFriend payload ==== ', action.payload);
+      //action.payload should be a username or a userID, undecided yet
+      //in friend.js, create a routeHelper called addFriend(user)
+        //friend.addFriend should take a friend and create the proper database logs for friend request / friend connection
+    }
   });
   io.emit('message2', 'xxxxxxxx received from server: connection established');
 });

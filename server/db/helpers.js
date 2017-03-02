@@ -61,5 +61,16 @@ module.exports = {
         console.log('posts.getReceivedPosts ERROR: ', error);
       });
     }
+  },
+  friends: {
+    searchByString: function(string, cb) {
+      db.manyOrNone("SELECT * FROM profile WHERE username LIKE '%$1#%'", string)
+        .then(function(result) {
+          cb(result);
+        })
+        .catch(function(error) {
+          console.log('friends.searchByString ERROR: ', error);
+        });
+    }
   }
 };

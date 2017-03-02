@@ -64,9 +64,9 @@ module.exports = {
   },
   friends: {
     searchByString: function(string, cb) {
-      db.manyOrNone("SELECT * FROM profile WHERE username LIKE '%$1#%'", string)
+      db.manyOrNone("SELECT id, username FROM profile WHERE username LIKE '%$1#%'", string)
         .then(function(result) {
-          cb(result);
+          cb(result)
         })
         .catch(function(error) {
           console.log('friends.searchByString ERROR: ', error);

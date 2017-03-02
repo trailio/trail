@@ -26,12 +26,12 @@ var db = pgp(dbConfig);
   //   console.log('ERROR: ', error);
   // });
 
-db.manyOrNone("SELECT * FROM profile WHERE username LIKE '%$1#%'", 'est')
-  .then(function(result) {
-    console.log('worked: ', result);
-  })
-  .catch(function(error) {
-    console.log('ERROR: ', error);
-  });
+// db.manyOrNone("SELECT id, username FROM profile WHERE username LIKE '%$1#%'", 'est')
+//   .then(function(result) {
+//     console.log('worked: ', result[1].username);
+//   })
+//   .catch(function(error) {
+//     console.log('ERROR: ', error);
+//   });
 
 module.exports = db;

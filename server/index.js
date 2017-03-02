@@ -66,12 +66,10 @@ io.on('connection', function(socket) {
     }
     if (action.type === 'socket/searchedUser') {
       console.log('socket/searchedUser payload ==== ', action.payload);
-        //action.payload should be a string that we want to search for by username in our database
-        //create a friend.js file and make a routeHelper called searchUser(searchText)
-          //friend.searchUser should take a searchText and return an array of all username & ID's that begin with the searchText(pattern match)
-        // action.payload should be the string to be searched
       friends.search(action.payload, function(data) {
-        // sends back all user details
+        // data = username, ids
+        // EXAMPLE
+        // data[0].id, data[0].username
         socket.emit('action', {
           type: 'USER_SEARCHED',
           data: data

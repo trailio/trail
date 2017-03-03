@@ -96,18 +96,19 @@ class TrailMap extends Component {
   }
 
   render () {
-    console.log('this.props.receivedPosts',this.props.receivedPosts)
+    console.log('!!!!!!this.props.receivedPosts',this.props.receivedPosts.imageurl)
 
-    var image = () => { 
-      if (this.props.renderImageURL.length) {
-        return (
-        <Image
-          style={{width: 500, height: 500}}
-          source={{uri: this.props.renderImageURL}}
-        />
-        );
-      }
-    };
+    // var image = () => { 
+    //   if (this.props.renderImageURL.length) {
+    //     return (
+    //     <Image
+    //       style={{width: 500, height: 500}}
+    //       source={{uri: this.props.renderImageURL}}
+    //     />
+    //     );
+    //   }
+    // };
+    var imageURL;
     return (
       <Swiper
         style={styles.wrapper}
@@ -132,7 +133,7 @@ class TrailMap extends Component {
                 coordinate={this.state.region}
                 draggable      
               >
-                <MapView.Callout onPress={() => {this.popupDialog.openDialog()}} style={styles.calloutStyle}>
+                <MapView.Callout style={styles.calloutStyle}>
                   <View>
                     <Text>
                       Alfred
@@ -140,6 +141,25 @@ class TrailMap extends Component {
                   </View>  
                 </MapView.Callout>
               </MapView.Marker>
+            
+            {this.props.receivedPosts.map((marker,i) => ([
+
+              <MapView.Marker
+                coordinate={{
+                  latitude: Number(marker.latitude),
+                  longitude: Number(marker.longitude)
+                }}
+                key={i}
+                pinColor={'aqua'}
+              >
+                <MapView.Callout onPress={() => {this.popupDialog.openDialog()}} style={styles.calloutStyle}>
+                  <View>
+                    <Text>
+                      {marker.username}
+                    </Text>
+                  </View>  
+                </MapView.Callout>              
+              </MapView.Marker>,
               <PopupDialog 
                 ref={(popupDialog) => {this.popupDialog=popupDialog}} 
                 height={height} 
@@ -149,31 +169,19 @@ class TrailMap extends Component {
                     text='X'
                     onPress={() => {this.popupDialog.dismiss()}}
                     key='button-1'
-                    align='left'
+                    align='center'
                   />
                 ]}>
                 <View>
                     <Image
                       style={{width: width, height: height - 100}}
-                      source={{uri: 'https://trail-media.s3.amazonaws.com/photos%2Fuser20170301T181739776Z.jpg'}}
+                      source={{uri: marker.imageurl}}
                     />
                 </View>
               </PopupDialog>
+            ]))}
 
 
-            {this.props.receivedPosts.map((marker,i) => (
-              <MapView.Marker
-                coordinate={{
-                  latitude: Number(marker.latitude),
-                  longitude: Number(marker.longitude)
-                }}
-                title={marker.username}
-                key={i}
-                pinColor={'aqua'}
-                onPress={() => this.refs.modal1.open()}
-              >
-              </MapView.Marker>
-            ))}
             </MapView> : null}
         </View>
         <View style={styles.slide1}>

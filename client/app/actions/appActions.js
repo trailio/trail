@@ -1,8 +1,9 @@
 import types from './types';
 
-export function loginUser () {
+export function loginUser (user) {
   return {
-    type: types.LoginUser
+    type: types.LoginUser,
+    payload: user
   };
 }
 

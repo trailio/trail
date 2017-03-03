@@ -32,8 +32,8 @@ export default function reducer ( state = {
       }
     }
   }
-  case 'USER_SEARCHED' : {
-    // console.log('user searched received from server', action.data);
+  case 'USER_SEARCHED': {
+    console.log('user searched received from server', action.data);
     return {
       ...state,
       searchedFriends: action.data
@@ -51,7 +51,6 @@ export default function reducer ( state = {
       renderImageURL: ''
     }
   }
-
   default:
     return state;
   }

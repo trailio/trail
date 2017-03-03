@@ -58,9 +58,9 @@ class Inbox extends Component {
     super(props);
   }
 
-  onReceivedPostPress(imageURL) {
-    console.log("HIIIIIII imageURL changed to: ", imageURL);
-    this.props.imageURLChanged(imageURL);
+  onReceivedPostPress(imageurl) {
+    this.props.imageURLChanged(imageurl);
+    console.log("HIIIIIII imageURL changed to: ", imageurl);
   }
 
   onImagePressed(){
@@ -74,14 +74,14 @@ class Inbox extends Component {
         <View>
         { that.props.receivedPosts.map(function(post, i){
           return (
-          <TouchableHighlight onPress={function(){that.onReceivedPostPress(post.imageURL)}} key={i}>
+          <TouchableHighlight onPress={that.onReceivedPostPress.bind(that, post.imageurl)} key={i}>
             <View style={styles.postBody}>
               <Image source={pinImg}/>
               <Text style={styles.postName}> 
                 {post.username}
               </Text>
               <Text style={styles.postDate}>
-                {post.timePosted}
+                {post.timeposted}
               </Text>
             </View>
           </TouchableHighlight>)

@@ -26,9 +26,9 @@ export function searchedUser (searchText) {
   };
 }
 
-export function addedFriend(friend) {
+export function addedFriend(userID, username, friend) {
   return {
     type: types.AddedFriend,
-    payload: friend
+    payload: {username: username, id: userID, friendID: friend.id}
   }
 }

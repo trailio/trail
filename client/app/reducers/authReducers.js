@@ -52,6 +52,7 @@ export default function reducer ( state = {
     };
     AsyncStorage.setItem('STORAGE_KEY', action.data.token).then((value) => {
       AsyncStorage.setItem('USER', JSON.stringify(user)).then((value) => {
+        // console.log('user credentials logged!!', user)
         store.dispatch({type: 'LOGIN_USER', payload: user});
       })
     });

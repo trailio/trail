@@ -50,6 +50,7 @@ module.exports = {
                 posts.sent = sentResults;
                 db.posts.getReceivedPosts(user.id, function(receivedResults) {
                   posts.received = receivedResults; 
+                  console.log('userfriends!!!!', user.friends);
                   db.user.getIDUsername(user.friends, function(friends){
                     console.log(`found friends of ${payload.usernameText}: ${friends}`);
                     cb(token, user.username, user.id, posts, friends);

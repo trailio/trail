@@ -75,9 +75,9 @@ class AddFriend extends Component {
     //upon return, add a listener to appReducers.js for returned search results in an array, then render them as a list similar to your inbox, with a button click for add friend that will change when clicked
   }
 
-  onFriendAdd(friend){
+  onFriendAdd(userID, username, friend){
     // console.log('call some function to submit add friends here for ', username);
-    this.props.addedFriend(friend);
+    this.props.addedFriend(userID, username, friend);
   }
 
   onFriendAccept(friend) {
@@ -97,7 +97,7 @@ class AddFriend extends Component {
               <Text style={styles.username}> 
                 { friend.username }
               </Text>
-              <TouchableHighlight onPress={that.onFriendAdd.bind(that, friend)} >
+              <TouchableHighlight onPress={that.onFriendAdd.bind(that, that.props.id, that.props.username, friend)} >
                 <Image source={addFriendImg}/>
               </TouchableHighlight>
               </View>
@@ -128,11 +128,13 @@ class AddFriend extends Component {
 
 
 const mapStateToProps = ({app}) => {
-  const { searchedUser, searchedFriends, addedFriend} = app;
+  const { searchedUser, searchedFriends, addedFriend, username, id} = app;
   return {
     searchedUser,
     searchedFriends,
-    addedFriend
+    addedFriend,
+    username,
+    id
   };
 };
 

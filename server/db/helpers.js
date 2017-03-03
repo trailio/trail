@@ -23,7 +23,7 @@ module.exports = {
 				});
     },
     getIDUsername: function(IDList, cb) {
-      db.query('SELECT username, id FROM profile WHERE id = ANY($1)', IDList)
+      db.query(`SELECT username, id FROM profile WHERE id in (${IDList.join()})`)
         .then(function(result) {
           cb(result);
         })
@@ -44,7 +44,7 @@ module.exports = {
         });
     },
     getSentPosts: function(userID, cb) {
-      db.query('SELECT p.recipientUserID as recipientUserID, u.username as recipientUsername, p.longitude as longitude, p.latitude as latitude, p.imageURL as imageURL, p.publicPost as publicPost, p.timePosted as timePosted, p.timeExpired as timeExpired FROM posts p JOIN profile u on p.recipientUserID = u.id WHERE p.userID = $1', userID)
+      db.query('SELECT p.recipientUserID as recipientUserID, u.username as recipientUsername, p.longitude as longitude, p.latitude as latitude, p.imageURL as imageURL, p.publicPost as publicPost, p.timePosted as timePosted, p.timeExpired as timeExpired FROM posts p JOIN profile u on u.id = ANY(p.recipientUserID) WHERE p.userID = $1', userID)
         .then(function(result) {
           cb(result);
         })
@@ -53,7 +53,7 @@ module.exports = {
         });
     },
     getReceivedPosts: function(userID, cb) {
-      db.query('SELECT p.userID as userID, u.username as username, p.longitude as longitude, p.latitude as latitude, p.imageURL as imageURL, p.publicPost as publicPost, p.timePosted as timePosted, p.timeExpired as timeExpired FROM posts p JOIN profile u on p.userID = u.id WHERE p.recipientUserID = $1', userID)
+      db.query('SELECT p.userID as userID, u.username as username, p.longitude as longitude, p.latitude as latitude, p.imageURL as imageURL, p.publicPost as publicPost, p.timePosted as timePosted, p.timeExpired as timeExpired FROM posts p JOIN profile u on p.userID = u.id WHERE p.recipientUserID @> ARRAY[$1]', userID)
       .then(function(result) {
         cb(result);
       })

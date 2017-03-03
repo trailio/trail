@@ -10,9 +10,11 @@ export default function reducer ( state = {
 }, action) {
   switch (action.type) {
   case 'LOGIN_USER': {
-    if (typeof action.payload === 'Object') {
-      console.log('Action.payload is an object');
-      console.log('Received friendlist from server: ', action.payload.friends);
+    // console.log('IS Action.payload an object???????');
+    // console.log(typeof action.payload)
+    if (typeof action.payload === 'object') {
+      // console.log('Action.payload is an object!!!!', action.payload);
+      // console.log('Received friendlist from server: ', action.payload.friends);
       //note: friends is an array of objects containing both username and id
       return {
         ...state,

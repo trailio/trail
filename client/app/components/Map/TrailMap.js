@@ -53,8 +53,9 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-  customView: {
-    backgroundColor: 'pink'
+  calloutStyle: {
+    flex: 1, 
+    position: 'relative',
   }
 });
 
@@ -131,13 +132,12 @@ class TrailMap extends Component {
                 coordinate={this.state.region}
                 draggable      
               >
-                <MapView.Callout onPress={() => {this.popupDialog.openDialog()}} style={styles.customView}>
+                <MapView.Callout onPress={() => {this.popupDialog.openDialog()}} style={styles.calloutStyle}>
                   <View>
                     <Text>
-                    
+                      Alfred
                     </Text>
-                  </View>
-
+                  </View>  
                 </MapView.Callout>
               </MapView.Marker>
               <PopupDialog 
@@ -153,7 +153,10 @@ class TrailMap extends Component {
                   />
                 ]}>
                 <View>
-                  {image()}
+                    <Image
+                      style={{width: width, height: height - 100}}
+                      source={{uri: 'https://trail-media.s3.amazonaws.com/photos%2Fuser20170301T181739776Z.jpg'}}
+                    />
                 </View>
               </PopupDialog>
 

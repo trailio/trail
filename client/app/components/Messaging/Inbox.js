@@ -60,7 +60,7 @@ class Inbox extends Component {
 
   onReceivedPostPress(imageurl) {
     this.props.imageURLChanged(imageurl);
-    console.log("HIIIIIII imageURL changed to: ", imageurl);
+    console.log("HIIIIIII imageURL changed to: ", this.props.receivedPosts);
   }
 
   onImagePressed(){
@@ -84,8 +84,8 @@ class Inbox extends Component {
                 {post.timeposted}
               </Text>
             </View>
-          </TouchableHighlight>)
-        })}
+          </TouchableHighlight>
+          )})}
         </View>
       )
     };
@@ -95,7 +95,7 @@ class Inbox extends Component {
         <View>
           <TouchableHighlight onPress={function() { that.onImagePressed() }}>
             <Image
-              style={{width: 500, height: 500}}
+              style={{width: 375, height: 675}}
               source={{uri: that.props.renderImageURL}}
             />
           </TouchableHighlight>

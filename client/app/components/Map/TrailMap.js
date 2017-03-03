@@ -84,6 +84,16 @@ class TrailMap extends Component {
     });
   }
 
+  onReceivedPostPress(imageIndex) {
+    console.log('image index is!!!!', this.props.receivedPosts)
+    this.props.imageURLChanged(this.props.receivedPosts[imageIndex].imageurl);
+    console.log("HIIIIIII imageURL changed to: ", this.props.receivedPosts[imageIndex].imageurl);
+  }
+
+  onImagePressed(){
+    this.props.imageClosed();
+  }
+
   componentWillMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -96,55 +106,11 @@ class TrailMap extends Component {
   }
 
   render () {
-    console.log('!!!!!!this.props.receivedPosts',this.props.receivedPosts.imageurl)
-
-    // var image = () => { 
-    //   if (this.props.renderImageURL.length) {
-    //     return (
-    //     <Image
-    //       style={{width: 500, height: 500}}
-    //       source={{uri: this.props.renderImageURL}}
-    //     />
-    //     );
-    //   }
-    // };
-    var imageURL;
-    return (
-      <Swiper
-        style={styles.wrapper}
-        showsButtons={false}
-        showsPagination={false}
-        loop={false}
-        horizontal={false}
-      >
-        <View style={styles.slide1}>
-          {this.state.region.latitude ?
-            <MapView
-              style={styles.map}
-              initialRegion={this.state.region}
-              showsUserLocation={true}
-              // followsUserLocation={true}
-              scrollEnabled={false}
-              provider={'google'}
-              customMapStyle={mapStyle}
-              showsScale={true}
-            >
-              <MapView.Marker
-                coordinate={this.state.region}
-                draggable      
-              >
-                <MapView.Callout style={styles.calloutStyle}>
-                  <View>
-                    <Text>
-                      Alfred
-                    </Text>
-                  </View>  
-                </MapView.Callout>
-              </MapView.Marker>
-            
-            {this.props.receivedPosts.map((marker,i) => ([
-
-              <MapView.Marker
+    var that = this;
+    var receivedMessages = function() {
+      return that.props.receivedPosts.map( function(marker, i) {
+          return (
+            <MapView.Marker
                 coordinate={{
                   latitude: Number(marker.latitude),
                   longitude: Number(marker.longitude)
@@ -152,43 +118,70 @@ class TrailMap extends Component {
                 key={i}
                 pinColor={'aqua'}
               >
-                <MapView.Callout onPress={() => {this.popupDialog.openDialog()}} style={styles.calloutStyle}>
+                <MapView.Callout onPress={that.onReceivedPostPress.bind(that, i)} style={styles.calloutStyle}>
                   <View>
                     <Text>
                       {marker.username}
                     </Text>
                   </View>  
                 </MapView.Callout>              
-              </MapView.Marker>,
-              <PopupDialog 
-                ref={(popupDialog) => {this.popupDialog=popupDialog}} 
-                height={height} 
-                dialogAnimation={new SlideAnimation({slideFrom: 'top'})} 
-                actions={[
-                  <DialogButton
-                    text='X'
-                    onPress={() => {this.popupDialog.dismiss()}}
-                    key='button-1'
-                    align='center'
-                  />
-                ]}>
-                <View>
-                    <Image
-                      style={{width: width, height: height - 100}}
-                      source={{uri: marker.imageurl}}
-                    />
-                </View>
-              </PopupDialog>
-            ]))}
-
-
-            </MapView> : null}
+              </MapView.Marker>
+        )})
+    }
+    if (this.props.renderImageURL) {
+      console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL);
+      return(
+        <View>
+          <TouchableHighlight onPress={function() { that.onImagePressed() }}>
+            <Image
+              style={{width: 375, height: 675 }}
+              source={{uri: that.props.renderImageURL}}
+            />
+          </TouchableHighlight>
         </View>
-        <View style={styles.slide1}>
-          <ViewContent />
-        </View>
-      </Swiper>
-    );
+      );
+    } else {
+    return (
+        <Swiper
+          style={styles.wrapper}
+          showsButtons={false}
+          showsPagination={false}
+          loop={false}
+          horizontal={false}
+        >
+          <View style={styles.slide1}>
+            {this.state.region.latitude ?
+              <MapView
+                style={styles.map}
+                initialRegion={this.state.region}
+                showsUserLocation={true}
+                // followsUserLocation={true}
+                scrollEnabled={false}
+                provider={'google'}
+                customMapStyle={mapStyle}
+                showsScale={true}
+              >
+                <MapView.Marker
+                  coordinate={this.state.region}
+                  draggable      
+                >
+                  <MapView.Callout style={styles.calloutStyle}>
+                    <View>
+                      <Text>
+                        Alfred
+                      </Text>
+                    </View>  
+                  </MapView.Callout>
+                </MapView.Marker>
+                { receivedMessages() }
+              </MapView> : null}
+          </View>
+          <View style={styles.slide1}>
+            <ViewContent />
+          </View>
+        </Swiper>
+      );
+    }
   }
 }
 

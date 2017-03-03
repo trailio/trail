@@ -10,7 +10,7 @@ export default function reducer ( state = {
 }, action) {
   switch (action.type) {
   case 'LOGIN_USER': {
-    // console.log('IS Action.payload an object???????');
+    // console.log('IS Action.payload an object???????', action.payload);
     // console.log(typeof action.payload)
     if (typeof action.payload === 'object') {
       // console.log('Action.payload is an object!!!!', action.payload);

@@ -28,6 +28,75 @@ import flashAuto from '../../../assets/ic_flash_auto_white.png';
 class Camera extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isRecording: false,
+      counter: '',
+      counterInterval: null,
+      counterTimeout: null
+    }
+  }
+
+  startRecording() {
+    if (!this.state.isRecording) {
+      var context = this;
+      var setCounterInterval = setInterval(function() {
+        context.setState({
+          counter: context.state.counter - 1
+        });
+      }, 1000);
+      var setCounterTimeout = setTimeout(function() {
+        context.stopRecording();
+      }, 7000);
+
+      this.setState({
+        isRecording: true,
+        counter: 7,
+        counterInterval: setCounterInterval,
+        counterTimeout: setCounterTimeout
+      });
+
+      this.camera.capture()
+        .then(data => {
+          const dateString = (new Date()).toISOString().replace(/\.|:|-/g,'');
+          const file = {
+            uri: data.path,
+            name: this.props.username + dateString + '.jpg',
+            type: 'video/mp4'
+          };
+
+          const options = {
+            keyPrefix: 'photos/',
+            bucket: 'trail-media',
+            region: 'us-west-1',
+            accessKey: config.AWSAccessKeyID,
+            secretKey: config.AWSSecretAccessKey,
+            successActionStatus: 201
+          };
+
+          RNS3.put(file, options)
+            .then(response => {
+              if (response.status !== 201) {
+                throw new Error('Failed to upload image to S3', response);
+              }
+              console.log('*** BODY ***', response.body);
+              this.props.postPhoto(this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
+            });
+        })
+        .catch(error => console.log('ERROR: ', error));
+
+    }
+  }
+
+  stopRecording() {
+    clearInterval(this.state.counterInterval);
+    clearTimeout(this.state.counterTimeout);
+    this.setState({
+      counter: '',
+      isRecording: false
+    });
+    this.camera.stopCapture();
+    alert('Uploading, your video will appear shortly!');
   }
 
   takePicture() {

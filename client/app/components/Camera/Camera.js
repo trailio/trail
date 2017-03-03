@@ -23,6 +23,7 @@ import setVideoMode from '../../../assets/ic_camera_roll_white_36pt.png';
 import flashOff from '../../../assets/ic_flash_off_white.png';
 import flashOn from '../../../assets/ic_flash_on_white.png';
 import flashAuto from '../../../assets/ic_flash_auto_white.png';
+import recordIcon from '../../../assets/ic_fiber_manual_record_white_48pt.png';
 
 
 class Camera extends Component {
@@ -147,6 +148,15 @@ class Camera extends Component {
     var cameraSide = this.props.captureSide === ReactNativeCamera.constants.Type.front ? cameraFrontIcon : cameraRearIcon;
     var cameraMode = this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still ? setCameraMode : setVideoMode;
     var flashMode = this.props.flashMode === ReactNativeCamera.constants.FlashMode.off ? flashOff : this.props.flashMode === ReactNativeCamera.constants.FlashMode.on ? flashOn : flashAuto;
+    var captureIcon;
+    var captureFn;
+    if (this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still) {
+      captureIcon = cameraIcon;
+      captureFn = this.takePicture.bind(this);
+    } else {
+      captureIcon = recordIcon;
+      captureFn = this.startRecording.bind(this);
+    }
 
     return (
       <Swiper
@@ -174,8 +184,8 @@ class Camera extends Component {
           <TouchableHighlight style={styles.flashButton} onPress={this.toggleFlash.bind(this)}>
             <Image source={flashMode} />
           </TouchableHighlight>
-          <TouchableHighlight style={styles.captureButton} onPress={this.takePicture.bind(this)}>
-            <Image source={cameraIcon} />
+          <TouchableHighlight style={styles.captureButton} onPress={captureFn}>
+            <Image source={captureIcon} />
           </TouchableHighlight>
           <TouchableHighlight style={styles.cameraSideButton} onPress={this.toggleCameraSide.bind(this)}>
             <Image source={cameraSide} />

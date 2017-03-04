@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import MapView from 'react-native-maps';
+import mapStyle from '../Map/mapStyle';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -95,6 +96,8 @@ class DropPin extends Component {
           showsUserLocation={true}
           followsUserLocation={true}
           scrollEnabled={false}
+          provider={'google'}
+          customMapStyle={mapStyle}
         >
           <MapView.Marker
             coordinate={{

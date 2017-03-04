@@ -36,7 +36,37 @@ class Camera extends Component {
       counterTimeout: null,
       currentView: 'cameraView'
     };
+  }
 
+  componentDidUpdate() {
+    if (this.props.uploadPhoto === true) {
+      console.log('Uploading photo');
+      const dateString = (new Date()).toISOString().replace(/\.|:|-/g,'');
+      const file = {
+        uri: this.props.photoPath,
+        name: this.props.username + dateString + '.jpg',
+        type: 'image/jpeg'
+      };
+
+      const options = {
+        keyPrefix: 'photos/',
+        bucket: 'trail-media',
+        region: 'us-west-1',
+        accessKey: config.AWSAccessKeyID,
+        secretKey: config.AWSSecretAccessKey,
+        successActionStatus: 201
+      };
+
+      RNS3.put(file, options)
+        .then(response => {
+          if (response.status !== 201) {
+            throw new Error('Failed to upload image to S3', response);
+          }
+          console.log('*** BODY ***', response.body);
+          this.props.postPhoto(this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
+          this.props.toggleUpload();
+        });
+    }
   }
 
   startRecording() {
@@ -60,7 +90,7 @@ class Camera extends Component {
 
       this.camera.capture()
         .then(data => {
-          const dateString = (new Date()).toISOString().replace(/\.|:|-/g,'');
+          const dateString = (new Date()).toISOString().replace(/\.|:|-/g, '');
           const file = {
             uri: data.path,
             name: this.props.username + dateString + '.jpg',
@@ -106,36 +136,9 @@ class Camera extends Component {
   takePicture() {
     this.camera.capture()
       .then(data => {
-        this.props.photoCapturePressed(data);
+        this.props.photoCapturePressed(data.path);
       })
       .catch(error => console.log('ERROR: ', error));
-  }
-
-  uploadPhoto() {
-    const dateString = (new Date()).toISOString().replace(/\.|:|-/g,'');
-    const file = {
-      uri: data.path,
-      name: this.props.username + dateString + '.jpg',
-      type: 'image/jpeg'
-    };
-
-    const options = {
-      keyPrefix: 'photos/',
-      bucket: 'trail-media',
-      region: 'us-west-1',
-      accessKey: config.AWSAccessKeyID,
-      secretKey: config.AWSSecretAccessKey,
-      successActionStatus: 201
-    };
-
-    RNS3.put(file, options)
-      .then(response => {
-        if (response.status !== 201) {
-          throw new Error('Failed to upload image to S3', response);
-        }
-        console.log('*** BODY ***', response.body);
-        this.props.postPhoto(this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
-      });
   }
 
   toggleCameraMode() {
@@ -217,7 +220,7 @@ class Camera extends Component {
 
 const mapStateToProps = ({ app, camera, map }) => {
   const { username } = app;
-  const { captureMode, captureSide, currentView, flashMode, photoPath } = camera;
+  const { captureMode, captureSide, currentView, flashMode, photoPath, uploadPhoto } = camera;
   const { latitude, longitude } = map;
   return {
     captureMode,
@@ -227,6 +230,7 @@ const mapStateToProps = ({ app, camera, map }) => {
     latitude,
     longitude,
     photoPath,
+    uploadPhoto,
     username
   };
 };

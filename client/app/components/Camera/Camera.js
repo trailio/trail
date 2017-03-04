@@ -3,7 +3,6 @@ import { Dimensions, Image, Text, TouchableHighlight, View } from 'react-native'
 import Swiper from 'react-native-swiper';
 import ReactNativeCamera from 'react-native-camera';
 import { RNS3 } from 'react-native-aws3';
-import PopupDialog, { SlideAnimation, DialogButton } from 'react-native-popup-dialog';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -26,8 +25,6 @@ import flashOn from '../../../assets/ic_flash_on_white.png';
 import flashAuto from '../../../assets/ic_flash_auto_white.png';
 import recordIcon from '../../../assets/ic_fiber_manual_record_white_48pt.png';
 
-const { height, width } = Dimensions.get('window');
-
 class Camera extends Component {
   constructor(props) {
     super(props);
@@ -36,8 +33,10 @@ class Camera extends Component {
       isRecording: false,
       counter: '',
       counterInterval: null,
-      counterTimeout: null
+      counterTimeout: null,
+      currentView: 'cameraView'
     };
+
   }
 
   startRecording() {
@@ -106,35 +105,44 @@ class Camera extends Component {
 
   takePicture() {
     // Current method: https://medium.com/@knowbody/react-native-image-upload-to-s3-bucket-5220941bfea2#.pw9qgho27
-    this.popupDialog.show();
-    // this.camera.capture()
-    //   .then(data => {
-    //     const dateString = (new Date()).toISOString().replace(/\.|:|-/g,'');
-    //     const file = {
-    //       uri: data.path,
-    //       name: this.props.username + dateString + '.jpg',
-    //       type: 'image/jpeg'
-    //     };
-    //
-    //     const options = {
-    //       keyPrefix: 'photos/',
-    //       bucket: 'trail-media',
-    //       region: 'us-west-1',
-    //       accessKey: config.AWSAccessKeyID,
-    //       secretKey: config.AWSSecretAccessKey,
-    //       successActionStatus: 201
-    //     };
-    //
-    //     RNS3.put(file, options)
-    //       .then(response => {
-    //         if (response.status !== 201) {
-    //           throw new Error('Failed to upload image to S3', response);
-    //         }
-    //         console.log('*** BODY ***', response.body);
-    //         this.props.postPhoto(this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
-    //       });
-    //   })
-    //   .catch(error => console.log('ERROR: ', error));
+
+    // this.setState({
+    //   currentView: 'friendSelect'
+    // });
+    this.camera.capture()
+      .then(data => {
+
+        this.props.photoCapturePressed(data);
+        console.log('PHOTOPATH === ', this.props.photoPath);
+
+        // console.log('DATA FROM PHOTO CAPTURE === ', data);
+        //
+        // const dateString = (new Date()).toISOString().replace(/\.|:|-/g,'');
+        // const file = {
+        //   uri: data.path,
+        //   name: this.props.username + dateString + '.jpg',
+        //   type: 'image/jpeg'
+        // };
+        //
+        // const options = {
+        //   keyPrefix: 'photos/',
+        //   bucket: 'trail-media',
+        //   region: 'us-west-1',
+        //   accessKey: config.AWSAccessKeyID,
+        //   secretKey: config.AWSSecretAccessKey,
+        //   successActionStatus: 201
+        // };
+        //
+        // RNS3.put(file, options)
+        //   .then(response => {
+        //     if (response.status !== 201) {
+        //       throw new Error('Failed to upload image to S3', response);
+        //     }
+        //     console.log('*** BODY ***', response.body);
+        //     this.props.postPhoto(this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
+        //   });
+      })
+      .catch(error => console.log('ERROR: ', error));
   }
 
   toggleCameraMode() {
@@ -149,33 +157,31 @@ class Camera extends Component {
     this.props.toggleFlashMode();
   }
 
-  render () {
-    var cameraSide = this.props.captureSide === ReactNativeCamera.constants.Type.front ? cameraFrontIcon : cameraRearIcon;
-    var cameraMode = this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still ? setCameraMode : setVideoMode;
-    var flashMode = this.props.flashMode === ReactNativeCamera.constants.FlashMode.off ? flashOff : this.props.flashMode === ReactNativeCamera.constants.FlashMode.on ? flashOn : flashAuto;
-    var captureIcon;
-    var captureFn;
-    if (this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still) {
-      captureIcon = cameraIcon;
-      captureFn = this.takePicture.bind(this);
-    } else {
-      captureIcon = recordIcon;
-      captureFn = this.startRecording.bind(this);
-    }
+  toggleDropPin() {
+    console.log('ToggleDropPin');
+    this.setState({
+      currentView: 'dropPin'
+    });
+  }
 
-    return (
-      <Swiper
-        style={styles.wrapper}
-        showsButtons={false}
-        showsPagination={false}
-        loop={false}
-        horizontal={false}
-        index={1}
-      >
-        <View style={styles.slide2}>
-          <AR />
-        </View>
-        <View style={styles.slide1}>
+  render () {
+
+    if (this.props.currentView === 'cameraView') {
+      var cameraSide = this.props.captureSide === ReactNativeCamera.constants.Type.front ? cameraFrontIcon : cameraRearIcon;
+      var cameraMode = this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still ? setCameraMode : setVideoMode;
+      var flashMode = this.props.flashMode === ReactNativeCamera.constants.FlashMode.off ? flashOff : this.props.flashMode === ReactNativeCamera.constants.FlashMode.on ? flashOn : flashAuto;
+      var captureIcon;
+      var captureFn;
+      if (this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still) {
+        captureIcon = cameraIcon;
+        captureFn = this.takePicture.bind(this);
+      } else {
+        captureIcon = recordIcon;
+        captureFn = this.startRecording.bind(this);
+      }
+
+      return (
+        <View>
           <ReactNativeCamera
           ref={(cam) => {
             this.camera = cam;
@@ -200,30 +206,100 @@ class Camera extends Component {
             </TouchableHighlight>
           </ReactNativeCamera>
         </View>
-        <View>
-          <CameraReview />
-        </View>
+      );
+    } else if (this.props.currentView === 'friendSelect') {
+      return (
         <View>
           <FriendSelect />
         </View>
+      );
+    } else if (this.state.currentView === 'dropPin') {
+      return (
         <View>
           <DropPin />
         </View>
-      </Swiper>
-    );
+      );
+    }
+
+    // return (
+    //   <Swiper
+    //     style={styles.wrapper}
+    //     showsButtons={false}
+    //     showsPagination={false}
+    //     loop={false}
+    //     horizontal={false}
+    //     index={1}
+    //   >
+    //     <View style={styles.slide2}>
+    //       <AR />
+    //     </View>
+    //     <View style={styles.slide1}>
+    //       <ReactNativeCamera
+    //       ref={(cam) => {
+    //         this.camera = cam;
+    //       }}
+    //       style={styles.preview}
+    //       aspect={ReactNativeCamera.constants.Aspect.fill}
+    //       captureMode={this.props.captureMode}
+    //       captureTarget={ReactNativeCamera.constants.CaptureTarget.disk}
+    //       flashMode={this.props.flashMode}
+    //       type={this.props.captureSide}>
+    //         <TouchableHighlight style={styles.flashButton} onPress={this.toggleFlash.bind(this)}>
+    //           <Image source={flashMode} />
+    //         </TouchableHighlight>
+    //         <TouchableHighlight style={styles.captureButton} onPress={captureFn}>
+    //           <Image source={captureIcon} />
+    //         </TouchableHighlight>
+    //         <TouchableHighlight style={styles.cameraSideButton} onPress={this.toggleCameraSide.bind(this)}>
+    //           <Image source={cameraSide} />
+    //         </TouchableHighlight>
+    //         <TouchableHighlight style={styles.captureModeButton} onPress={this.toggleCameraMode.bind(this)}>
+    //           <Image source={cameraMode} />
+    //         </TouchableHighlight>
+    //       </ReactNativeCamera>
+    //
+    //       <PopupDialog
+    //         ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+    //         height={height}
+    //         dialogAnimation={ new SlideAnimation({ slideFrom: 'top' })}
+    //         actions={[
+    //           <DialogButton
+    //             text = 'CLOSE'
+    //             onPress = {() => { this.toggleDropPin(); }}
+    //             key = 'button-1'
+    //             align = 'center'
+    //           />
+    //         ]}
+    //         >
+    //         {friendOrDrop}
+    //       </PopupDialog>
+    //     </View>
+    //     <View>
+    //       <CameraReview />
+    //     </View>
+    //     <View>
+    //       <FriendSelect />
+    //     </View>
+    //     <View>
+    //       <DropPin />
+    //     </View>
+    //   </Swiper>
+    // );
   }
 }
 
 const mapStateToProps = ({ app, camera, map }) => {
   const { username } = app;
-  const { captureMode, captureSide, flashMode } = camera;
+  const { captureMode, captureSide, currentView, flashMode, photoPath } = camera;
   const { latitude, longitude } = map;
   return {
     captureMode,
     captureSide,
+    currentView,
     flashMode,
     latitude,
     longitude,
+    photoPath,
     username
   };
 };

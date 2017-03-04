@@ -24,6 +24,8 @@ const types = {
 
   CurrentCoordsFound: 'CURRENT_COORDS_FOUND',
 
+  PhotoCapturePressed: 'PHOTO_CAPTURE_PRESSED'
+
   // SocketHello: 'socket/hello'
   // SocketReceiveMessage: 'server/receiveMessage'
 };

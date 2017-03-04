@@ -29,3 +29,10 @@ export function postPhoto(latitude, longitude, imageURL, publicPost) {
     }
   };
 }
+
+export function photoCapturePressed(photoPath) {
+  return {
+    type: types.PhotoCapturePressed,
+    payload: photoPath
+  };
+}

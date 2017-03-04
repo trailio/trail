@@ -13,7 +13,9 @@ const constants = {
 export default function reducer ( state = {
   captureMode: constants.still,
   captureSide: constants.back,
-  flashMode: constants.flashOff
+  flashMode: constants.flashOff,
+  currentView: 'cameraView',
+  photoPath: ''
 }, action) {
   switch (action.type) {
   case 'TOGGLE_CAPTURE_MODE': {
@@ -58,6 +60,13 @@ export default function reducer ( state = {
         ...state,
         flashMode: constants.flashOff
       }
+    }
+  }
+  case 'PHOTO_CAPTURE_PRESSED': {
+    return {
+      ...state,
+      photoPath: action.payload,
+      currentView: 'friendSelect'
     }
   }
   default:

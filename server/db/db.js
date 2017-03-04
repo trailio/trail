@@ -34,4 +34,16 @@ var db = pgp(dbConfig);
 //     console.log('ERROR: ', error);
 //   });
 
+
+// var sendArray = [5, 8, 9];
+// var values = [3, sendArray, '-122.40743033333337', '37.98728814970013', 'https://s3-us-west-1.amazonaws.com/trail-media/videos/undefined20170304T030525921Z.mp4', true];
+//
+// db.one('INSERT INTO posts(userid, recipientuserid, longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4, $5, $6) returning id', values)
+//   .then(function(result) {
+//     console.log(result);
+//   })
+//   .catch(function(error) {
+//     console.log('posts.post ERROR: ', error);
+//   });
+
 module.exports = db;

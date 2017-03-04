@@ -55,7 +55,7 @@ class Landing extends Component {
             <Text style={styles.text}>Login</Text>
             <Text>Username</Text>
             <TextInput
-              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              style={{height: 40, width: 150, borderColor: 'gray', borderWidth: 1}}
               value={this.props.usernameText}
               autoCapitalize={'none'}
               onChangeText={this.onUsernameChange.bind(this)}

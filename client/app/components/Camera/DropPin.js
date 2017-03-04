@@ -90,19 +90,29 @@ class DropPin extends Component {
           initialRegion={{
             latitude: this.props.latitude,
             longitude: this.props.longitude,
-            latitudeDelta: this.props.latitudeDelta,
-            longitudeDelta: this.props.longitudeDelta
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.015
           }}
           showsUserLocation={true}
           followsUserLocation={true}
-          scrollEnabled={false}
+          scrollEnabled={true}
           provider={'google'}
           customMapStyle={mapStyle}
         >
-          <MapView.Marker
-            coordinate={{
+        <MapView.Circle 
+          center={{
             latitude: this.props.latitude,
             longitude: this.props.longitude
+          }}
+          radius={500}
+          strokeWidth={3}
+          strokeColor={'#cc3399'}
+          zIndex={2}
+        />
+          <MapView.Marker
+            coordinate={{
+            latitude: Number(this.props.latitude),
+            longitude: Number(this.props.longitude)
             }}
             title={"title"}
             description={"description"}

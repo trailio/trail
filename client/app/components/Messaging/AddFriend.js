@@ -98,19 +98,19 @@ class AddFriend extends Component {
   onFriendAdd(userID, username, friend){
     console.log(`calling onFriendAdd for ${username} with ID of ${userID} to friend of`)
     console.log(JSON.stringify(friend));
-    this.props.addedFriend(userID, username, friend);
+    this.props.addedFriend(userID, friend.id);
   }
 
   onFriendAccept(userID, username, friend) {
     console.log(`calling onFriendAccept for ${username} with ID of ${userID} to friend of`)
     console.log(JSON.stringify(friend));
-    //TBD - for accpepting friend requests
+    this.props.addedFriend(userID, friend.id);
   }
 
   onFriendRemove(userID, username, friend) {
     console.log(`calling onFriendRemove for ${username} with ID of ${userID} to friend of`)
     console.log(JSON.stringify(friend));
-    //TBD - for accpepting friend requests
+    this.props.removedFriend(userID, friend.id);
   }
 
   displayUsernames () {
@@ -141,8 +141,8 @@ class AddFriend extends Component {
   };
 
   render() {
+
     var that = this;
-    console.log('fix this bug ===> this.props.username does not exist, nor does this.props.id', this.props.username);
     return (
       <View>
         <View style = {styles.heading}>

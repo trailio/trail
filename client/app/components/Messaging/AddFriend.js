@@ -8,6 +8,7 @@ import {
   ScrollView,
   Image
 } from 'react-native';
+import Tabs from 'react-native-tabs';
 import Swiper from 'react-native-swiper';
 import searchImg from './search.png'
 import addFriendImg from './addFriend.png'
@@ -34,7 +35,11 @@ const styles = StyleSheet.create({
     fontSize: 22
   },
   searchBox: {
-    flexDirection:'row'
+    flexDirection:'row',
+    padding: 20,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#d3d3d3'
   },
   searchButton: {
     alignSelf: 'flex-end' 
@@ -55,19 +60,28 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  tabNav: {
+    backgroundColor:'white'
+  },
+  selectedIconStyle: {
+    backgroundColor: '#d3d3d3'
+  },
+  selectedStyle: {
+    color:'white',
+    fontWeight: 'bold'
+  },
 });
+
 
 class AddFriend extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      text: ''
+      text: '',
+      page:'addFriends'
     };
   }
 
-
-  //TODO: EVENTUALLY REFACTOR TO REMOVE THE FIND USERNAME BUTTON AND SEARCH DYNAMICALLY WHILE TYPING
   onSubmitUsername(){
     console.log('searching for username ===>', this.state.text)
     this.props.searchedUser(this.state.text);
@@ -84,47 +98,37 @@ class AddFriend extends Component {
     //TBD - for accpepting friend requests
   }
 
-  render () {
-    var that = this
-    var displayUsernames = function() {
-      return (
-        <View>
-          { console.log('searchedFriends====>', that.props.searchedFriends)}
-          {
-            that.props.searchedFriends.map(function(friend, i) {
-            return (
-              <View style={styles.friendBody} key={i}>
-              <Text style={styles.username}> 
-                { friend.username }
-              </Text>
-              <TouchableHighlight onPress={that.onFriendAdd.bind(that, that.props.id, that.props.username, friend)} >
-                <Image source={addFriendImg}/>
-              </TouchableHighlight>
-              </View>
-            )
-          })}
-        </View>
-      )
-    }
+  render() {
+    var self = this;
+    var displayUsernames = function(){};
     return (
       <View>
         <View style = {styles.heading}>
-          <Text style={styles.text}>Add Friend</Text>
+            <Text style={styles.text}>Goorl Friends</Text>
+        </View>
+        <View style = {styles.heading}>
+          <Tabs selected={this.state.page} style={styles.tabNav}
+                selectedStyle={{color:'red'}} onSelect={el=>this.setState({page:el.props.name})}>
+              <Text name="addFriends" selectedIconStyle={styles.selectedIconStyle} selectedStyle={styles.selectedStyle}>Add</Text>
+              <Text name="acceptFriends" selectedIconStyle={styles.selectedIconStyle} selectedStyle={styles.selectedStyle}>Accept</Text>
+              <Text name="removeFriends" selectedIconStyle={styles.selectedIconStyle} selectedStyle={styles.selectedStyle}>Remove</Text>
+          </Tabs>
         </View>
         <View style={styles.searchBox}>
           <Image source={searchImg}/>
           <TextInput  style={styles.textInput} onChangeText={(text)=>this.setState({text})} value={this.state.text}/>
         </View>
         <TouchableHighlight style={styles.searchButton} onPress={this.onSubmitUsername.bind(this)}>
-          <Text style={styles.searchButtonText}>Find Username</Text>
+          <Text style={styles.searchButtonText}>Find User</Text>
         </TouchableHighlight>
         <ScrollView bounces={true}>
           { displayUsernames() }
         </ScrollView>
-
-      </View>)
+      </View>
+    );
   }
 }
+
 
 
 const mapStateToProps = ({app}) => {
@@ -145,5 +149,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddFriend);
-
-

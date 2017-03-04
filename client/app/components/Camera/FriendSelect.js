@@ -9,8 +9,9 @@ import {
   Image
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import searchImg from './search.png'
-import selectFriendImg from './addFriend.png'
+import searchImg from './search.png';
+import selectFriendUnchecked from './ic_radio_button_unchecked.png';
+import selectFriendChecked from './ic_radio_button_checked.png';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -86,13 +87,19 @@ class FriendSelect extends Component {
         <View>
           { that.props.friendList.map(function(friend, i){
               if (friend.username.toLowerCase().includes(that.state.text.toLowerCase())) {
+                var selectIcon;
+                if (!that.props.friendRecipients.includes(friend.id)) {
+                  selectIcon = selectFriendUnchecked;
+                } else {
+                  selectIcon = selectFriendChecked;
+                }
                 return (
                   <View style={styles.friendBody} key={i}>
                   <Text style={styles.username}>
                     { friend.username }
                   </Text>
                   <TouchableHighlight onPress={that.onFriendSelect.bind(that, friend)} >
-                    <Image source={selectFriendImg}/>
+                    <Image source={selectIcon}/>
                   </TouchableHighlight>
                  </View>
                 )

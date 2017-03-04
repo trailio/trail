@@ -5,8 +5,11 @@ export default function reducer ( state = {
   sentPosts: [],
   receivedPosts: [],
   friendList: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'xxoxoxaznxo23', id: 7}, {username: 'poofzie', id: 1}],
+  receivedFriendRequests: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'poofzie', id: 1}],
+  sentFriendRequests: [{username: 'xxoxoxaznxo23', id: 7}],
   renderImageURL: '',
-  searchedFriends: []
+  searchedFriends: [],
+
 }, action) {
   switch (action.type) {
   case 'LOGIN_USER': {

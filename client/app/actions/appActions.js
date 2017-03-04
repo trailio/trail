@@ -20,10 +20,14 @@ export function imageClosed () {
   };
 }
 
-export function searchedUser (searchText) {
+export function searchedUser (searchText, userID) {
+  console.log('searchedText AppAction.js ====>', searchText, 'hi', userID)
   return {
     type: types.SearchedUser,
-    payload: searchText
+    payload: {
+              searchText: searchText,
+              userID: userID
+             }
   };
 }
 

@@ -70,7 +70,7 @@ io.on('connection', function(socket) {
     }
     if (action.type === 'socket/searchedUser') {
       console.log('socket/searchedUser payload ==== ', action.payload);
-      friends.search(action.payload.toLowerCase(), function(data) {
+      friends.search(action.payload.searchText.toLowerCase(), action.payload.userID, function(data) {
         console.log('returning search results for friend search', data);
         // data = username, ids
         // EXAMPLE

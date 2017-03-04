@@ -82,25 +82,67 @@ class AddFriend extends Component {
     };
   }
 
-  onSubmitUsername(){
-    console.log('searching for username ===>', this.state.text)
-    this.props.searchedUser(this.state.text);
+  onFindUser(){
+    var that = this;
+    var interactionType = {
+      addFriends: that.props.searchedUser.bind(that, that.state.text, that.props.id),
+      acceptFriends: function(searchText){console.log('display only friend requests matching', searchText)}.bind(that, that.state.text),
+      removeFriends: function(searchText){console.log('display only current friends matching', searchText)}.bind(that, that.state.text)
+    }
+    console.log('searching for user ===>', this.props.id)
+    interactionType[this.state.page]()
     //Then define searchFriend socket endpoint in server and build out userSearch from filmedin
     //upon return, add a listener to appReducers.js for returned search results in an array, then render them as a list similar to your inbox, with a button click for add friend that will change when clicked
   }
 
   onFriendAdd(userID, username, friend){
-    // console.log('call some function to submit add friends here for ', username);
+    console.log(`calling onFriendAdd for ${username} with ID of ${userID} to friend of`)
+    console.log(JSON.stringify(friend));
     this.props.addedFriend(userID, username, friend);
   }
 
-  onFriendAccept(friend) {
+  onFriendAccept(userID, username, friend) {
+    console.log(`calling onFriendAccept for ${username} with ID of ${userID} to friend of`)
+    console.log(JSON.stringify(friend));
     //TBD - for accpepting friend requests
   }
 
+  onFriendRemove(userID, username, friend) {
+    console.log(`calling onFriendRemove for ${username} with ID of ${userID} to friend of`)
+    console.log(JSON.stringify(friend));
+    //TBD - for accpepting friend requests
+  }
+
+  displayUsernames () {
+    var that = this
+    var interactionType = {
+      addFriends: {list: that.props.searchedFriends, onSubmit: that.onFriendAdd},
+      acceptFriends: {list: that.props.receivedFriendRequests, onSubmit: that.onFriendAccept},
+      removeFriends: {list: that.props.friendList, onSubmit: that.onFriendRemove}
+    }
+    
+    return (
+      <View>
+        {
+          interactionType[that.state.page].list.map(function(friend, i) {
+          return (
+            <View style={styles.friendBody} key={i}>
+            <Text style={styles.username}> 
+              { friend.username }
+            </Text>
+            <TouchableHighlight onPress={interactionType[that.state.page].onSubmit.bind(that, that.props.id, that.props.username, friend)} >
+              <Image source={addFriendImg}/>
+            </TouchableHighlight>
+            </View>
+          )
+        })}
+      </View>
+    )
+  };
+
   render() {
-    var self = this;
-    var displayUsernames = function(){};
+    var that = this;
+    console.log('fix this bug ===> this.props.username does not exist, nor does this.props.id', this.props.username);
     return (
       <View>
         <View style = {styles.heading}>
@@ -118,11 +160,11 @@ class AddFriend extends Component {
           <Image source={searchImg}/>
           <TextInput  style={styles.textInput} onChangeText={(text)=>this.setState({text})} value={this.state.text}/>
         </View>
-        <TouchableHighlight style={styles.searchButton} onPress={this.onSubmitUsername.bind(this)}>
+        <TouchableHighlight style={styles.searchButton} onPress={this.onFindUser.bind(this)}>
           <Text style={styles.searchButtonText}>Find User</Text>
         </TouchableHighlight>
         <ScrollView bounces={true}>
-          { displayUsernames() }
+          { this.displayUsernames.call(this, this.state.page) }
         </ScrollView>
       </View>
     );
@@ -132,9 +174,12 @@ class AddFriend extends Component {
 
 
 const mapStateToProps = ({app}) => {
-  const { searchedUser, searchedFriends, addedFriend, username, id} = app;
+  const { searchedUser, friendList, receivedFriendRequests, sentFriendRequests, searchedFriends, addedFriend, username, id} = app;
   return {
     searchedUser,
+    friendList,
+    receivedFriendRequests,
+    sentFriendRequests,
     searchedFriends,
     addedFriend,
     username,

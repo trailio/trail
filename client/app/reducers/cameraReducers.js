@@ -69,6 +69,12 @@ export default function reducer ( state = {
       currentView: 'friendSelect'
     }
   }
+  case 'CONFIRM_FRIEND_SELECTION': {
+    return {
+      ...state,
+      currentView: 'dropPin'
+    }
+  }
   default:
     return state;
   }

@@ -36,3 +36,9 @@ export function photoCapturePressed(photoPath) {
     payload: photoPath
   };
 }
+
+export function confirmFriendSelection() {
+  return {
+    type: types.ConfirmFriendSelection
+  };
+}

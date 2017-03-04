@@ -179,7 +179,6 @@ class Camera extends Component {
         captureIcon = recordIcon;
         captureFn = this.startRecording.bind(this);
       }
-
       return (
         <View>
           <ReactNativeCamera
@@ -213,7 +212,7 @@ class Camera extends Component {
           <FriendSelect />
         </View>
       );
-    } else if (this.state.currentView === 'dropPin') {
+    } else if (this.props.currentView === 'dropPin') {
       return (
         <View>
           <DropPin />

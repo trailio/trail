@@ -14,7 +14,9 @@ import selectFriendImg from './addFriend.png'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import * as appActions from '../../actions/appActions';
+import * as cameraActions from '../../actions/cameraActions';
 
 
 const styles = StyleSheet.create({
@@ -37,7 +39,7 @@ const styles = StyleSheet.create({
     flexDirection:'row'
   },
   confirmButton: {
-    alignSelf: 'center' 
+    alignSelf: 'center'
   },
   confirmButtonText: {
     fontSize: 14
@@ -68,7 +70,7 @@ class FriendSelect extends Component {
 
   onConfirmSelections() {
     console.log('make use of this.state.friendsSelected to finish your posting process');
-
+    this.props.confirmFriendSelection();
   }
 
   onFriendSelect (friend) {
@@ -85,22 +87,22 @@ class FriendSelect extends Component {
     var that = this;
     var displayFriends = function() {
       return (
-        <View>  
+        <View>
           { that.props.friendList.map(function(friend, i){
               if (friend.username.toLowerCase().includes(that.state.text.toLowerCase())) {
                 return (
                   <View style={styles.friendBody} key={i}>
-                  <Text style={styles.username}> 
+                  <Text style={styles.username}>
                     { friend.username }
                   </Text>
                   <TouchableHighlight onPress={that.onFriendSelect.bind(that, friend)} >
                     <Image source={selectFriendImg}/>
                   </TouchableHighlight>
                  </View>
-                )   
+                )
               }
             })
-          } 
+          }
         </View>
       )
     }
@@ -124,14 +126,14 @@ class FriendSelect extends Component {
   }
 }
 
-const mapStateToProps = ({app}) => {
-  const { friendList} = app;
+const mapStateToProps = ({ app, camera }) => {
+  const { friendList } = app;
   return {
     friendList
   };
 };
 
-const bundledActionCreators = Object.assign({}, appActions);
+const bundledActionCreators = Object.assign({}, appActions, cameraActions);
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(bundledActionCreators, dispatch);

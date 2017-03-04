@@ -40,7 +40,8 @@ export function photoCapturePressed(photoPath) {
 
 export function videoRecordingEnded(videoPath) {
   return {
-    type: types.VideoRecordingEnded
+    type: types.VideoRecordingEnded,
+    payload: videoPath
   };
 }
 

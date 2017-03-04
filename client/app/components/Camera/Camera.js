@@ -36,13 +36,12 @@ class Camera extends Component {
     this.state = {
       counter: '',
       counterInterval: null,
-      counterTimeout: null,
-      currentView: 'cameraView'
+      counterTimeout: null
     };
   }
 
   componentDidUpdate() {
-    if (this.props.uploadPhoto === true) {
+    if (this.props.uploadPhoto === true && this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still) {
       console.log('Uploading photo');
       const dateString = (new Date()).toISOString().replace(/\.|:|-/g,'');
       const file = {
@@ -70,6 +69,33 @@ class Camera extends Component {
           this.props.toggleUpload();
         });
     }
+
+    if (this.props.uploadPhoto === true && this.props.captureMode === ReactNativeCamera.constants.CaptureMode.video) {
+      const dateString = (new Date()).toISOString().replace(/\.|:|-/g, '');
+      const file = {
+        uri: this.props.videoPath,
+        name: this.props.username + dateString + '.mp4',
+        type: 'video/mp4'
+      };
+
+      const options = {
+        keyPrefix: 'videos/',
+        bucket: 'trail-media',
+        region: 'us-west-1',
+        accessKey: config.AWSAccessKeyID,
+        secretKey: config.AWSSecretAccessKey,
+        successActionStatus: 201
+      };
+
+      RNS3.put(file, options)
+        .then(response => {
+          if (response.status !== 201) {
+            throw new Error('Failed to upload image to S3', response);
+          }
+          console.log('*** BODY ***', response.body);
+          this.props.postPhoto(this.props.friendRecipients, this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
+        });
+    }
   }
 
   startRecording() {
@@ -81,7 +107,6 @@ class Camera extends Component {
         });
       }, 1000);
       var setCounterTimeout = setTimeout(function() {
-        context.props.toggleIsRecording();
         context.stopRecording();
       }, 7000);
 
@@ -95,35 +120,8 @@ class Camera extends Component {
         .then(data => {
           console.log('data.path: ', data.path);
           this.props.videoRecordingEnded(data.path);
-          console.log('VIDEO PATH === ', this.props.videoPath);
-
-          const dateString = (new Date()).toISOString().replace(/\.|:|-/g, '');
-          const file = {
-            uri: data.path,
-            name: this.props.username + dateString + '.mp4',
-            type: 'video/mp4'
-          };
-
-          const options = {
-            keyPrefix: 'videos/',
-            bucket: 'trail-media',
-            region: 'us-west-1',
-            accessKey: config.AWSAccessKeyID,
-            secretKey: config.AWSSecretAccessKey,
-            successActionStatus: 201
-          };
-
-          RNS3.put(file, options)
-            .then(response => {
-              if (response.status !== 201) {
-                throw new Error('Failed to upload image to S3', response);
-              }
-              console.log('*** BODY ***', response.body);
-              this.props.postPhoto(this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
-            });
         })
         .catch(error => console.log('ERROR: ', error));
-
     } else {
       this.stopRecording();
     }
@@ -133,9 +131,7 @@ class Camera extends Component {
     clearInterval(this.state.counterInterval);
     clearTimeout(this.state.counterTimeout);
     this.setState({ counter: '' });
-    this.props.toggleIsRecording();
-    this.camera.stopCapture();
-    alert('Uploading, your video will appear shortly!');
+    console.log('videoPath: ', this.props.videoPath);
   }
 
   takePicture() {
@@ -180,6 +176,7 @@ class Camera extends Component {
           }}
           style={styles.preview}
           aspect={ReactNativeCamera.constants.Aspect.fill}
+          captureAudio={true}
           captureMode={this.props.captureMode}
           captureTarget={ReactNativeCamera.constants.CaptureTarget.disk}
           flashMode={this.props.flashMode}

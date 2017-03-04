@@ -63,30 +63,19 @@ class FriendSelect extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: '',
-      friendsSelected: {}
+      text: ''
     };
   }
 
   onConfirmSelections() {
-    console.log('make use of this.state.friendsSelected to finish your posting process');
     this.props.confirmFriendSelection();
   }
 
   onFriendSelect (friend) {
-    console.log('FRIEND === ', friend.id);
-
     if (!this.props.friendRecipients.includes(friend.id)) {
       this.props.addFriendToRecipients(friend.id);
       console.log('Friend Recipients: ', this.props.friendRecipients);
     }
-    // console.log(`${JSON.stringify(friend)} added to friendsSelected`)
-    // if (!(friend.id in this.state.friendsSelected)) {
-    //   this.state.friendsSelected[friend.id] = friend.username;
-    // } else {
-    //   delete this.state.friendsSelected[friend.id]
-    // }
-    // console.log(`current friend list is ${JSON.stringify(this.state.friendsSelected)}`)
   }
 
   render () {

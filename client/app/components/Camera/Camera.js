@@ -66,7 +66,7 @@ class Camera extends Component {
             throw new Error('Failed to upload image to S3', response);
           }
           console.log('*** BODY ***', response.body);
-          this.props.postPhoto(this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
+          this.props.postPhoto(this.props.friendRecipients, this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
           this.props.toggleUpload();
         });
     }
@@ -217,13 +217,14 @@ class Camera extends Component {
 
 const mapStateToProps = ({ app, camera, map }) => {
   const { username } = app;
-  const { captureMode, captureSide, currentView, flashMode, isRecording, photoPath, uploadPhoto, videoPath } = camera;
+  const { captureMode, captureSide, currentView, flashMode, friendRecipients, isRecording, photoPath, uploadPhoto, videoPath } = camera;
   const { latitude, longitude } = map;
   return {
     captureMode,
     captureSide,
     currentView,
     flashMode,
+    friendRecipients,
     isRecording,
     latitude,
     longitude,

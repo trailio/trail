@@ -34,8 +34,8 @@ module.exports = {
   },
   posts: {
     post: function(postDetails, cb) {
-      var values = [postDetails.longitude, postDetails.latitude, postDetails.imageURL, postDetails.publicPost];
-      db.one('INSERT INTO posts(longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4) returning id', values)
+      var values = [postDetails.recipientUserID, postDetails.longitude, postDetails.latitude, postDetails.imageURL, postDetails.publicPost];
+      db.one('INSERT INTO posts(recipientUserID, longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4, $5) returning id', values)
         .then(function(result) {
           cb(result);
         })

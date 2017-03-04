@@ -19,7 +19,7 @@ export default function reducer ( state = {
       return {
         ...state,
         isLoggedIn: true,
-        username: action.payload.posts.username,
+        username: action.payload.username,
         id: action.payload.posts.id,
         sentPosts: action.payload.posts.sent,
         receivedPosts: action.payload.posts.received,
@@ -29,6 +29,7 @@ export default function reducer ( state = {
       return {
         ...state,
         isLoggedIn: true,
+        username: action.payload.posts.username
       }
     }
   }

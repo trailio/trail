@@ -28,8 +28,7 @@ export default function reducer ( state = {
     } else {
       return {
         ...state,
-        isLoggedIn: true,
-        username: action.payload.posts.username
+        isLoggedIn: true
       }
     }
   }

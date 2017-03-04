@@ -67,7 +67,7 @@ class Camera extends Component {
           };
 
           const options = {
-            keyPrefix: 'photos/',
+            keyPrefix: 'videos/',
             bucket: 'trail-media',
             region: 'us-west-1',
             accessKey: config.AWSAccessKeyID,
@@ -179,6 +179,7 @@ class Camera extends Component {
         }}
         style={styles.preview}
         aspect={ReactNativeCamera.constants.Aspect.fill}
+        captureAudio={true}
         captureMode={this.props.captureMode}
         captureTarget={ReactNativeCamera.constants.CaptureTarget.disk}
         flashMode={this.props.flashMode}

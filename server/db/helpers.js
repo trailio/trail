@@ -64,7 +64,7 @@ module.exports = {
   },
   friends: {
     searchByString: function(string, cb) {
-      db.manyOrNone("SELECT id, username FROM profile WHERE username LIKE '%$1#%'", string)
+      db.manyOrNone("SELECT id, username FROM profile WHERE lower(username) LIKE '%$1#%'", string)
         .then(function(result) {
           cb(result)
         })

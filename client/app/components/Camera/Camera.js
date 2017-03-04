@@ -86,6 +86,8 @@ class Camera extends Component {
         })
         .catch(error => console.log('ERROR: ', error));
 
+    } else {
+      this.stopRecording();
     }
   }
 

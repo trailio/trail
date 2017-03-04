@@ -15,7 +15,8 @@ export default function reducer ( state = {
   captureSide: constants.back,
   flashMode: constants.flashOff,
   currentView: 'cameraView',
-  photoPath: ''
+  photoPath: '',
+  uploadPhoto: false
 }, action) {
   switch (action.type) {
   case 'TOGGLE_CAPTURE_MODE': {
@@ -73,6 +74,20 @@ export default function reducer ( state = {
     return {
       ...state,
       currentView: 'dropPin'
+    }
+  }
+  case 'TOGGLE_UPLOAD': {
+    if (state.uploadPhoto === true) {
+      return {
+        ...state,
+        uploadPhoto: false
+      }
+    } else if (state.uploadPhoto === false) {
+      return {
+        ...state,
+        uploadPhoto: true,
+        currentView: 'cameraView'
+      }
     }
   }
   default:

@@ -25,7 +25,9 @@ const types = {
   CurrentCoordsFound: 'CURRENT_COORDS_FOUND',
 
   PhotoCapturePressed: 'PHOTO_CAPTURE_PRESSED',
-  ConfirmFriendSelection: 'CONFIRM_FRIEND_SELECTION'
+  ConfirmFriendSelection: 'CONFIRM_FRIEND_SELECTION',
+
+  ToggleUpload: 'TOGGLE_UPLOAD'
 
   // SocketHello: 'socket/hello'
   // SocketReceiveMessage: 'server/receiveMessage'

@@ -42,3 +42,9 @@ export function confirmFriendSelection() {
     type: types.ConfirmFriendSelection
   };
 }
+
+export function toggleUpload() {
+  return {
+    type: types.ToggleUpload
+  };
+}

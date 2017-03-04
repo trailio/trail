@@ -104,45 +104,38 @@ class Camera extends Component {
   }
 
   takePicture() {
-    // Current method: https://medium.com/@knowbody/react-native-image-upload-to-s3-bucket-5220941bfea2#.pw9qgho27
-
-    // this.setState({
-    //   currentView: 'friendSelect'
-    // });
     this.camera.capture()
       .then(data => {
-
         this.props.photoCapturePressed(data);
-        console.log('PHOTOPATH === ', this.props.photoPath);
-
-        // console.log('DATA FROM PHOTO CAPTURE === ', data);
-        //
-        // const dateString = (new Date()).toISOString().replace(/\.|:|-/g,'');
-        // const file = {
-        //   uri: data.path,
-        //   name: this.props.username + dateString + '.jpg',
-        //   type: 'image/jpeg'
-        // };
-        //
-        // const options = {
-        //   keyPrefix: 'photos/',
-        //   bucket: 'trail-media',
-        //   region: 'us-west-1',
-        //   accessKey: config.AWSAccessKeyID,
-        //   secretKey: config.AWSSecretAccessKey,
-        //   successActionStatus: 201
-        // };
-        //
-        // RNS3.put(file, options)
-        //   .then(response => {
-        //     if (response.status !== 201) {
-        //       throw new Error('Failed to upload image to S3', response);
-        //     }
-        //     console.log('*** BODY ***', response.body);
-        //     this.props.postPhoto(this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
-        //   });
       })
       .catch(error => console.log('ERROR: ', error));
+  }
+
+  uploadPhoto() {
+    const dateString = (new Date()).toISOString().replace(/\.|:|-/g,'');
+    const file = {
+      uri: data.path,
+      name: this.props.username + dateString + '.jpg',
+      type: 'image/jpeg'
+    };
+
+    const options = {
+      keyPrefix: 'photos/',
+      bucket: 'trail-media',
+      region: 'us-west-1',
+      accessKey: config.AWSAccessKeyID,
+      secretKey: config.AWSSecretAccessKey,
+      successActionStatus: 201
+    };
+
+    RNS3.put(file, options)
+      .then(response => {
+        if (response.status !== 201) {
+          throw new Error('Failed to upload image to S3', response);
+        }
+        console.log('*** BODY ***', response.body);
+        this.props.postPhoto(this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
+      });
   }
 
   toggleCameraMode() {
@@ -219,71 +212,6 @@ class Camera extends Component {
         </View>
       );
     }
-
-    // return (
-    //   <Swiper
-    //     style={styles.wrapper}
-    //     showsButtons={false}
-    //     showsPagination={false}
-    //     loop={false}
-    //     horizontal={false}
-    //     index={1}
-    //   >
-    //     <View style={styles.slide2}>
-    //       <AR />
-    //     </View>
-    //     <View style={styles.slide1}>
-    //       <ReactNativeCamera
-    //       ref={(cam) => {
-    //         this.camera = cam;
-    //       }}
-    //       style={styles.preview}
-    //       aspect={ReactNativeCamera.constants.Aspect.fill}
-    //       captureMode={this.props.captureMode}
-    //       captureTarget={ReactNativeCamera.constants.CaptureTarget.disk}
-    //       flashMode={this.props.flashMode}
-    //       type={this.props.captureSide}>
-    //         <TouchableHighlight style={styles.flashButton} onPress={this.toggleFlash.bind(this)}>
-    //           <Image source={flashMode} />
-    //         </TouchableHighlight>
-    //         <TouchableHighlight style={styles.captureButton} onPress={captureFn}>
-    //           <Image source={captureIcon} />
-    //         </TouchableHighlight>
-    //         <TouchableHighlight style={styles.cameraSideButton} onPress={this.toggleCameraSide.bind(this)}>
-    //           <Image source={cameraSide} />
-    //         </TouchableHighlight>
-    //         <TouchableHighlight style={styles.captureModeButton} onPress={this.toggleCameraMode.bind(this)}>
-    //           <Image source={cameraMode} />
-    //         </TouchableHighlight>
-    //       </ReactNativeCamera>
-    //
-    //       <PopupDialog
-    //         ref={(popupDialog) => { this.popupDialog = popupDialog; }}
-    //         height={height}
-    //         dialogAnimation={ new SlideAnimation({ slideFrom: 'top' })}
-    //         actions={[
-    //           <DialogButton
-    //             text = 'CLOSE'
-    //             onPress = {() => { this.toggleDropPin(); }}
-    //             key = 'button-1'
-    //             align = 'center'
-    //           />
-    //         ]}
-    //         >
-    //         {friendOrDrop}
-    //       </PopupDialog>
-    //     </View>
-    //     <View>
-    //       <CameraReview />
-    //     </View>
-    //     <View>
-    //       <FriendSelect />
-    //     </View>
-    //     <View>
-    //       <DropPin />
-    //     </View>
-    //   </Swiper>
-    // );
   }
 }
 

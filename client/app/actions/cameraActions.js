@@ -60,3 +60,10 @@ export function toggleIsRecording() {
     type: types.ToggleIsRecording
   };
 }
+
+export function addFriendToRecipients(friendID) {
+  return {
+    type: types.AddFriendToRecipients,
+    payload: friendID
+  };
+}

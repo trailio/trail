@@ -29,7 +29,9 @@ const types = {
   ConfirmFriendSelection: 'CONFIRM_FRIEND_SELECTION',
 
   ToggleUpload: 'TOGGLE_UPLOAD',
-  ToggleIsRecording: 'TOGGLE_ISRECORDING'
+  ToggleIsRecording: 'TOGGLE_ISRECORDING',
+
+  AddFriendToRecipients: 'ADD_FRIEND_TO_RECIPIENTS'
 
   // SocketHello: 'socket/hello'
   // SocketReceiveMessage: 'server/receiveMessage'

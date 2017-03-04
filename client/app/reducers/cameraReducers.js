@@ -15,6 +15,7 @@ export default function reducer ( state = {
   captureSide: constants.back,
   currentView: 'cameraView',
   flashMode: constants.flashOff,
+  friendRecipients: [],
   isRecording: false,
   photoPath: '',
   uploadPhoto: false,
@@ -110,6 +111,12 @@ export default function reducer ( state = {
       ...state,
       videoPath: action.payload,
       currentView: 'friendSelect'
+    }
+  }
+  case 'ADD_FRIEND_TO_RECIPIENTS': {
+    return {
+      ...state,
+      friendRecipients: [...state.friendRecipients, action.payload]
     }
   }
   default:

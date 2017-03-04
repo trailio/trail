@@ -74,13 +74,19 @@ class FriendSelect extends Component {
   }
 
   onFriendSelect (friend) {
-    console.log(`${JSON.stringify(friend)} added to friendsSelected`)
-    if (!(friend.id in this.state.friendsSelected)) {
-      this.state.friendsSelected[friend.id] = friend.username;
-    } else {
-      delete this.state.friendsSelected[friend.id]
+    console.log('FRIEND === ', friend.id);
+
+    if (!this.props.friendRecipients.includes(friend.id)) {
+      this.props.addFriendToRecipients(friend.id);
+      console.log('Friend Recipients: ', this.props.friendRecipients);
     }
-    console.log(`current friend list is ${JSON.stringify(this.state.friendsSelected)}`)
+    // console.log(`${JSON.stringify(friend)} added to friendsSelected`)
+    // if (!(friend.id in this.state.friendsSelected)) {
+    //   this.state.friendsSelected[friend.id] = friend.username;
+    // } else {
+    //   delete this.state.friendsSelected[friend.id]
+    // }
+    // console.log(`current friend list is ${JSON.stringify(this.state.friendsSelected)}`)
   }
 
   render () {
@@ -128,8 +134,10 @@ class FriendSelect extends Component {
 
 const mapStateToProps = ({ app, camera }) => {
   const { friendList } = app;
+  const { friendRecipients } = camera;
   return {
-    friendList
+    friendList,
+    friendRecipients
   };
 };
 

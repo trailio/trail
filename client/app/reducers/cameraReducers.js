@@ -13,10 +13,12 @@ const constants = {
 export default function reducer ( state = {
   captureMode: constants.still,
   captureSide: constants.back,
-  flashMode: constants.flashOff,
   currentView: 'cameraView',
+  flashMode: constants.flashOff,
+  isRecording: false,
   photoPath: '',
-  uploadPhoto: false
+  uploadPhoto: false,
+  videoPath: ''
 }, action) {
   switch (action.type) {
   case 'TOGGLE_CAPTURE_MODE': {
@@ -88,6 +90,26 @@ export default function reducer ( state = {
         uploadPhoto: true,
         currentView: 'cameraView'
       }
+    }
+  }
+  case 'TOGGLE_ISRECORDING': {
+    if (state.isRecording === true) {
+      return {
+        ...state,
+        isRecording: false
+      }
+    } else if (state.isRecording === false) {
+      return {
+        ...state,
+        isRecording: true
+      }
+    }
+  }
+  case 'VIDEO_RECORDING_ENDED': {
+    return {
+      ...state,
+      videoPath: action.payload,
+      currentView: 'friendSelect'
     }
   }
   default:

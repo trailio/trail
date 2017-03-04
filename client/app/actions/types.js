@@ -24,10 +24,12 @@ const types = {
 
   CurrentCoordsFound: 'CURRENT_COORDS_FOUND',
 
+  VideoRecordingEnded: 'VIDEO_RECORDING_ENDED',
   PhotoCapturePressed: 'PHOTO_CAPTURE_PRESSED',
   ConfirmFriendSelection: 'CONFIRM_FRIEND_SELECTION',
 
-  ToggleUpload: 'TOGGLE_UPLOAD'
+  ToggleUpload: 'TOGGLE_UPLOAD',
+  ToggleIsRecording: 'TOGGLE_ISRECORDING'
 
   // SocketHello: 'socket/hello'
   // SocketReceiveMessage: 'server/receiveMessage'

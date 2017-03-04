@@ -29,8 +29,11 @@ class Camera extends Component {
   constructor(props) {
     super(props);
 
+    // We must use state for video recording
+    // because a setInterval and setTimeout
+    // in the reducer will be a lot of work
+    // for the dispatcher
     this.state = {
-      isRecording: false,
       counter: '',
       counterInterval: null,
       counterTimeout: null,
@@ -70,7 +73,7 @@ class Camera extends Component {
   }
 
   startRecording() {
-    if (!this.state.isRecording) {
+    if (!this.props.isRecording) {
       var context = this;
       var setCounterInterval = setInterval(function() {
         context.setState({
@@ -78,11 +81,11 @@ class Camera extends Component {
         });
       }, 1000);
       var setCounterTimeout = setTimeout(function() {
+        context.props.toggleIsRecording();
         context.stopRecording();
       }, 7000);
 
       this.setState({
-        isRecording: true,
         counter: 7,
         counterInterval: setCounterInterval,
         counterTimeout: setCounterTimeout
@@ -90,10 +93,14 @@ class Camera extends Component {
 
       this.camera.capture()
         .then(data => {
+          console.log('data.path: ', data.path);
+          this.props.videoRecordingEnded(data.path);
+          console.log('VIDEO PATH === ', this.props.videoPath);
+
           const dateString = (new Date()).toISOString().replace(/\.|:|-/g, '');
           const file = {
             uri: data.path,
-            name: this.props.username + dateString + '.jpg',
+            name: this.props.username + dateString + '.mp4',
             type: 'video/mp4'
           };
 
@@ -125,10 +132,8 @@ class Camera extends Component {
   stopRecording() {
     clearInterval(this.state.counterInterval);
     clearTimeout(this.state.counterTimeout);
-    this.setState({
-      counter: '',
-      isRecording: false
-    });
+    this.setState({ counter: '' });
+    this.props.toggleIsRecording();
     this.camera.stopCapture();
     alert('Uploading, your video will appear shortly!');
   }
@@ -153,15 +158,7 @@ class Camera extends Component {
     this.props.toggleFlashMode();
   }
 
-  toggleDropPin() {
-    console.log('ToggleDropPin');
-    this.setState({
-      currentView: 'dropPin'
-    });
-  }
-
   render () {
-
     if (this.props.currentView === 'cameraView') {
       var cameraSide = this.props.captureSide === ReactNativeCamera.constants.Type.front ? cameraFrontIcon : cameraRearIcon;
       var cameraMode = this.props.captureMode === ReactNativeCamera.constants.CaptureMode.still ? setCameraMode : setVideoMode;
@@ -220,18 +217,20 @@ class Camera extends Component {
 
 const mapStateToProps = ({ app, camera, map }) => {
   const { username } = app;
-  const { captureMode, captureSide, currentView, flashMode, photoPath, uploadPhoto } = camera;
+  const { captureMode, captureSide, currentView, flashMode, isRecording, photoPath, uploadPhoto, videoPath } = camera;
   const { latitude, longitude } = map;
   return {
     captureMode,
     captureSide,
     currentView,
     flashMode,
+    isRecording,
     latitude,
     longitude,
     photoPath,
     uploadPhoto,
-    username
+    username,
+    videoPath
   };
 };
 

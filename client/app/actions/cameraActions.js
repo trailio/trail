@@ -37,6 +37,12 @@ export function photoCapturePressed(photoPath) {
   };
 }
 
+export function videoRecordingEnded(videoPath) {
+  return {
+    type: types.VideoRecordingEnded
+  };
+}
+
 export function confirmFriendSelection() {
   return {
     type: types.ConfirmFriendSelection
@@ -46,5 +52,11 @@ export function confirmFriendSelection() {
 export function toggleUpload() {
   return {
     type: types.ToggleUpload
+  };
+}
+
+export function toggleIsRecording() {
+  return {
+    type: types.ToggleIsRecording
   };
 }

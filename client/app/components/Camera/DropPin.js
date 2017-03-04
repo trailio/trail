@@ -2,27 +2,31 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  Dimensions
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import MapView from 'react-native-maps';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-import * as cameraActions from '../../actions/cameraActions';
 import * as mapActions from '../../actions/mapActions';
+
+const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   map: {
-    height: 600, margin: 0
+    height: height - 100, 
+    width: width,
+    margin: 0,
+    padding: 0
   },
   text: {
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    padding: 10,
+    padding: 10
   }
 });
 
@@ -80,8 +84,8 @@ class DropPin extends Component {
     return (
     <View>
       {this.props.latitude ?
-        <MapView
-          style={styles.map}
+        <MapView 
+          style={styles.map} 
           initialRegion={{
             latitude: this.props.latitude,
             longitude: this.props.longitude,
@@ -104,7 +108,7 @@ class DropPin extends Component {
           />
         </MapView> : null
       }
-      <Text style={styles.text} onPress={this.props.toggleUpload}>Drop Pin</Text>
+      <Text style={styles.text}>Drop Pin</Text>
     </View>
     );
   }
@@ -120,10 +124,11 @@ const mapStateToProps = ({map}) => {
   };
 };
 
-const bundledActionCreators = Object.assign({}, cameraActions, mapActions);
+const bundledActionCreators = Object.assign({}, mapActions);
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(bundledActionCreators, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropPin);
+

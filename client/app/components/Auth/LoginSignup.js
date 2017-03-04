@@ -65,6 +65,7 @@ class Landing extends Component {
               style={{height: 40, borderColor: 'gray', borderWidth: 1}}
               value={this.props.passwordText}
               autoCapitalize={'none'}
+              secureTextEntry={true}
               onChangeText={this.onPasswordChange.bind(this)}
             />
             <Text/>

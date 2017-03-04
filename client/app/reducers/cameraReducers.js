@@ -122,6 +122,12 @@ export default function reducer ( state = {
       friendRecipients: [...state.friendRecipients, action.payload]
     }
   }
+  case 'REMOVE_FRIEND_FROM_RECIPIENTS': {
+    return {
+      ...state,
+      friendRecipients: state.friendRecipients.filter(item => item !== action.payload)
+    };
+  }
   default:
     return state;
   }

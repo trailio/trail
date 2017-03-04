@@ -31,7 +31,8 @@ const types = {
   ToggleUpload: 'TOGGLE_UPLOAD',
   ToggleIsRecording: 'TOGGLE_ISRECORDING',
 
-  AddFriendToRecipients: 'ADD_FRIEND_TO_RECIPIENTS'
+  AddFriendToRecipients: 'ADD_FRIEND_TO_RECIPIENTS',
+  RemoveFriendFromRecipients: 'REMOVE_FRIEND_FROM_RECIPIENTS'
 
   // SocketHello: 'socket/hello'
   // SocketReceiveMessage: 'server/receiveMessage'

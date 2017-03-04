@@ -68,3 +68,10 @@ export function addFriendToRecipients(friendID) {
     payload: friendID
   };
 }
+
+export function removeFriendFromRecipients(friendID) {
+  return {
+    type: types.RemoveFriendFromRecipients,
+    payload: friendID
+  };
+}

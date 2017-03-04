@@ -74,7 +74,8 @@ class FriendSelect extends Component {
   onFriendSelect (friend) {
     if (!this.props.friendRecipients.includes(friend.id)) {
       this.props.addFriendToRecipients(friend.id);
-      console.log('Friend Recipients: ', this.props.friendRecipients);
+    } else {
+      this.props.removeFriendFromRecipients(friend.id);
     }
   }
 

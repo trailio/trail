@@ -1,4 +1,4 @@
-export default function reducer ( state = {
+  export default function reducer ( state = {
   isLoggedIn: false,
   username: '',
   id: '',
@@ -13,7 +13,7 @@ export default function reducer ( state = {
 }, action) {
   switch (action.type) {
   case 'LOGIN_USER': {
-    // console.log('IS Action.payload an object???????', action.payload);
+    console.log('IS Action.payload an object???????', action.payload);
     // console.log(typeof action.payload)
     if (typeof action.payload === 'object') {
       // console.log('Action.payload is an object!!!!', action.payload);
@@ -23,7 +23,7 @@ export default function reducer ( state = {
         ...state,
         isLoggedIn: true,
         username: action.payload.username,
-        id: action.payload.posts.id,
+        id: action.payload.id,
         sentPosts: action.payload.posts.sent,
         receivedPosts: action.payload.posts.received,
         friendList: action.payload.friends
@@ -39,7 +39,7 @@ export default function reducer ( state = {
     console.log('user searched received from server', action.data);
     return {
       ...state,
-      searchedFriends: action.data
+      searchedFriends: action.data  
     }
   }
   case 'IMAGEURL_CHANGED': {

@@ -64,8 +64,7 @@ module.exports = {
   },
   friends: {
     searchByString: function(string, userID, cb) {
-      console.log('!!!!!!', userID)
-      db.manyOrNone("SELECT id, username FROM profile WHERE lower(username) LIKE '%$1#%' AND ID != $2", string, userID)
+      db.manyOrNone("SELECT id, username FROM profile WHERE lower(username) LIKE '%$1#%' AND id != $2", [string, userID]  )
         .then(function(result) {
           cb(result)
         })

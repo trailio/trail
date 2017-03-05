@@ -93,7 +93,8 @@ class Camera extends Component {
             throw new Error('Failed to upload image to S3', response);
           }
           console.log('*** BODY ***', response.body);
-          this.props.postPhoto(this.props.friendRecipients, this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
+          this.props.postPhoto(this.props.friendRecipients, 'test', 'test', response.body.postResponse.location, true);
+          this.props.toggleUpload();
         });
     }
   }
@@ -118,7 +119,6 @@ class Camera extends Component {
 
       this.camera.capture()
         .then(data => {
-          console.log('data.path: ', data.path);
           this.props.videoRecordingEnded(data.path);
         })
         .catch(error => console.log('ERROR: ', error));
@@ -131,7 +131,7 @@ class Camera extends Component {
     clearInterval(this.state.counterInterval);
     clearTimeout(this.state.counterTimeout);
     this.setState({ counter: '' });
-    console.log('videoPath: ', this.props.videoPath);
+    this.camera.stopCapture();
   }
 
   takePicture() {

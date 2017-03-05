@@ -83,6 +83,7 @@ export default function reducer ( state = {
     if (state.uploadPhoto === true) {
       return {
         ...state,
+        isRecording: false,
         uploadPhoto: false,
         friendRecipients: [],
         photoPath: '',

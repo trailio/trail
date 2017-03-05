@@ -93,7 +93,7 @@ class Camera extends Component {
             throw new Error('Failed to upload image to S3', response);
           }
           console.log('*** BODY ***', response.body);
-          this.props.postPhoto(this.props.friendRecipients, 'test', 'test', response.body.postResponse.location, true);
+          this.props.postPhoto(this.props.friendRecipients, this.props.latitude, this.props.longitude, response.body.postResponse.location, true);
           this.props.toggleUpload();
         });
     }

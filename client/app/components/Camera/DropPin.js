@@ -89,6 +89,7 @@ class DropPin extends Component {
     console.log('this.props.longitude', this.props.longitude)
 
     var sendPin = function() {console.log('SENDDDPINNN!!!!!', this)};
+    var that = this;
 
     //To calculate distance between two coordinates: https://en.wikipedia.org/wiki/Haversine_formula
     function getDistanceFromLatLonInMeters(lat1,lon1,lat2,lon2) {
@@ -112,7 +113,7 @@ class DropPin extends Component {
     var locationCheck = function(lat1, long1, lat2, long2) {
       if (lat1 && getDistanceFromLatLonInMeters(lat1, long1, lat2, long2) <= 500) {
         return (
-          <TouchableHighlight onPress={sendPin}>
+          <TouchableHighlight onPress={that.props.toggleUpload}>
             <Image source={sendIcon}/>
           </TouchableHighlight>
         );

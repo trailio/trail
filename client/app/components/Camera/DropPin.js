@@ -11,6 +11,8 @@ import mapStyle from '../Map/mapStyle';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+import * as cameraActions from '../../actions/cameraActions';
 import * as mapActions from '../../actions/mapActions';
 
 const {height, width} = Dimensions.get('window');
@@ -121,7 +123,7 @@ class DropPin extends Component {
           />
         </MapView> : null
       }
-      <Text style={styles.text}>Drop Pin</Text>
+      <Text style={styles.text} onPress={this.props.toggleUpload}>Drop Pin</Text>
     </View>
     );
   }
@@ -137,7 +139,7 @@ const mapStateToProps = ({map}) => {
   };
 };
 
-const bundledActionCreators = Object.assign({}, mapActions);
+const bundledActionCreators = Object.assign({}, cameraActions, mapActions);
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(bundledActionCreators, dispatch);

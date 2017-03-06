@@ -89,8 +89,28 @@ class DropPin extends Component {
     console.log('this.props.longitude', this.props.longitude)
 
     var sendPin = function() {console.log('SENDDDPINNN!!!!!', this)};
-    var locationCheck = function(lat, long) {
-      if (lat) {
+
+    //To calculate distance between two coordinates: https://en.wikipedia.org/wiki/Haversine_formula
+    function getDistanceFromLatLonInMeters(lat1,lon1,lat2,lon2) {
+      var R = 6371000; // Radius of the earth in meters
+      var dLat = deg2rad(lat2-lat1);
+      var dLon = deg2rad(lon2-lon1); 
+      var a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+        ; 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var d = R * c; // Distance in meters
+      return d;
+    }
+
+    function deg2rad(deg) {
+      return deg * (Math.PI/180)
+    }
+
+    var locationCheck = function(lat1, long1, lat2, long2) {
+      if (lat1 && getDistanceFromLatLonInMeters(lat1, long1, lat2, long2) <= 500) {
         return (
           <TouchableHighlight onPress={sendPin}>
             <Image source={sendIcon}/>
@@ -140,7 +160,7 @@ class DropPin extends Component {
         </MapView> : null
       }
       <Text style={styles.text}>Drop Pin</Text>
-      {locationCheck(this.state.pinDropLat)}
+      {locationCheck(this.state.pinDropLat, this.state.pinDropLong, this.props.latitude, this.props.longitude)}
     </View>
     );
   }

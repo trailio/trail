@@ -4,11 +4,13 @@ import {
   Text,
   View,
   Dimensions,
-  TouchableHighlight
+  TouchableHighlight,
+  Image
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import MapView from 'react-native-maps';
 import mapStyle from '../Map/mapStyle';
+import sendIcon from './send.png';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

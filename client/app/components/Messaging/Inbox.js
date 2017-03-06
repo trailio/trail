@@ -5,17 +5,22 @@ import {
   View,
   ScrollView,
   TouchableHighlight,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
 import Swiper from 'react-native-swiper';
+import VideoPlayer from 'react-native-video';
+
 import AddFriend from './AddFriend';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appActions from '../../actions/appActions';
 import TrailApp from '../trailApp';
-import pinImg from './Pin.png'
+import pinImg from './Pin.png';
 // import Inbox from './Inbox'
+
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -50,6 +55,19 @@ const styles = StyleSheet.create({
   postDate: {
     color: '#54575C',
     fontSize: 10
+  },
+  video: {
+    //position: 'absolute',
+    height: height,
+    width: width,
+    flex: 1,
+    margin: 0,
+    padding: 0
+  },
+  photo: {
+    flex: 1,
+    width: 375,
+    height: 675
   }
 });
 
@@ -60,7 +78,7 @@ class Inbox extends Component {
 
   onReceivedPostPress(imageurl) {
     this.props.imageURLChanged(imageurl);
-    console.log("HIIIIIII imageURL changed to: ", this.props.receivedPosts);
+    console.log("HIIIIIII imageURL changed to: ", imageurl);
   }
 
   onImagePressed(){
@@ -77,7 +95,7 @@ class Inbox extends Component {
           <TouchableHighlight onPress={that.onReceivedPostPress.bind(that, post.imageurl)} key={i}>
             <View style={styles.postBody}>
               <Image source={pinImg}/>
-              <Text style={styles.postName}> 
+              <Text style={styles.postName}>
                 {post.username}
               </Text>
               <Text style={styles.postDate}>
@@ -91,16 +109,37 @@ class Inbox extends Component {
     };
     if (this.props.renderImageURL) {
       console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL);
-      return(
-        <View>
-          <TouchableHighlight onPress={function() { that.onImagePressed() }}>
-            <Image
-              style={{width: 375, height: 675}}
-              source={{uri: that.props.renderImageURL}}
-            />
-          </TouchableHighlight>
-        </View>
-      );
+      if (this.props.renderImageURL.indexOf('.mp4') >= 0) {
+        var videoURL = this.props.renderImageURL;
+        return (
+          <View>
+            <TouchableHighlight onPress={function() { that.onImagePressed() }}>
+              <VideoPlayer source={{uri: videoURL}}
+                rate={1.0}
+                volume={1.0}
+                muted={false}
+                paused={false}
+                resizeMode="cover"
+                repeat={true}
+                style={styles.video}
+              />
+            </TouchableHighlight>
+          </View>
+        );
+      } else {
+        console.log('**** IMAGE *** ');
+        var imageURL = this.props.renderImageURL;
+        return (
+          <View>
+            <TouchableHighlight onPress={function() { that.onImagePressed() }}>
+              <Image
+                style={styles.photo}
+                source={{uri: that.props.renderImageURL}}
+              />
+            </TouchableHighlight>
+          </View>
+        );
+      }
     } else {
       return (
         <Swiper

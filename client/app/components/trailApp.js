@@ -57,7 +57,7 @@ class TrailApp extends Component {
         if (value && user) {
           this.props.loginUser(JSON.parse(user));
         }
-      })
+      });
     });
   }
 }

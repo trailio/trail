@@ -8,7 +8,6 @@ import {
   Dimensions
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import ViewContent from './ViewContent';
 import MapView from 'react-native-maps';
 import store from '../../store.js';
 import mapStyle from './mapStyle';
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   calloutStyle: {
-    flex: 1, 
+    flex: 1,
     position: 'relative',
   }
 });
@@ -123,8 +122,8 @@ class TrailMap extends Component {
                     <Text>
                       {marker.username}
                     </Text>
-                  </View>  
-                </MapView.Callout>              
+                  </View>
+                </MapView.Callout>
               </MapView.Marker>
         )})
     }
@@ -163,21 +162,21 @@ class TrailMap extends Component {
               >
                 <MapView.Marker
                   coordinate={this.state.region}
-                  draggable      
+                  draggable
                 >
                   <MapView.Callout style={styles.calloutStyle}>
                     <View>
                       <Text>
                         Alfred
                       </Text>
-                    </View>  
+                    </View>
                   </MapView.Callout>
                 </MapView.Marker>
                 { receivedMessages() }
               </MapView> : null}
           </View>
           <View style={styles.slide1}>
-            <ViewContent />
+
           </View>
         </Swiper>
       );

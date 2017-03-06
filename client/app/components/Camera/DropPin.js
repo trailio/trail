@@ -88,7 +88,19 @@ class DropPin extends Component {
     console.log('this.props.latitude', this.props.latitude)
     console.log('this.props.longitude', this.props.longitude)
 
-    var sendPin = function() {console.log('SENDDDPINNN!!!!!')}
+    var sendPin = function() {console.log('SENDDDPINNN!!!!!', this)};
+    var locationCheck = function(lat, long) {
+      if (lat) {
+        return (
+          <TouchableHighlight onPress={sendPin}>
+            <Image source={sendIcon}/>
+          </TouchableHighlight>
+        );
+      } else {
+        return null;
+      }
+    };
+
     return (
     <View>
       {this.props.latitude ?
@@ -127,7 +139,8 @@ class DropPin extends Component {
           />
         </MapView> : null
       }
-      <Text style={styles.text} onPress={this.props.toggleUpload}>Drop Pin</Text>
+      <Text style={styles.text}>Drop Pin</Text>
+      {locationCheck(this.state.pinDropLat)}
     </View>
     );
   }

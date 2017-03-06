@@ -3,7 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import MapView from 'react-native-maps';
@@ -84,6 +85,8 @@ class DropPin extends Component {
     console.log('this.state.pinDropLat', this.state.pinDropLat)
     console.log('this.props.latitude', this.props.latitude)
     console.log('this.props.longitude', this.props.longitude)
+
+    var sendPin = function() {console.log('SENDDDPINNN!!!!!')}
     return (
     <View>
       {this.props.latitude ?
@@ -95,7 +98,6 @@ class DropPin extends Component {
             latitudeDelta: 0.015,
             longitudeDelta: 0.015
           }}
-          showsUserLocation={true}
           followsUserLocation={true}
           scrollEnabled={true}
           provider={'google'}

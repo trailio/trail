@@ -1,75 +1,22 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableHighlight,
   Image,
-  Dimensions
+  Text,
+  TouchableHighlight,
+  View,
+  ScrollView
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import VideoPlayer from 'react-native-video';
 
-import AddFriend from './AddFriend';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appActions from '../../actions/appActions';
-import TrailApp from '../trailApp';
+
+import styles from './styles';
 import pinImg from './Pin.png';
-// import Inbox from './Inbox'
 
-const { height, width } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  wrapper: {
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center'
-  },
-  heading: {
-    padding: 20
-  },
-  postBody: {
-    // margin: .25,
-    borderColor: '#81cbe5',
-    borderWidth: .25,
-    borderRadius: 5,
-    padding: 20,
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  pinImg: {
-  },
-  postName:  {
-    color: '#54575C',
-    fontSize: 14
-  },
-  postDate: {
-    color: '#54575C',
-    fontSize: 10
-  },
-  video: {
-    //position: 'absolute',
-    height: height,
-    width: width,
-    flex: 1,
-    margin: 0,
-    padding: 0
-  },
-  photo: {
-    flex: 1,
-    width: 375,
-    height: 675
-  }
-});
+import AddFriend from './AddFriend';
 
 class Inbox extends Component {
   constructor(props) {
@@ -78,43 +25,46 @@ class Inbox extends Component {
 
   onReceivedPostPress(imageurl) {
     this.props.imageURLChanged(imageurl);
-    console.log("HIIIIIII imageURL changed to: ", imageurl);
   }
 
-  onImagePressed(){
+  onImagePressed() {
     this.props.imageClosed();
   }
 
   render () {
     var that = this;
+
     var receivedMessages = function() {
       return (
         <View>
-        { that.props.receivedPosts.map(function(post, i){
+        { that.props.receivedPosts.map(function(post, i) {
           return (
-          <TouchableHighlight onPress={that.onReceivedPostPress.bind(that, post.imageurl)} key={i}>
-            <View style={styles.postBody}>
-              <Image source={pinImg}/>
-              <Text style={styles.postName}>
-                {post.username}
-              </Text>
-              <Text style={styles.postDate}>
-                {post.timeposted}
-              </Text>
-            </View>
-          </TouchableHighlight>
-          )})}
+            <TouchableHighlight
+              onPress={that.onReceivedPostPress.bind(that, post.imageurl)}
+              key={i}
+            >
+              <View style={styles.postBody}>
+                <Image source={pinImg}/>
+                <Text style={styles.postName}>
+                  {post.username}
+                </Text>
+                <Text style={styles.postDate}>
+                  {post.timeposted}
+                </Text>
+              </View>
+            </TouchableHighlight>
+          );
+        })}
         </View>
-      )
+      );
     };
+
     if (this.props.renderImageURL) {
-      console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL);
       if (this.props.renderImageURL.indexOf('.mp4') >= 0) {
-        var videoURL = this.props.renderImageURL;
         return (
           <View>
-            <TouchableHighlight onPress={function() { that.onImagePressed() }}>
-              <VideoPlayer source={{uri: videoURL}}
+            <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
+              <VideoPlayer source={{uri: that.props.renderImageURL}}
                 rate={1.0}
                 volume={1.0}
                 muted={false}
@@ -127,11 +77,9 @@ class Inbox extends Component {
           </View>
         );
       } else {
-        console.log('**** IMAGE *** ');
-        var imageURL = this.props.renderImageURL;
         return (
           <View>
-            <TouchableHighlight onPress={function() { that.onImagePressed() }}>
+            <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
               <Image
                 style={styles.photo}
                 source={{uri: that.props.renderImageURL}}
@@ -164,8 +112,6 @@ class Inbox extends Component {
     }
   }
 }
-
-
 
 const mapStateToProps = ({app}) => {
   const { isLoggedIn, sentPosts, receivedPosts, renderImageURL } = app;

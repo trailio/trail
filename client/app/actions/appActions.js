@@ -30,9 +30,16 @@ export function searchedUser (searchText, userID) {
   };
 }
 
-export function addedFriend(userID, username, friend) {
+export function addedFriend(primaryID, friendID) {
   return {
     type: types.AddedFriend,
-    payload: {username: username, id: userID, friendID: friend.id}
+    payload: {primaryID: primaryID, friendID: friendID}
+  }
+}
+
+export function removedFriend(primaryID, friendID) {
+  return {
+    type: types.RemovedFriend,
+    payload: {primaryID: primaryID, friendID: friendID}
   }
 }

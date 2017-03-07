@@ -31,7 +31,7 @@ io.on('connection', function(socket) {
   });
   socket.on('action', function(action) {
     if (action.type === 'socket/signin') {
-      auth.signin(action.payload, function(token, username, userID, posts, friends) {
+      auth.signin(action.payload, function(token, username, userID, posts, friendList, receivedFriendRequests, sentFriendRequests) {
         console.log('index.js socket/signin - got token, emitting action with token back to app for token', token);
         socket.emit('action',
           {
@@ -41,7 +41,9 @@ io.on('connection', function(socket) {
               id: userID,
               token: token,
               posts: posts || {},
-              friends: friends || [{username: 'testUser23', id: 3}, {username: 'testUser41', id: 5}, {username: 'testUser352', id: 7}, {username: 'testUser095', id: 1}]
+              friendList: friendList || [{username: 'testUser23', id: 3}, {username: 'testUser41', id: 5}, {username: 'testUser352', id: 7}, {username: 'testUser095', id: 1}],
+              receivedFriendRequests: receivedFriendRequests || [{username: 'receivedReqUser1', id: 9999}, {username: 'receivedReqUser2', id: 9998}, {username: 'receivedReqUser3', id: 9997}],
+              sentFriendRequests: sentFriendRequests || [{username: 'sentReqUser1', id: 1008}, {username: 'sentReqUser2', id: 1009}, {username: 'sentReqUser3', id: 1007}]
             }
           });
       });
@@ -57,9 +59,12 @@ io.on('connection', function(socket) {
               id: userID,
               token: token,
               posts: {},
-              friends: []
+              friendList: [],
+              receivedFriendRequests: [],
+              sentFriendRequests: []
             }
-          });
+          }
+        );
       });
     }
     if (action.type === 'socket/postPhoto') {
@@ -84,10 +89,23 @@ io.on('connection', function(socket) {
 
     if (action.type === 'socket/addFriend') {
       console.log('socket/addFriend payload ==== ', action.payload);
-      //action.payload should be a username or a userID, undecided yet
+      friends.add(action.payload.primaryID, action.payload.friendID, function(confirmation){
+        console.log('friends.add stuff done', confirmation)
+      })
+      //action.payload should have primaryID and friendID
       //in friend.js, create a routeHelper called addFriend(user)
         //friend.addFriend should take a friend and create the proper database logs for friend request / friend connection
     }
+    if (action.type === 'socket/removeFriend') {
+      console.log('socket/addFriend payload ==== ', action.payload);
+      friends.remove(action.payload.primaryID, action.payload.friendID, function(confirmation){
+        console.log('friends.remove stuff done', confirmation)
+      })
+      //action.payload should have primaryID and friendID
+      //in friend.js, create a routeHelper called addFriend(user)
+        //friend.addFriend should take a friend and create the proper database logs for friend request / friend connection
+    }
+
   });
   io.emit('message2', 'xxxxxxxx received from server: connection established');
 });

@@ -26,7 +26,9 @@
         id: action.payload.id,
         sentPosts: action.payload.posts.sent,
         receivedPosts: action.payload.posts.received,
-        friendList: action.payload.friends
+        friendList: action.payload.friendList,
+        receivedFriendRequests: action.payload.receivedFriendRequests,
+        sentFriendRequests: action.payload.sentFriendRequests
       }
     } else {
       return {

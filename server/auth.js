@@ -50,10 +50,23 @@ module.exports = {
                 posts.sent = sentResults;
                 db.posts.getReceivedPosts(user.id, function(receivedResults) {
                   posts.received = receivedResults; 
-                  console.log('userfriends!!!!', user.friends);
-                  db.user.getIDUsername(user.friends, function(friends){
-                    console.log(`found friends of ${payload.usernameText}: ${friends}`);
-                    cb(token, user.username, user.id, posts, friends);
+                  db.friends.get(user.id, function(friends){
+                    var friendList = [];
+                    var receivedFriendRequests = [];
+                    var sentFriendRequests = [];
+                    friends.forEach(function(friend){
+                      if (friend.friendshipConfirmed === true) {
+                        friendList.push({username: friend.username, id: friend.friendID});
+                      } else if (friend.primaryIDSentRequest === true) {
+                        sentFriendRequests.push({username: friend.username, id: friend.friendID});
+                      } else if (friend.primaryIDReceivedRequest === true) {
+                        receivedFriendRequests.push({username: friend.username, id: friend.friendID});
+                      }
+                    })
+                    console.log(`found friends of ${payload.usernameText}: ${friendList}`);
+                    console.log(`found friendReqsSent of ${payload.usernameText}: ${sentFriendRequests}`);
+                    console.log(`found friendReqsReceived of ${payload.usernameText}: ${receivedFriendRequests}`);
+                    cb(token, user.username, user.id, posts, friendList, receivedFriendRequests, sentFriendRequests);
                   })  
                 });
               });

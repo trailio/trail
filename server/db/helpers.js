@@ -63,14 +63,76 @@ module.exports = {
     }
   },
   friends: {
+    get: function(primaryID, cb) {
+      db.query('SELECT f.friendID as friendID, p.username as username, f.friendshipConfirmed as friendshipConfirmed, f.primaryIDSentRequest as primaryIDSentRequest, f.primaryIDReceivedRequest as primaryIDReceivedRequest FROM friend f JOIN profile p on f.friendID =  p.id WHERE f.primaryID = $1', primaryID)
+      .then(function(result){
+        cb(result);
+      })
+      .catch(function(error) {
+        console.log('friends.get ERROR: ', error);
+      });
+    },
     searchByString: function(string, userID, cb) {
-      db.manyOrNone("SELECT id, username FROM profile WHERE lower(username) LIKE '%$1#%' AND id != $2", [string, userID]  )
+      db.manyOrNone("SELECT id, username FROM profile WHERE lower(username) LIKE '%$1#%' AND id != $2", [string, userID])
         .then(function(result) {
-          cb(result)
+          cb(result);
         })
         .catch(function(error) {
           console.log('friends.searchByString ERROR: ', error);
         });
+    },
+    exist: function(primaryID, friendID, cb){
+      db.query('SELECT * FROM friend WHERE primaryID = $1 AND friendID = $2', [primaryID, friendID])
+        .then(function(result){
+          cb(result);
+        })
+        .catch(function(error) {
+          console.log('friends.exist ERROR: ', error);
+        });
+    },
+    insert: function(primaryID, friendID, cb){
+      db.one('INSERT INTO friend(primaryID, friendID, friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) VALUES($1, $2, $3, $4, $5)', [primaryID, friendID, false, true, false])
+        .then(function(confirmed){
+          db.one('INSERT INTO friend(primaryID, friendID, friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) VALUES($1, $2, $3, $4, $5)', [friendID, primaryID, false, false, true])
+          .then(function(confirmed2){
+            cb(confirmed2);
+          })
+          .catch(function(error2) {
+            console.log('friends.insert ERROR: ', error2);
+          });
+        })
+      .catch(function(error) {
+        console.log('friends.insert ERROR: ', error);
+      });
+    },
+    update: function(primaryID, friendID, cb) {
+      db.one('UPDATE friend SET (friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) = (TRUE, FALSE, FALSE) WHERE primaryID = $1 AND friendID = $2', [primaryID, friendID])
+      .then(function(confirmed){
+        db.one('UPDATE friend SET (friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) = (TRUE, FALSE, FALSE) WHERE primaryID = $1 AND friendID = $2', [friendID, primaryID])
+          .then(function(confirmed2){
+            cb(confirmed2);
+          })
+          .catch(function(error2) {
+            console.log('friends.update ERROR: ', error2);
+          });
+        })
+      .catch(function(error) {
+        console.log('friends.update ERROR: ', error);
+      });
+    },
+    remove: function(primaryID, friendID, cb) {
+      db.one('DELETE FROM friend WHERE primaryID = $1 AND friendID = $2', [primaryID, friendID])
+      .then(function(confirmed){
+        db.one('DELETE FROM friend WHERE primaryID = $1 AND friendID = $2', [friendID, primaryID])
+          .then(function(confirmed2){
+            cb(confirmed2);
+          })
+          .catch(function(error2) {
+            console.log('friends.remove ERROR: ', error2);
+          });
+        })
+      .catch(function(error) {
+        console.log('friends.remove ERROR: ', error);
+      });
     }
-  }
 };

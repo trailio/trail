@@ -47,6 +47,8 @@ class TrailMap extends Component {
     console.log('image index is!!!!', this.props.receivedPosts)
     this.props.imageURLChanged(this.props.receivedPosts[imageIndex].imageurl);
     console.log("HIIIIIII imageURL changed to: ", this.props.receivedPosts[imageIndex].imageurl);
+    this.props.latitudeChanged(this.props.receivedPosts[imageIndex].latitude);
+    this.props.longitudeChanged(this.props.receivedPosts[imageIndex].longitude);
   }
 
   onImagePressed(){
@@ -163,12 +165,14 @@ class TrailMap extends Component {
 }
 
 const mapStateToProps = ({app}) => {
-  const { isLoggedIn, sentPosts, receivedPosts, renderImageURL } = app;
+  const { isLoggedIn, sentPosts, receivedPosts, renderImageURL, renderLatitude, renderLongitude } = app;
   return {
     isLoggedIn,
     sentPosts,
     receivedPosts,
-    renderImageURL
+    renderImageURL,
+    renderLatitude,
+    renderLongitude
   };
 };
 

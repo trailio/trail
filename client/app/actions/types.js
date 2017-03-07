@@ -2,6 +2,8 @@ const types = {
 
   LoginUser: 'LOGIN_USER',
   ImageURLChanged: 'IMAGEURL_CHANGED',
+  LatitudeChanged: 'LATITUDE_CHANGED',
+  LongitudeChanged: 'LONGITUDE_CHANGED',
   ImageClosed: 'IMAGE_CLOSED',
   SearchedUser: 'socket/searchedUser',
   AddedFriend: 'socket/addFriend',

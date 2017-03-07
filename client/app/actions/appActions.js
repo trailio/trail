@@ -7,6 +7,20 @@ export function loginUser (user) {
   };
 }
 
+export function latitudeChanged (latitude) {
+  return {
+    type: types.LatitudeChanged,
+    payload: latitude
+  };
+}
+
+export function longitudeChanged (longitude) {
+  return {
+    type: types.LongitudeChanged,
+    payload: longitude
+  };
+}
+
 export function imageURLChanged (imageURL) {
   return {
     type: types.ImageURLChanged,

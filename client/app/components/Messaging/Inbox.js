@@ -21,18 +21,69 @@ import AddFriend from './AddFriend';
 class Inbox extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      latitude: null,
+      longitude: null,
+    }
   }
 
-  onReceivedPostPress(imageurl) {
+  onReceivedPostPress(imageurl, lat, long) {
     this.props.imageURLChanged(imageurl);
+    console.log('CHECK HERE!!!!!', this.props)
+    this.props.latitudeChanged(lat);
+    this.props.longitudeChanged(long);
   }
 
   onImagePressed() {
     this.props.imageClosed();
+    console.log('IM IN HERE', this.props)
+  }
+
+  componentWillMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        })
+      }
+    );
   }
 
   render () {
     var that = this;
+    console.log('this.props', this.props);
+    console.log('this.state.latitude', this.state.latitude);
+    console.log('this.state.longitude', this.state.longitude);
+
+
+    function getDistanceFromLatLonInMeters(lat1,lon1,lat2,lon2) {
+      var R = 6371000; // Radius of the earth in meters
+      var dLat = deg2rad(lat2-lat1);
+      var dLon = deg2rad(lon2-lon1);
+      var a =
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+        ;
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      var d = R * c; // Distance in meters
+      return d;
+    }
+
+    function deg2rad(deg) {
+      return deg * (Math.PI/180)
+    }
+
+   var locationCheck = function(lat1, long1, lat2, long2) {
+      if (lat1 && getDistanceFromLatLonInMeters(lat1, long1, lat2, long2) <= 5) {
+        return true;
+      } else {
+        return false;
+      }
+
+    };
 
     var receivedMessages = function() {
       return (
@@ -40,7 +91,7 @@ class Inbox extends Component {
         { that.props.receivedPosts.map(function(post, i) {
           return (
             <TouchableHighlight
-              onPress={that.onReceivedPostPress.bind(that, post.imageurl)}
+              onPress={that.onReceivedPostPress.bind(that, post.imageurl, post.latitude, post.longitude)}
               key={i}
             >
               <View style={styles.postBody}>
@@ -58,6 +109,8 @@ class Inbox extends Component {
         </View>
       );
     };
+
+    console.log('this.props', this.props)
 
     if (this.props.renderImageURL) {
       if (this.props.renderImageURL.indexOf('.mp4') >= 0) {
@@ -114,12 +167,14 @@ class Inbox extends Component {
 }
 
 const mapStateToProps = ({app}) => {
-  const { isLoggedIn, sentPosts, receivedPosts, renderImageURL } = app;
+  const { isLoggedIn, sentPosts, receivedPosts, renderImageURL, renderLatitude, renderLongitude } = app;
   return {
     isLoggedIn,
     sentPosts,
     receivedPosts,
-    renderImageURL
+    renderImageURL,
+    renderLatitude,
+    renderLongitude
   };
 };
 

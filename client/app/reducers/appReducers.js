@@ -8,6 +8,8 @@
   receivedFriendRequests: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'poofzie', id: 1}],
   sentFriendRequests: [{username: 'xxoxoxaznxo23', id: 7}],
   renderImageURL: '',
+  renderLatitude: '',
+  renderLongitude: '',
   searchedFriends: [],
 
 }, action) {
@@ -53,7 +55,21 @@
   case 'IMAGE_CLOSED': {
     return {
       ...state,
-      renderImageURL: ''
+      renderImageURL: '',
+      renderLatitude: '',
+      renderLongitude: ''
+    }
+  }
+  case 'LATITUDE_CHANGED': {
+    return {
+      ...state,
+      renderLatitude: action.payload
+    }
+  }
+  case 'LONGITUDE_CHANGED': {
+    return {
+      ...state,
+      renderLongitude: action.payload
     }
   }
   default:

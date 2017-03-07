@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import VideoPlayer from 'react-native-video';
+import MapView from 'react-native-maps';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -16,6 +17,7 @@ import * as appActions from '../../actions/appActions';
 
 import styles from './styles';
 import pinImg from './Pin.png';
+import mapStyle from '../Map/mapStyle';
 
 import AddFriend from './AddFriend';
 
@@ -112,11 +114,57 @@ class Inbox extends Component {
         }
       } else {
         return (
-          <TouchableHighlight onPress={function() { that.onImagePressed() }}>
-            <View>
-              <Text>TOO FAR, GET CLOSER</Text>
-            </View>
-          </TouchableHighlight>
+          <View style={styles.slide1}>
+            {that.state.latitude ?
+              <MapView
+                style={styles.map}
+                initialRegion={{
+                  latitude: that.state.latitude,
+                  longitude: that.state.longitude,
+                  latitudeDelta: 0.015,
+                  longitudeDelta: 0.015}}
+                showsUserLocation={true}
+                followsUserLocation={true}
+                scrollEnabled={false}
+                provider={'google'}
+                customMapStyle={mapStyle}
+                showsScale={true}
+              >
+                <MapView.Marker
+                  coordinate={{        
+                    latitude: that.state.latitude,
+                      longitude: that.state.longitude,
+                      latitudeDelta: 0.015,
+                      longitudeDelta: 0.015
+                    }}
+                >
+                  <MapView.Callout style={styles.calloutStyle}>
+                    <View>
+                      <Text>
+                        You are here
+                      </Text>
+                    </View>
+                  </MapView.Callout>
+                </MapView.Marker>
+                <MapView.Marker
+                  coordinate={{        
+                      latitude: Number(that.props.renderLatitude),
+                      longitude: Number(that.props.renderLongitude),
+                      latitudeDelta: 0.015,
+                      longitudeDelta: 0.015
+                    }}
+                    pinColor={'aqua'}
+                >
+                  <MapView.Callout style={styles.calloutStyle}>
+                    <View>
+                      <Text>
+                        Message is here
+                      </Text>
+                    </View>
+                  </MapView.Callout>
+                </MapView.Marker>
+              </MapView> : null}
+          </View>
         );
       }
     }

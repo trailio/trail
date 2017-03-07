@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableHighlight,
   ScrollView,
+  Switch,
   Image
 } from 'react-native';
 import Swiper from 'react-native-swiper';
@@ -58,6 +59,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  switchButton: {
+    alignSelf: 'center'
+  }
 });
 
 class FriendSelect extends Component {
@@ -85,6 +89,11 @@ class FriendSelect extends Component {
     var displayFriends = function() {
       return (
         <View>
+          <Switch
+            onValueChange={(value) => console.log(value)}
+            value={false}
+            style={styles.switchButton}
+          />
           { that.props.friendList.map(function(friend, i){
               if (friend.username.toLowerCase().includes(that.state.text.toLowerCase())) {
                 var selectIcon;

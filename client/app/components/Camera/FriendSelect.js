@@ -87,7 +87,8 @@ class FriendSelect extends Component {
   }
 
   onPublicPrivateSwitch() {
-    
+    this.props.togglePublicPrivatePost();
+    console.log('CURRENTLY === ', this.props.isPrivatePost);
   }
 
   render () {
@@ -95,36 +96,36 @@ class FriendSelect extends Component {
     var displayFriends = function() {
       return (
         <View>
-          <Text style={styles.switchButton}>
-            Public
-            <Switch
-              onValueChange={(value) => console.log(value)}
-              value={false}
-            />
-          </Text>
-
-          { that.props.friendList.map(function(friend, i){
-              if (friend.username.toLowerCase().includes(that.state.text.toLowerCase())) {
-                var selectIcon;
-                if (!that.props.friendRecipients.includes(friend.id)) {
-                  selectIcon = selectFriendUnchecked;
-                } else {
-                  selectIcon = selectFriendChecked;
-                }
-                return (
-                  <View style={styles.friendBody} key={i}>
-                  <Text style={styles.username}>
-                    { friend.username }
-                  </Text>
-                  <TouchableHighlight onPress={that.onFriendSelect.bind(that, friend)} >
-                    <Image source={selectIcon}/>
-                  </TouchableHighlight>
-                 </View>
-                )
-              }
-            })
-          }
+          <Text>{that.props.isPrivatePost ? 'Public' : 'Private'}</Text>
+          <Switch
+            onValueChange={() => that.onPublicPrivateSwitch()}
+            value={that.props.isPrivatePost}
+          />
         </View>
+        // <View>
+        //
+        //   { that.props.friendList.map(function(friend, i){
+        //       if (friend.username.toLowerCase().includes(that.state.text.toLowerCase())) {
+        //         var selectIcon;
+        //         if (!that.props.friendRecipients.includes(friend.id)) {
+        //           selectIcon = selectFriendUnchecked;
+        //         } else {
+        //           selectIcon = selectFriendChecked;
+        //         }
+        //         return (
+        //           <View style={styles.friendBody} key={i}>
+        //           <Text style={styles.username}>
+        //             { friend.username }
+        //           </Text>
+        //           <TouchableHighlight onPress={that.onFriendSelect.bind(that, friend)} >
+        //             <Image source={selectIcon}/>
+        //           </TouchableHighlight>
+        //          </View>
+        //         )
+        //       }
+        //     })
+        //   }
+        // </View>
       )
     }
     return (
@@ -149,8 +150,9 @@ class FriendSelect extends Component {
 
 const mapStateToProps = ({ app, camera }) => {
   const { friendList } = app;
-  const { friendRecipients } = camera;
+  const { friendRecipients, isPrivatePost } = camera;
   return {
+    isPrivatePost,
     friendList,
     friendRecipients
   };

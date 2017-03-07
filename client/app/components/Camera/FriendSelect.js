@@ -41,7 +41,9 @@ const styles = StyleSheet.create({
     flexDirection:'row'
   },
   confirmButton: {
-    alignSelf: 'center'
+    flex: 1,
+    alignSelf: 'center',
+    justifyContent: 'space-between'
   },
   confirmButtonText: {
     fontSize: 14
@@ -161,12 +163,12 @@ class FriendSelect extends Component {
           <Image source={searchImg}/>
           <TextInput  style={styles.textInput} onChangeText={(text)=>this.setState({text})} value={this.state.text}/>
         </View>
-        <TouchableHighlight style={styles.confirmButton} onPress={this.onConfirmSelections.bind(this)}>
-          <Text style={styles.confirmButtonText}>Confirm Selections</Text>
-        </TouchableHighlight>
         <ScrollView bounces={true}>
           { displayFriends() }
         </ScrollView>
+        <TouchableHighlight style={styles.confirmButton} onPress={this.onConfirmSelections.bind(this)}>
+          <Text style={styles.confirmButtonText}>Confirm Selections</Text>
+        </TouchableHighlight>
       </View>
     );
   }

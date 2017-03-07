@@ -5,7 +5,7 @@ const types = {
   ImageClosed: 'IMAGE_CLOSED',
   SearchedUser: 'socket/searchedUser',
   AddedFriend: 'socket/addFriend',
-  RemovedFriend: 'socket/removeFriend'
+  RemovedFriend: 'socket/removeFriend',
 
   ClickedLogin: 'LOGIN_CLICKED',
   ClickedSignin: 'SIGNUP_CLICKED',

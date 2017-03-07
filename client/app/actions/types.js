@@ -32,7 +32,9 @@ const types = {
   ToggleIsRecording: 'TOGGLE_ISRECORDING',
 
   AddFriendToRecipients: 'ADD_FRIEND_TO_RECIPIENTS',
-  RemoveFriendFromRecipients: 'REMOVE_FRIEND_FROM_RECIPIENTS'
+  RemoveFriendFromRecipients: 'REMOVE_FRIEND_FROM_RECIPIENTS',
+
+  DropPin: 'DROP_PIN'
 
   // SocketHello: 'socket/hello'
   // SocketReceiveMessage: 'server/receiveMessage'

@@ -6,7 +6,9 @@ export default function reducer ( state = {
   latitude: null,
   longitude: null,
   latitudeDelta: null,
-  longitudeDelta: null
+  longitudeDelta: null,
+  pinDropLat: null,
+  pinDropLong: null
 }, action) {
   switch (action.type) {
   case 'CURRENT_COORDS_FOUND': {
@@ -17,6 +19,13 @@ export default function reducer ( state = {
       latitudeDelta: action.payload.latitudeDelta,
   		longitudeDelta: action.payload.longitudeDelta
     };
+  }
+  case 'DROP_PIN': {
+    return {
+      ...state,
+      pinDropLat: action.payload.pinDropLat,
+      pinDropLong: action.payload.pinDropLong
+    }
   }
   default:
     return state;

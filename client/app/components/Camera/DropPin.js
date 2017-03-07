@@ -22,7 +22,7 @@ const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   map: {
-    height: height - 100, 
+    height: height - 100,
     width: width,
     margin: 0,
     padding: 0
@@ -41,12 +41,6 @@ class DropPin extends Component {
     super(props);
 
     this.state = {
-      // region: {
-      //   latitude: null,
-      //   longitude: null,
-      //   latitudeDelta: null,
-      //   longitudeDelta: null
-      // },
       pinDropLong: null,
       pinDropLat: null
     }
@@ -60,15 +54,6 @@ class DropPin extends Component {
     const longDelta = (accuracy / oneDegreeOfLongitudeInMeters);
 
     this.props.currentCoordsFound(lat, lon, latDelta, longDelta);
-
-    // this.setState({
-    //   region: {
-    //     latitude: lat,
-    //     longitude: lon,
-    //     latitudeDelta: latDelta,
-    //     longitudeDelta: longDelta
-    //   }
-    // })
   }
 
   componentWillMount() {
@@ -82,26 +67,28 @@ class DropPin extends Component {
     )
   }
 
-  render () {
-    console.log('this.state.pinDropLong', this.state.pinDropLong)
-    console.log('this.state.pinDropLat', this.state.pinDropLat)
-    console.log('this.props.latitude', this.props.latitude)
-    console.log('this.props.longitude', this.props.longitude)
+  submitPinDrop() {
+    console.log('PROPS == ', this.props);
+    this.props.dropPin(this.state.pinDropLat, this.state.pinDropLong);
+    this.props.toggleUpload();
+  }
 
-    var sendPin = function() {console.log('SENDDDPINNN!!!!!', this)};
+  render () {
+
+    var sendPin = function() { console.log('SENDDDPINNN!!!!!', this)};
     var that = this;
 
     //To calculate distance between two coordinates: https://en.wikipedia.org/wiki/Haversine_formula
     function getDistanceFromLatLonInMeters(lat1,lon1,lat2,lon2) {
       var R = 6371000; // Radius of the earth in meters
       var dLat = deg2rad(lat2-lat1);
-      var dLon = deg2rad(lon2-lon1); 
-      var a = 
+      var dLon = deg2rad(lon2-lon1);
+      var a =
         Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
         Math.sin(dLon/2) * Math.sin(dLon/2)
-        ; 
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        ;
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
       var d = R * c; // Distance in meters
       return d;
     }
@@ -113,7 +100,7 @@ class DropPin extends Component {
     var locationCheck = function(lat1, long1, lat2, long2) {
       if (lat1 && getDistanceFromLatLonInMeters(lat1, long1, lat2, long2) <= 500) {
         return (
-          <TouchableHighlight onPress={that.props.toggleUpload}>
+          <TouchableHighlight onPress={that.submitPinDrop.bind(that)}>
             <Image source={sendIcon}/>
           </TouchableHighlight>
         );
@@ -125,8 +112,8 @@ class DropPin extends Component {
     return (
     <View>
       {this.props.latitude ?
-        <MapView 
-          style={styles.map} 
+        <MapView
+          style={styles.map}
           initialRegion={{
             latitude: this.props.latitude,
             longitude: this.props.longitude,
@@ -138,7 +125,7 @@ class DropPin extends Component {
           provider={'google'}
           customMapStyle={mapStyle}
         >
-        <MapView.Circle 
+        <MapView.Circle
           center={{
             latitude: this.props.latitude,
             longitude: this.props.longitude
@@ -184,4 +171,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropPin);
-

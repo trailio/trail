@@ -129,6 +129,7 @@ class Inbox extends Component {
                 provider={'google'}
                 customMapStyle={mapStyle}
                 showsScale={true}
+                onPress={function() { that.onImagePressed(); }}
               >
                 <MapView.Marker
                   coordinate={{        

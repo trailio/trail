@@ -4,7 +4,8 @@ import {
   Text,
   TouchableHighlight,
   View,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import VideoPlayer from 'react-native-video';
@@ -33,6 +34,7 @@ class Inbox extends Component {
     console.log('CHECK HERE!!!!!', this.props)
     this.props.latitudeChanged(lat);
     this.props.longitudeChanged(long);
+
   }
 
   onImagePressed() {
@@ -76,15 +78,6 @@ class Inbox extends Component {
       return deg * (Math.PI/180)
     }
 
-   var locationCheck = function(lat1, long1, lat2, long2) {
-      if (lat1 && getDistanceFromLatLonInMeters(lat1, long1, lat2, long2) <= 5) {
-        return true;
-      } else {
-        return false;
-      }
-
-    };
-
     var receivedMessages = function() {
       return (
         <View>
@@ -110,10 +103,17 @@ class Inbox extends Component {
       );
     };
 
-    console.log('this.props', this.props)
+
 
     if (this.props.renderImageURL) {
-      if (this.props.renderImageURL.indexOf('.mp4') >= 0) {
+      console.log('USER IS THIS MANY METERS AWAY FROM MESSAGE', getDistanceFromLatLonInMeters(this.state.latitude, this.state.longitude, that.props.renderLatitude, that.props.renderLongitude))
+      if (getDistanceFromLatLonInMeters(this.state.latitude, this.state.longitude, that.props.renderLatitude, that.props.renderLongitude) >= 5) {
+        return (
+          <View>
+            <Text>TOO FAR TO VIEW</Text>
+          </View>
+        )
+      } else if (this.props.renderImageURL.indexOf('.mp4') >= 0) {
         return (
           <View>
             <TouchableHighlight onPress={function() { that.onImagePressed(); }}>

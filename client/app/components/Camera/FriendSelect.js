@@ -57,7 +57,7 @@ class FriendSelect extends Component {
             value={that.props.isPublicPost}
             style={{alignSelf: 'center'}}
           />
-        <Text style={{alignSelf: 'center'}}>{that.props.isPublicPost ? 'Private' : 'Public'}</Text>
+        <Text style={{alignSelf: 'center'}}>{that.props.isPublicPost ? 'Public' : 'Private'}</Text>
           { that.props.friendList.map(function(friend, i){
               if (friend.username.toLowerCase().includes(that.state.text.toLowerCase())) {
                 var selectIcon;

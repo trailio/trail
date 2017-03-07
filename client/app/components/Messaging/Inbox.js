@@ -31,7 +31,7 @@ class Inbox extends Component {
 
   onReceivedPostPress(imageurl, lat, long) {
     this.props.imageURLChanged(imageurl);
-    console.log('CHECK HERE!!!!!', this.props)
+    // console.log('CHECK HERE!!!!!', this.props)
     this.props.latitudeChanged(lat);
     this.props.longitudeChanged(long);
 
@@ -55,9 +55,9 @@ class Inbox extends Component {
 
   render () {
     var that = this;
-    console.log('this.props', this.props);
-    console.log('this.state.latitude', this.state.latitude);
-    console.log('this.state.longitude', this.state.longitude);
+    // console.log('this.props', this.props);
+    // console.log('this.state.latitude', this.state.latitude);
+    // console.log('this.state.longitude', this.state.longitude);
 
 
     function getDistanceFromLatLonInMeters(lat1,lon1,lat2,lon2) {
@@ -78,6 +78,29 @@ class Inbox extends Component {
       return deg * (Math.PI/180)
     }
 
+    function check () {
+      // console.log('SOIFJEIOSJFSIOEJFISE',that.state.latitude, that.state.longitude, that.props.renderLatitude, that.props.renderLongitude)
+      console.log('USER IS THIS MANY METERS AWAY FROM MESSAGE', getDistanceFromLatLonInMeters(that.state.latitude, that.state.longitude, that.props.renderLatitude, that.props.renderLongitude))
+      //if user is less than 200 meters away from message, he/she can view it (any less is too sensitive)
+      if (that.props.renderLatitude && (getDistanceFromLatLonInMeters(that.state.latitude, that.state.longitude, that.props.renderLatitude, that.props.renderLongitude) <= 200)){
+        return (
+            <View>
+              <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
+                <Image
+                  style={styles.photo}
+                  source={{uri: that.props.renderImageURL}}
+                />
+              </TouchableHighlight>
+            </View>
+          );
+      } else {
+        return (
+          <View>
+            <Text>TOO FAR, GET CLOSER</Text>
+          </View>
+        );
+      }
+    }
     var receivedMessages = function() {
       return (
         <View>
@@ -87,6 +110,7 @@ class Inbox extends Component {
               onPress={that.onReceivedPostPress.bind(that, post.imageurl, post.latitude, post.longitude)}
               key={i}
             >
+            <View>
               <View style={styles.postBody}>
                 <Image source={pinImg}/>
                 <Text style={styles.postName}>
@@ -96,6 +120,7 @@ class Inbox extends Component {
                   {post.timeposted}
                 </Text>
               </View>
+            </View>
             </TouchableHighlight>
           );
         })}
@@ -103,17 +128,11 @@ class Inbox extends Component {
       );
     };
 
-
-
-    if (this.props.renderImageURL) {
-      console.log('USER IS THIS MANY METERS AWAY FROM MESSAGE', getDistanceFromLatLonInMeters(this.state.latitude, this.state.longitude, that.props.renderLatitude, that.props.renderLongitude))
-      if (getDistanceFromLatLonInMeters(this.state.latitude, this.state.longitude, that.props.renderLatitude, that.props.renderLongitude) >= 5) {
-        return (
-          <View>
-            <Text>TOO FAR TO VIEW</Text>
-          </View>
-        )
-      } else if (this.props.renderImageURL.indexOf('.mp4') >= 0) {
+    if (this.props.renderImageURL && this.props.renderLatitude) {
+      // console.log('USER IS THIS MANY METERS AWAY FROM MESSAGE', getDistanceFromLatLonInMeters(this.state.latitude, this.state.longitude, that.props.renderLatitude, that.props.renderLongitude))
+      // console.log('that.props.renderLatitude', that.props.renderLatitude)
+      // console.log('HELLOOOO', this.state.latitude, this.state.longitude, that.props.renderLatitude, that.props.renderLongitude)
+      if (this.props.renderImageURL.indexOf('.mp4') >= 0 && true) {
         return (
           <View>
             <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
@@ -129,17 +148,8 @@ class Inbox extends Component {
             </TouchableHighlight>
           </View>
         );
-      } else {
-        return (
-          <View>
-            <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
-              <Image
-                style={styles.photo}
-                source={{uri: that.props.renderImageURL}}
-              />
-            </TouchableHighlight>
-          </View>
-        );
+      } else if (this.props.renderImageURL.indexOf('.jpg') >= 0) {
+        return check();
       }
     } else {
       return (

@@ -77,21 +77,39 @@ class Inbox extends Component {
       return deg * (Math.PI/180)
     }
 
-    function check () {
+    function checkPic () {
       // console.log('SOIFJEIOSJFSIOEJFISE',that.state.latitude, that.state.longitude, that.props.renderLatitude, that.props.renderLongitude)
       console.log('USER IS THIS MANY METERS AWAY FROM MESSAGE', getDistanceFromLatLonInMeters(that.state.latitude, that.state.longitude, that.props.renderLatitude, that.props.renderLongitude))
-      //if user is less than 200 meters away from message, he/she can view it (any less is too sensitive)
-      if (that.props.renderLatitude && (getDistanceFromLatLonInMeters(that.state.latitude, that.state.longitude, that.props.renderLatitude, that.props.renderLongitude) <= 100)){
-        return (
+      //if user is less than 170 meters away from message, use can view message
+      if (that.props.renderLatitude && (getDistanceFromLatLonInMeters(that.state.latitude, that.state.longitude, that.props.renderLatitude, that.props.renderLongitude) <= 170)){
+        if (that.props.renderImageURL.indexOf('.jpg') >= 0) {
+          return (
+              <View>
+                <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
+                  <Image
+                    style={styles.photo}
+                    source={{uri: that.props.renderImageURL}}
+                  />
+                </TouchableHighlight>
+              </View>
+            );
+        } else if (that.props.renderImageURL.indexOf('.mp4') >= 0) {
+          return (
             <View>
               <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
-                <Image
-                  style={styles.photo}
-                  source={{uri: that.props.renderImageURL}}
+                <VideoPlayer source={{uri: that.props.renderImageURL}}
+                  rate={1.0}
+                  volume={1.0}
+                  muted={false}
+                  paused={false}
+                  resizeMode="cover"
+                  repeat={true}
+                  style={styles.video}
                 />
               </TouchableHighlight>
             </View>
           );
+        }
       } else {
         return (
           <TouchableHighlight onPress={function() { that.onImagePressed() }}>
@@ -102,6 +120,7 @@ class Inbox extends Component {
         );
       }
     }
+
     var receivedMessages = function() {
       return (
         <View>
@@ -133,25 +152,7 @@ class Inbox extends Component {
       // console.log('USER IS THIS MANY METERS AWAY FROM MESSAGE', getDistanceFromLatLonInMeters(this.state.latitude, this.state.longitude, that.props.renderLatitude, that.props.renderLongitude))
       // console.log('that.props.renderLatitude', that.props.renderLatitude)
       // console.log('HELLOOOO', this.state.latitude, this.state.longitude, that.props.renderLatitude, that.props.renderLongitude)
-      if (this.props.renderImageURL.indexOf('.mp4') >= 0 && true) {
-        return (
-          <View>
-            <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
-              <VideoPlayer source={{uri: that.props.renderImageURL}}
-                rate={1.0}
-                volume={1.0}
-                muted={false}
-                paused={false}
-                resizeMode="cover"
-                repeat={true}
-                style={styles.video}
-              />
-            </TouchableHighlight>
-          </View>
-        );
-      } else if (this.props.renderImageURL.indexOf('.jpg') >= 0) {
-        return check();
-      }
+      return checkPic();  
     } else {
       return (
         <Swiper

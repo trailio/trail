@@ -18,7 +18,7 @@ module.exports = {
   				console.log('friend.js -> friend request sent confirmation ->', requestSentConfirmation)
   				cb('friend request sent, awaiting confirmation'); //true represents the friend request is awaiting confirmation
   			})
-  		} else if (exists[0].primaryIDReceivedRequest === true) { /* test if it actually returns a boolean or a string'TRUE'*/
+  		} else if (exists[0].primaryidreceivedrequest === true) { /* test if it actually returns a boolean or a string'TRUE'*/
   			//else if friends.exist && primaryID is friend request recipient , then we need to confirm the friendship
   			db.friends.update(primaryID, friendID, function(friendshipEstablishedConfirmation) {
   				console.log('friend.js -> friendship established ->', friendshipEstablishedConfirmation)

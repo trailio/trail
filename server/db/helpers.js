@@ -91,9 +91,9 @@ module.exports = {
         });
     },
     insert: function(primaryID, friendID, cb){
-      db.one('INSERT INTO friend(primaryID, friendID, friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) VALUES($1, $2, $3, $4, $5)', [primaryID, friendID, false, true, false])
+      db.one('INSERT INTO friend(primaryID, friendID, friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) VALUES($1, $2, $3, $4, $5) returning friendID', [primaryID, friendID, false, true, false])
         .then(function(confirmed){
-          db.one('INSERT INTO friend(primaryID, friendID, friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) VALUES($1, $2, $3, $4, $5)', [friendID, primaryID, false, false, true])
+          db.one('INSERT INTO friend(primaryID, friendID, friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) VALUES($1, $2, $3, $4, $5) returning friendID', [friendID, primaryID, false, false, true])
           .then(function(confirmed2){
             cb(confirmed2);
           })
@@ -106,11 +106,11 @@ module.exports = {
       });
     },
     update: function(primaryID, friendID, cb) {
-      db.one('UPDATE friend SET (friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) = (TRUE, FALSE, FALSE) WHERE primaryID = $1 AND friendID = $2', [primaryID, friendID])
+      db.one('UPDATE friend SET (friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) = (TRUE, FALSE, FALSE) WHERE primaryID = $1 AND friendID = $2 returning friendID', [primaryID, friendID])
       .then(function(confirmed){
-        db.one('UPDATE friend SET (friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) = (TRUE, FALSE, FALSE) WHERE primaryID = $1 AND friendID = $2', [friendID, primaryID])
+        db.one('UPDATE friend SET (friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) = (TRUE, FALSE, FALSE) WHERE primaryID = $1 AND friendID = $2 returning friendID', [friendID, primaryID])
           .then(function(confirmed2){
-            cb(confirmed2);
+            cb();
           })
           .catch(function(error2) {
             console.log('friends.update ERROR: ', error2);
@@ -121,9 +121,9 @@ module.exports = {
       });
     },
     remove: function(primaryID, friendID, cb) {
-      db.one('DELETE FROM friend WHERE primaryID = $1 AND friendID = $2', [primaryID, friendID])
+      db.one('DELETE FROM friend WHERE primaryID = $1 AND friendID = $2 returning friendID', [primaryID, friendID])
       .then(function(confirmed){
-        db.one('DELETE FROM friend WHERE primaryID = $1 AND friendID = $2', [friendID, primaryID])
+        db.one('DELETE FROM friend WHERE primaryID = $1 AND friendID = $2 returning friendID', [friendID, primaryID])
           .then(function(confirmed2){
             cb(confirmed2);
           })

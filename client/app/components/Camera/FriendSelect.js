@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableHighlight,
+  Image,
   ScrollView,
   Switch,
-  Image
+  Text,
+  TextInput,
+  TouchableHighlight,
+  View
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import searchImg from './search.png';
@@ -20,55 +19,8 @@ import { bindActionCreators } from 'redux';
 import * as appActions from '../../actions/appActions';
 import * as cameraActions from '../../actions/cameraActions';
 
+import styles from './styles';
 
-const styles = StyleSheet.create({
-  wrapper: {
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center'
-  },
-   heading: {
-    padding: 20
-  },
-  textInput: {
-    flex: 1,
-    fontSize: 22
-  },
-  searchBox: {
-    flexDirection:'row'
-  },
-  confirmButton: {
-    flex: 1,
-    alignSelf: 'center',
-    justifyContent: 'space-between'
-  },
-  confirmButtonText: {
-    fontSize: 14
-  },
-  username:  {
-    color: '#54575C',
-    fontSize: 20
-  },
-  friendBody: {
-    padding: 20,
-    marginHorizontal: 30,
-    backgroundColor: 'rgba(255,255,255,0)',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  switchButton: {
-    alignSelf: 'center',
-    fontSize: 20,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between'
-  }
-});
 
 class FriendSelect extends Component {
   constructor(props) {

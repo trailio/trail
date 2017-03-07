@@ -76,3 +76,9 @@ export function removeFriendFromRecipients(friendID) {
     payload: friendID
   };
 }
+
+export function togglePublicPrivatePost() {
+  return {
+    type:types.TogglePublicPrivatePost
+  }
+}

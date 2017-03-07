@@ -16,6 +16,7 @@ export default function reducer ( state = {
   currentView: 'cameraView',
   flashMode: constants.flashOff,
   friendRecipients: [],
+  isPublicPost: true,
   isRecording: false,
   photoPath: '',
   uploadPhoto: false,
@@ -128,6 +129,12 @@ export default function reducer ( state = {
       ...state,
       friendRecipients: state.friendRecipients.filter(item => item !== action.payload)
     };
+  }
+  case 'TOGGLE_PUBLIC_PRIVATE_POST': {
+    return {
+      ...state,
+      isPublicPost: !isPublicPost
+    }
   }
   default:
     return state;

@@ -37,7 +37,9 @@ const types = {
   AddFriendToRecipients: 'ADD_FRIEND_TO_RECIPIENTS',
   RemoveFriendFromRecipients: 'REMOVE_FRIEND_FROM_RECIPIENTS',
 
-  DropPin: 'DROP_PIN'
+  DropPin: 'DROP_PIN',
+
+  TogglePublicPrivatePost: 'TOGGLE_PUBLIC_PRIVATE_POST'
 
   // SocketHello: 'socket/hello'
   // SocketReceiveMessage: 'server/receiveMessage'

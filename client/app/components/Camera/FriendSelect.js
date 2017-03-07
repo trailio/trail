@@ -60,7 +60,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   switchButton: {
-    alignSelf: 'center'
+    alignSelf: 'center',
+    fontSize: 20,
+    alignItems: 'center'
   }
 });
 
@@ -84,16 +86,23 @@ class FriendSelect extends Component {
     }
   }
 
+  onPublicPrivateSwitch() {
+    
+  }
+
   render () {
     var that = this;
     var displayFriends = function() {
       return (
         <View>
-          <Switch
-            onValueChange={(value) => console.log(value)}
-            value={false}
-            style={styles.switchButton}
-          />
+          <Text style={styles.switchButton}>
+            Public
+            <Switch
+              onValueChange={(value) => console.log(value)}
+              value={false}
+            />
+          </Text>
+
           { that.props.friendList.map(function(friend, i){
               if (friend.username.toLowerCase().includes(that.state.text.toLowerCase())) {
                 var selectIcon;

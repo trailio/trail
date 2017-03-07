@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import MapView from 'react-native-maps';
+import VideoPlayer from 'react-native-video';
+
 import store from '../../store.js';
 import mapStyle from './mapStyle';
 import PopupDialog, { SlideAnimation, DialogButton } from 'react-native-popup-dialog';
@@ -55,6 +57,14 @@ const styles = StyleSheet.create({
   calloutStyle: {
     flex: 1,
     position: 'relative',
+  },
+  video: {
+    //position: 'absolute',
+    height: height,
+    width: width,
+    flex: 1,
+    margin: 0,
+    padding: 0
   }
 });
 
@@ -128,17 +138,35 @@ class TrailMap extends Component {
         )})
     }
     if (this.props.renderImageURL) {
-      console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL);
-      return(
-        <View>
-          <TouchableHighlight onPress={function() { that.onImagePressed() }}>
-            <Image
-              style={{width: 375, height: 675 }}
-              source={{uri: that.props.renderImageURL}}
-            />
-          </TouchableHighlight>
-        </View>
-      );
+      // console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL);
+      if (this.props.renderImageURL.indexOf('.mp4') >= 0) {
+        return (
+          <View>
+            <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
+              <VideoPlayer source={{uri: that.props.renderImageURL}}
+                rate={1.0}
+                volume={1.0}
+                muted={false}
+                paused={false}
+                resizeMode="cover"
+                repeat={true}
+                style={styles.video}
+              />
+            </TouchableHighlight>
+          </View>
+        );
+      } else {
+        return(
+          <View>
+            <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
+              <Image
+                style={{width: 375, height: 675 }}
+                source={{uri: that.props.renderImageURL}}
+              />
+            </TouchableHighlight>
+          </View>
+        );
+      }
     } else {
     return (
         <Swiper

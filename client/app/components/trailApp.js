@@ -18,7 +18,7 @@ class TrailApp extends Component {
   }
 
   render() {
-    // AsyncStorage.removeItem('STORAGE_KEY');
+    AsyncStorage.removeItem('STORAGE_KEY');
     if (!this.props.isLoggedIn) {
       return (
         <View style={styles.slide3}>

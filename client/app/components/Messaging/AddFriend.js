@@ -120,10 +120,11 @@ class AddFriend extends Component {
       acceptFriends: {list: that.props.receivedFriendRequests, onSubmit: that.onFriendAccept},
       removeFriends: {list: that.props.friendList, onSubmit: that.onFriendRemove}
     }
+    console.log('interactiontype!!', interactionType[that.state.page])
     
     return (
       <View>
-        {
+        { 
           interactionType[that.state.page].list.map(function(friend, i) {
           return (
             <View style={styles.friendBody} key={i}>

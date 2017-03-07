@@ -43,6 +43,6 @@ module.exports = {
           cb('friendship successfully deleted');
         })
       }
-    }
+    })
   }
 };

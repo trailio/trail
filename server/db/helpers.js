@@ -135,4 +135,5 @@ module.exports = {
         console.log('friends.remove ERROR: ', error);
       });
     }
+  }
 };

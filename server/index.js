@@ -33,6 +33,7 @@ io.on('connection', function(socket) {
     if (action.type === 'socket/signin') {
       auth.signin(action.payload, function(token, username, userID, posts, friendList, receivedFriendRequests, sentFriendRequests) {
         console.log('index.js socket/signin - got token, emitting action with token back to app for token', token);
+        console.log('all this stuff', posts, friendList, receivedFriendRequests, sentFriendRequests)
         socket.emit('action',
           {
             type: 'LOGIN_RESPONSE',

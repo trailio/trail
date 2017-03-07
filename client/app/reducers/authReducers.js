@@ -48,7 +48,9 @@ export default function reducer ( state = {
       username: action.data.username, 
       id: action.data.id, 
       posts: action.data.posts, 
-      friends: action.data.friends
+      friendList: action.data.friendList,
+      receivedFriendRequests: action.data.receivedFriendRequests,
+      sentFriendRequests: action.data.sentFriendRequests
     };
     AsyncStorage.setItem('STORAGE_KEY', action.data.token).then((value) => {
       AsyncStorage.setItem('USER', JSON.stringify(user)).then((value) => {

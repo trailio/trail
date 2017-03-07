@@ -31,7 +31,6 @@ class Inbox extends Component {
 
   onReceivedPostPress(imageurl, lat, long) {
     this.props.imageURLChanged(imageurl);
-    // console.log('CHECK HERE!!!!!', this.props)
     this.props.latitudeChanged(lat);
     this.props.longitudeChanged(long);
 
@@ -82,7 +81,7 @@ class Inbox extends Component {
       // console.log('SOIFJEIOSJFSIOEJFISE',that.state.latitude, that.state.longitude, that.props.renderLatitude, that.props.renderLongitude)
       console.log('USER IS THIS MANY METERS AWAY FROM MESSAGE', getDistanceFromLatLonInMeters(that.state.latitude, that.state.longitude, that.props.renderLatitude, that.props.renderLongitude))
       //if user is less than 200 meters away from message, he/she can view it (any less is too sensitive)
-      if (that.props.renderLatitude && (getDistanceFromLatLonInMeters(that.state.latitude, that.state.longitude, that.props.renderLatitude, that.props.renderLongitude) <= 200)){
+      if (that.props.renderLatitude && (getDistanceFromLatLonInMeters(that.state.latitude, that.state.longitude, that.props.renderLatitude, that.props.renderLongitude) <= 100)){
         return (
             <View>
               <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
@@ -95,9 +94,11 @@ class Inbox extends Component {
           );
       } else {
         return (
-          <View>
-            <Text>TOO FAR, GET CLOSER</Text>
-          </View>
+          <TouchableHighlight onPress={function() { that.onImagePressed() }}>
+            <View>
+              <Text>TOO FAR, GET CLOSER</Text>
+            </View>
+          </TouchableHighlight>
         );
       }
     }

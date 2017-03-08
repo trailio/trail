@@ -98,7 +98,7 @@ class DropPin extends Component {
     }
 
     var locationCheck = function(lat1, long1, lat2, long2) {
-      if (lat1 && getDistanceFromLatLonInMeters(lat1, long1, lat2, long2) <= 500) {
+      if (lat1 && getDistanceFromLatLonInMeters(lat1, long1, lat2, long2) <= 170) {
         return (
           <TouchableHighlight onPress={that.submitPinDrop.bind(that)}>
             <Image source={sendIcon}/>

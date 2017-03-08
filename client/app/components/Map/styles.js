@@ -9,7 +9,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#9DD6EB',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flex: 1,
+    height: height,
+    width: width
   },
   slide2: {
     flex: 1,
@@ -34,6 +40,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    flex: 1,
+    height: height,
+    width: width
   },
   calloutStyle: {
     flex: 1,
@@ -46,6 +55,14 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 0,
     padding: 0
+  },
+  directions: {
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    top: height-100,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
   }
 });
 

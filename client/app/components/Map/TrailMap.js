@@ -8,6 +8,7 @@ import {
 import Swiper from 'react-native-swiper';
 import MapView from 'react-native-maps';
 import VideoPlayer from 'react-native-video';
+import getDirections from 'react-native-google-maps-directions';
 
 import store from '../../store.js';
 import mapStyle from './mapStyle';
@@ -68,6 +69,130 @@ class TrailMap extends Component {
 
   render () {
     var that = this;
+
+    function getDistanceFromLatLonInMeters(lat1,lon1,lat2,lon2) {
+      var R = 6371000; // Radius of the earth in meters
+      var dLat = deg2rad(lat2-lat1);
+      var dLon = deg2rad(lon2-lon1);
+      var a =
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+        ;
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      var d = R * c; // Distance in meters
+      return d;
+    }
+
+    function deg2rad(deg) {
+      return deg * (Math.PI/180)
+    }
+
+    function checkPic () {
+      if (that.props.renderLatitude && (getDistanceFromLatLonInMeters(that.state.region.latitude, that.state.region.longitude, that.props.renderLatitude, that.props.renderLongitude) <= 170)){
+        if (that.props.renderImageURL.indexOf('.jpg') >= 0) {
+          return (
+              <View>
+                <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
+                  <Image
+                    style={styles.photo}
+                    source={{uri: that.props.renderImageURL}}
+                  />
+                </TouchableHighlight>
+              </View>
+            );
+        } else if (that.props.renderImageURL.indexOf('.mp4') >= 0) {
+          return (
+            <View>
+              <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
+                <VideoPlayer source={{uri: that.props.renderImageURL}}
+                  rate={1.0}
+                  volume={1.0}
+                  muted={false}
+                  paused={false}
+                  resizeMode="cover"
+                  repeat={true}
+                  style={styles.video}
+                />
+              </TouchableHighlight>
+            </View>
+          );
+        }
+      } else {
+        return (
+          <View style={styles.slide1}>
+            {that.state.latitude ?
+              <MapView
+                style={styles.map}
+                initialRegion={{
+                  latitude: that.state.region.latitude,
+                  longitude: that.state.region.longitude,
+                  latitudeDelta: 0.015,
+                  longitudeDelta: 0.015}}
+                showsUserLocation={true}
+                followsUserLocation={true}
+                scrollEnabled={false}
+                provider={'google'}
+                customMapStyle={mapStyle}
+                showsScale={true}
+                onPress={function() { that.onImagePressed(); }}
+              >
+                <MapView.Marker
+                  coordinate={{        
+                    latitude: that.state.region.latitude,
+                      longitude: that.state.region.longitude,
+                      latitudeDelta: 0.015,
+                      longitudeDelta: 0.015
+                    }}
+                >
+                  <MapView.Callout style={styles.calloutStyle}>
+                    <View>
+                      <Text>
+                        You are here
+                      </Text>
+                    </View>
+                  </MapView.Callout>
+                </MapView.Marker>
+                <MapView.Marker
+                  coordinate={{        
+                      latitude: Number(that.props.renderLatitude),
+                      longitude: Number(that.props.renderLongitude),
+                      latitudeDelta: 0.015,
+                      longitudeDelta: 0.015
+                    }}
+                    pinColor={'aqua'}
+                >
+                  <MapView.Callout style={styles.calloutStyle}>
+                    <View>
+                      <Text>
+                        Message is here
+                      </Text>
+                    </View>
+                  </MapView.Callout>
+                </MapView.Marker>
+                <TouchableHighlight 
+                  style={styles.directions}
+                  onPress={function(){
+                    getDirections({
+                     source: {
+                      latitude: that.state.region.latitude,
+                      longitude: that.state.region.longitude
+                      },
+                      destination: {
+                        latitude: Number(that.props.renderLatitude),
+                        longitude: Number(that.props.renderLongitude)
+                      }
+                    })}
+                  }
+                >
+                  <Text> Get directions </Text>
+                </TouchableHighlight>
+              </MapView> : null}
+          </View>
+        );
+      }
+    }
+
     var receivedMessages = function() {
       return that.props.receivedPosts.map( function(marker, i) {
           return (
@@ -91,36 +216,9 @@ class TrailMap extends Component {
     }
     if (this.props.renderImageURL) {
       // console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL);
-      if (this.props.renderImageURL.indexOf('.mp4') >= 0) {
-        return (
-          <View>
-            <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
-              <VideoPlayer source={{uri: that.props.renderImageURL}}
-                rate={1.0}
-                volume={1.0}
-                muted={false}
-                paused={false}
-                resizeMode="cover"
-                repeat={true}
-                style={styles.video}
-              />
-            </TouchableHighlight>
-          </View>
-        );
-      } else {
-        return(
-          <View>
-            <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
-              <Image
-                style={{width: 375, height: 675 }}
-                source={{uri: that.props.renderImageURL}}
-              />
-            </TouchableHighlight>
-          </View>
-        );
-      }
+      return checkPic();
     } else {
-    return (
+      return (
         <Swiper
           style={styles.wrapper}
           showsButtons={false}
@@ -145,7 +243,7 @@ class TrailMap extends Component {
                   latitude: this.state.region.latitude,
                   longitude: this.state.region.longitude
                 }}
-                radius={500}
+                radius={170}
                 strokeWidth={3}
                 strokeColor={'#cc3399'}
                 zIndex={2}

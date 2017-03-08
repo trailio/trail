@@ -52,3 +52,16 @@ export function submitSignup (usernameText, passwordText, email) {
     }
   };
 }
+
+export function autoSignin (token) {
+  return {
+    type: types.SocketAutoSignIn,
+    payload: token
+  }
+}
+
+export function clickedLogout () {
+  return {
+    type: types.ClickedLogout,
+  }
+}

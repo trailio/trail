@@ -12,6 +12,7 @@ const types = {
   ClickedLogin: 'LOGIN_CLICKED',
   ClickedSignin: 'SIGNUP_CLICKED',
   ClickedBack: 'BACK_CLICKED',
+  ClickedLogout: 'LOGOUT_CLICKED',
 
   UsernameChanged: 'USERNAME_CHANGED',
   PasswordChanged: 'PASSWORD_CHANGED',
@@ -22,6 +23,7 @@ const types = {
 
   SocketSignIn: 'socket/signin',
   SocketSignUp: 'socket/signup',
+  SocketAutoSignIn: 'socket/autosignin',
 
   PostPhoto: 'socket/postPhoto',
 

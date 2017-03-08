@@ -21,6 +21,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#92BBD9',
   },
+  slide4: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#92BBD9',
+  },
   text: {
     color: '#fff',
     fontSize: 30,

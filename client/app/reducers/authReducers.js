@@ -52,12 +52,33 @@ export default function reducer ( state = {
       receivedFriendRequests: action.data.receivedFriendRequests,
       sentFriendRequests: action.data.sentFriendRequests
     };
+
     AsyncStorage.setItem('STORAGE_KEY', action.data.token).then((value) => {
       AsyncStorage.setItem('USER', JSON.stringify(user)).then((value) => {
-        // console.log('user credentials logged!!', user)
+        console.log('user credentials logged!!')
         store.dispatch({type: 'LOGIN_USER', payload: user});
       })
     });
+    return {
+      ...state
+    }
+  }
+  case 'LOGOUT_CLICKED': {
+    AsyncStorage.removeItem('STORAGE_KEY').then(()=> {
+      AsyncStorage.removeItem('USER').then(()=>{
+        console.log('user logged out!!')
+      })
+    })
+    return{
+      ...state,
+      loginClicked: false,
+      signupClicked: false,
+      usernameText: '',
+      passwordText: ''
+    }
+  }
+  case 'TESTING': {
+    console.log('user searched for !!!!!', action.data)
     return {
       ...state
     }

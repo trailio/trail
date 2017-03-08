@@ -11,11 +11,10 @@
   renderLatitude: '',
   renderLongitude: '',
   searchedFriends: [],
-
 }, action) {
   switch (action.type) {
   case 'LOGIN_USER': {
-    console.log('IS Action.payload an object???????', action.payload);
+    // console.log('IS Action.payload an object???????', action.payload);
     // console.log(typeof action.payload)
     if (typeof action.payload === 'object') {
       // console.log('Action.payload is an object!!!!', action.payload);
@@ -70,6 +69,21 @@
     return {
       ...state,
       renderLongitude: action.payload
+    }
+  }
+  case 'LOGOUT_CLICKED': {
+    return {
+      ...state,
+      isLoggedIn: false,
+      username: '',
+      id: '',
+      sentPosts: [],
+      receivedPosts: [],
+      friendList: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'xxoxoxaznxo23', id: 7}, {username: 'poofzie', id: 1}],
+      receivedFriendRequests: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'poofzie', id: 1}],
+      sentFriendRequests: [{username: 'xxoxoxaznxo23', id: 7}],
+      renderImageURL: '',
+      searchedFriends: []
     }
   }
   default:

@@ -134,15 +134,24 @@ class TrailMap extends Component {
                 style={styles.map}
                 initialRegion={this.state.region}
                 showsUserLocation={true}
-                // followsUserLocation={true}
+                followsUserLocation={true}
                 scrollEnabled={false}
                 provider={'google'}
                 customMapStyle={mapStyle}
                 showsScale={true}
               >
+              <MapView.Circle
+                center={{
+                  latitude: this.state.region.latitude,
+                  longitude: this.state.region.longitude
+                }}
+                radius={500}
+                strokeWidth={3}
+                strokeColor={'#cc3399'}
+                zIndex={2}
+              />
                 <MapView.Marker
                   coordinate={this.state.region}
-                  draggable
                 >
                   <MapView.Callout style={styles.calloutStyle}>
                     <View>

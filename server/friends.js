@@ -16,18 +16,18 @@ module.exports = {
   			//if friends.exist returns no result, it means no friend has formed, so we need to insert new friend records
   			db.friends.insert(primaryID, friendID, function(requestSentConfirmation) { /*write this function*/
   				console.log('friend.js -> friend request sent confirmation ->', requestSentConfirmation)
-  				cb('friend request sent, awaiting confirmation'); //true represents the friend request is awaiting confirmation
+  				cb('REQUEST SENT'); //true represents the friend request is awaiting confirmation
   			})
   		} else if (exists[0].primaryidreceivedrequest === true) { /* test if it actually returns a boolean or a string'TRUE'*/
   			//else if friends.exist && primaryID is friend request recipient , then we need to confirm the friendship
   			db.friends.update(primaryID, friendID, function(friendshipEstablishedConfirmation) {
   				console.log('friend.js -> friendship established ->', friendshipEstablishedConfirmation)
-  				cb('friendship established yay ^_^'); //false represents the friendship has been established
+  				cb('FRIENDSHIP CONFIRMED'); //false represents the friendship has been established
   			})
   		} else {
   			//else if friends.exist && primaryID is friend request sender, we take no action
   			console.log('friend.js -> friend request already sent')
-  			cb('friend request already sent, no need to resend'); //true represents the friend request is awaiting confirmation
+  			cb('NO ACTION'); //true represents the friend request is awaiting confirmation
   		}
   	})
   },

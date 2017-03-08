@@ -45,34 +45,10 @@ module.exports = {
           .then(result => {
             if (result) {
               var token = jwt.encode(payload.usernameText, '53cr3t');
-              var posts = {};
-              db.posts.getSentPosts(user.id, function(sentResults) {
-                posts.sent = sentResults;
-                db.posts.getReceivedPosts(user.id, function(receivedResults) {
-                  posts.received = receivedResults; 
-                  db.friends.get(user.id, function(friends){
-                    // console.log(`${payload.usernameText}'s friends are ${JSON.stringify(friends)}`)
-                    var friendList = [];
-                    var receivedFriendRequests = [];
-                    var sentFriendRequests = [];
-                    friends.forEach(function(friend){
-                      if (friend.friendshipconfirmed === true) {
-                        friendList.push({username: friend.username, id: friend.friendid});
-                      } else if (friend.primaryidsentrequest === true) {
-                        sentFriendRequests.push({username: friend.username, id: friend.friendid});
-                      } else if (friend.primaryidreceivedrequest === true) {
-                        receivedFriendRequests.push({username: friend.username, id: friend.friendid});
-                      }
-                    })
-                    console.log(`found friends of ${payload.usernameText}: ${friendList}`);
-                    console.log(`found friendReqsSent of ${payload.usernameText}: ${sentFriendRequests}`);
-                    console.log(`found friendReqsReceived of ${payload.usernameText}: ${receivedFriendRequests}`);
-                    cb(token, user.username, user.id, posts, friendList, receivedFriendRequests, sentFriendRequests);
-                  })  
-                });
-              });
+              cb(token, user);
             } else {
               console.log('invalid password for username: ', username);
+              cb(null);
             }
           }).catch(err => {
             console.log('Invalid password: ', err);
@@ -87,8 +63,9 @@ module.exports = {
     if ((token !== undefined) && (token !== 'undefined')) {
       var username = jwt.decode(token, '53cr3t');
       db.user.get(username, function (result) {
+        var user = result[0];
         if (result.length === 1) {
-          cb(result[0]);
+          cb(token, user);
         } else {
           cb(null);
         }
@@ -96,5 +73,33 @@ module.exports = {
     } else {
       console.log('No token provided');
     }
+  },
+  getAccountData: function(token, user, cb) {
+    var posts = {};
+    db.posts.getSentPosts(user.id, function(sentResults) {
+      posts.sent = sentResults;
+      db.posts.getReceivedPosts(user.id, function(receivedResults) {
+        posts.received = receivedResults; 
+        db.friends.get(user.id, function(friends){
+          // console.log(`${payload.usernameText}'s friends are ${JSON.stringify(friends)}`)
+          var friendList = [];
+          var receivedFriendRequests = [];
+          var sentFriendRequests = [];
+          friends.forEach(function(friend){
+            if (friend.friendshipconfirmed === true) {
+              friendList.push({username: friend.username, id: friend.friendid});
+            } else if (friend.primaryidsentrequest === true) {
+              sentFriendRequests.push({username: friend.username, id: friend.friendid});
+            } else if (friend.primaryidreceivedrequest === true) {
+              receivedFriendRequests.push({username: friend.username, id: friend.friendid});
+            }
+          })
+          console.log(`found friends of ${user.id}: ${friendList}`);
+          console.log(`found friendReqsSent of ${user.id}: ${sentFriendRequests}`);
+          console.log(`found friendReqsReceived of ${user.id}: ${receivedFriendRequests}`);
+          cb(token, user.username, user.id, posts, friendList, receivedFriendRequests, sentFriendRequests);
+        })  
+      });
+    });
   }
 };

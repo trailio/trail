@@ -121,7 +121,7 @@ class TrailMap extends Component {
       } else {
         return (
           <View style={styles.slide1}>
-            {that.state.latitude ?
+            {that.state.region.latitude ?
               <MapView
                 style={styles.map}
                 initialRegion={{
@@ -214,8 +214,8 @@ class TrailMap extends Component {
               </MapView.Marker>
         )})
     }
-    if (this.props.renderImageURL) {
-      // console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL);
+    if (this.props.renderImageURL && this.props.renderLatitude) {
+      console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL);
       return checkPic();
     } else {
       return (
@@ -254,7 +254,7 @@ class TrailMap extends Component {
                   <MapView.Callout style={styles.calloutStyle}>
                     <View>
                       <Text>
-                        Alfred
+                        You are here
                       </Text>
                     </View>
                   </MapView.Callout>

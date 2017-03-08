@@ -55,7 +55,7 @@ class TrailApp extends Component {
             </View>
           </Swiper>
 
-          <View style={styles.slide3}>
+          <View style={styles.slide1}>
             <TrailMap />
           </View>
         </Swiper>

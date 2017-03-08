@@ -5,11 +5,11 @@ import {
   TouchableHighlight,
   View,
   ScrollView,
-  Alert
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import VideoPlayer from 'react-native-video';
 import MapView from 'react-native-maps';
+import getDirections from 'react-native-google-maps-directions';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -59,7 +59,6 @@ class Inbox extends Component {
     // console.log('this.props', this.props);
     // console.log('this.state.latitude', this.state.latitude);
     // console.log('this.state.longitude', this.state.longitude);
-
 
     function getDistanceFromLatLonInMeters(lat1,lon1,lat2,lon2) {
       var R = 6371000; // Radius of the earth in meters
@@ -164,6 +163,23 @@ class Inbox extends Component {
                     </View>
                   </MapView.Callout>
                 </MapView.Marker>
+                <TouchableHighlight 
+                  style={styles.directions}
+                  onPress={function(){
+                    getDirections({
+                     source: {
+                      latitude: that.state.latitude,
+                      longitude: that.state.longitude
+                      },
+                      destination: {
+                        latitude: Number(that.props.renderLatitude),
+                        longitude: Number(that.props.renderLongitude)
+                      }
+                    })}
+                  }
+                >
+                  <Text> Get directions </Text>
+                </TouchableHighlight>
               </MapView> : null}
           </View>
         );
@@ -179,17 +195,17 @@ class Inbox extends Component {
               onPress={that.onReceivedPostPress.bind(that, post.imageurl, post.latitude, post.longitude)}
               key={i}
             >
-            <View>
-              <View style={styles.postBody}>
-                <Image source={pinImg}/>
-                <Text style={styles.postName}>
-                  {post.username}
-                </Text>
-                <Text style={styles.postDate}>
-                  {post.timeposted}
-                </Text>
+              <View>
+                <View style={styles.postBody}>
+                  <Image source={pinImg}/>
+                  <Text style={styles.postName}>
+                    {post.username}
+                  </Text>
+                  <Text style={styles.postDate}>
+                    {post.timeposted}
+                  </Text>
+                </View>
               </View>
-            </View>
             </TouchableHighlight>
           );
         })}

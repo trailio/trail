@@ -75,6 +75,14 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
   },
+  directions: {
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    top: height-100,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+  }
 });
 
 export default styles;

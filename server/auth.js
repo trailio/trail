@@ -101,5 +101,20 @@ module.exports = {
         })  
       });
     });
+    db.posts.getPublicPosts(function(publicPosts) {
+      posts.publicPosts = publicPosts;
+    });
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+

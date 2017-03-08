@@ -85,6 +85,15 @@ module.exports = {
       .catch(function(error) {
         console.log('posts.getReceivedPosts ERROR: ', error);
       });
+    },
+    getPublicPosts: function(cb) {
+      db.query('SELECT * FROM posts WHERE publicpost = true')
+      .then(function(result) {
+        cb(result);
+      })
+      .catch(function(error) {
+        console.log('posts.getPublicPosts ERROR: ', error);
+      });
     }
   },
   friends: {

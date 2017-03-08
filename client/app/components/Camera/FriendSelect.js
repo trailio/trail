@@ -80,30 +80,6 @@ class FriendSelect extends Component {
             })
           }
         </View>
-        // <View>
-        //
-          // { that.props.friendList.map(function(friend, i){
-          //     if (friend.username.toLowerCase().includes(that.state.text.toLowerCase())) {
-          //       var selectIcon;
-          //       if (!that.props.friendRecipients.includes(friend.id)) {
-          //         selectIcon = selectFriendUnchecked;
-          //       } else {
-          //         selectIcon = selectFriendChecked;
-          //       }
-          //       return (
-          //         <View style={styles.friendBody} key={i}>
-          //         <Text style={styles.username}>
-          //           { friend.username }
-          //         </Text>
-          //         <TouchableHighlight onPress={that.onFriendSelect.bind(that, friend)} >
-          //           <Image source={selectIcon}/>
-          //         </TouchableHighlight>
-          //        </View>
-          //       )
-          //     }
-          //   })
-          // }
-        // </View>
       );
     };
     return (

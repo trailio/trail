@@ -34,14 +34,27 @@ module.exports = {
   },
   posts: {
     post: function(postDetails, cb) {
-      var values = [postDetails.recipientUserID, postDetails.longitude, postDetails.latitude, postDetails.imageURL, postDetails.publicPost];
-      db.one('INSERT INTO posts(recipientUserID, longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4, $5) returning id', values)
-        .then(function(result) {
-          cb(result);
-        })
-        .catch(function(error) {
-          console.log('posts.post ERROR: ', error);
-        });
+      var values = [postDetails.userID, postDetails.recipientUserID, postDetails.longitude, postDetails.latitude, postDetails.imageURL, postDetails.publicPost];
+      // user specified no user recipients and post is public
+      if (values[1].length === 0 && values[5] === true) {
+        var noUserRecipients = values.slice();
+        noUserRecipients.splice(1, 1);
+        db.one('INSERT INTO posts(userID, longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4, $5) returning id', noUserRecipients)
+          .then(function(result) {
+            cb(result);
+          })
+          .catch(function(error) {
+            console.log('posts.post ERROR: ', error);
+          });
+      } else {
+        db.one('INSERT INTO posts(userID, recipientUserID, longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4, $5, $6) returning id', values)
+          .then(function(result) {
+            cb(result);
+          })
+          .catch(function(error) {
+            console.log('posts.post ERROR: ', error);
+          });
+      }
     },
     getSentPosts: function(userID, cb) {
       db.query('SELECT p.recipientUserID as recipientUserID, u.username as recipientUsername, p.longitude as longitude, p.latitude as latitude, p.imageURL as imageURL, p.publicPost as publicPost, p.timePosted as timePosted, p.timeExpired as timeExpired FROM posts p JOIN profile u on u.id = ANY(p.recipientUserID) WHERE p.userID = $1', userID)

@@ -18,10 +18,11 @@ export function toggleFlashMode () {
   };
 }
 
-export function postPhoto(recipientUserID, latitude, longitude, imageURL, publicPost) {
+export function postPhoto(userID, recipientUserID, latitude, longitude, imageURL, publicPost) {
   return {
     type: types.PostPhoto,
     payload: {
+      userID: userID,
       recipientUserID: recipientUserID,
       latitude: latitude,
       longitude: longitude,

@@ -1,5 +1,5 @@
-//install and save to package json
-//window.navigator.userAgent = 'react-native';
+// install and save to package json
+// window.navigator.userAgent = 'react-native';
 
 var express = require('express');
 var http = require('http');
@@ -28,7 +28,7 @@ var socketClients = {};
 
 io.on('connection', function(socket) {
   console.log('a client just joined', socket.id);
-  
+
   // io.sockets.socket(socketClients[<userID>].socket).emit('testing', 'meowth!!!!!!/?????!?!?!?')
 
   // socket.on('message', function (message) {
@@ -37,7 +37,7 @@ io.on('connection', function(socket) {
 
   socket.on('action', function(action) {
     if (action.type === 'socket/autosignin') {
-      auth.check(action.payload, function(token, user){
+      auth.check(action.payload, function(token, user) {
         if (!(token)) {
           console.log('autosignin failed, no socket data returned');
         } else {
@@ -45,21 +45,21 @@ io.on('connection', function(socket) {
             // console.log('all this stuff', posts, friendList, receivedFriendRequests, sentFriendRequests)
             socketClients[userID] = {'socket': socket.id};
             socket.emit('action',
-            {
-              type: 'LOGIN_RESPONSE',
-              data: {
-                username: username,
-                id: userID,
-                token: token,
-                posts: posts || {},
-                friendList: friendList || [{username: 'testUser23', id: 3}, {username: 'testUser41', id: 5}, {username: 'testUser352', id: 7}, {username: 'testUser095', id: 1}],
-                receivedFriendRequests: receivedFriendRequests || [{username: 'receivedReqUser1', id: 9999}, {username: 'receivedReqUser2', id: 9998}, {username: 'receivedReqUser3', id: 9997}],
-                sentFriendRequests: sentFriendRequests || [{username: 'sentReqUser1', id: 1008}, {username: 'sentReqUser2', id: 1009}, {username: 'sentReqUser3', id: 1007}]
-              }
-            });
-          })
+              {
+                type: 'LOGIN_RESPONSE',
+                data: {
+                  username: username,
+                  id: userID,
+                  token: token,
+                  posts: posts || {},
+                  friendList: friendList || [{username: 'testUser23', id: 3}, {username: 'testUser41', id: 5}, {username: 'testUser352', id: 7}, {username: 'testUser095', id: 1}],
+                  receivedFriendRequests: receivedFriendRequests || [{username: 'receivedReqUser1', id: 9999}, {username: 'receivedReqUser2', id: 9998}, {username: 'receivedReqUser3', id: 9997}],
+                  sentFriendRequests: sentFriendRequests || [{username: 'sentReqUser1', id: 1008}, {username: 'sentReqUser2', id: 1009}, {username: 'sentReqUser3', id: 1007}]
+                }
+              });
+          });
         }
-      }) 
+      });
     }
 
     if (action.type === 'socket/signin') {
@@ -85,7 +85,7 @@ io.on('connection', function(socket) {
             });
           })
         }
-      }) 
+      })
     }
 
     if (action.type === 'socket/signup') {
@@ -119,9 +119,9 @@ io.on('connection', function(socket) {
     if (action.type === 'socket/searchedUser') {
       console.log('socket/searchedUser payload ==== ', action.payload);
       if (socketClients[1]) {
-        io.sockets.sockets[socketClients[1].socket].emit('action', 
+        io.sockets.sockets[socketClients[1].socket].emit('action',
           {
-            type: 'TESTING', 
+            type: 'TESTING',
             data: action.payload.searchText
           })
       }
@@ -143,7 +143,7 @@ io.on('connection', function(socket) {
         console.log('friends.add stuff done')
       });
     }
-    
+
     if (action.type === 'socket/removeFriend') {
       console.log('socket/addFriend payload ==== ', action.payload);
       friends.remove(action.payload.primaryID, action.payload.friendID, function(confirmation){

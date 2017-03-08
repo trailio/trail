@@ -119,7 +119,7 @@ io.on('connection', function(socket) {
     if (action.type === 'socket/searchedUser') {
       console.log('socket/searchedUser payload ==== ', action.payload);
       if (socketClients[1]) {
-        io.sockets.socket(socketClients[1].socket).emit('action', 
+        io.sockets.sockets[socketClients[1].socket].emit('action', 
           {
             type: 'TESTING', 
             data: action.payload.searchText

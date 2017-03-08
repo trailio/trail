@@ -75,9 +75,9 @@ class FriendSelect extends Component {
                     <Image source={selectIcon}/>
                   </TouchableHighlight>
                  </View>
-                )
+                );
               }
-            })
+          })
           }
         </View>
       );
@@ -95,7 +95,7 @@ class FriendSelect extends Component {
           { displayFriends() }
         </ScrollView>
         <TouchableHighlight style={styles.confirmButton} onPress={this.onConfirmSelections.bind(this)}>
-          <Text style={styles.confirmButtonText}>Confirm Selections</Text>
+          <Text style={{alignSelf: 'center'}}>{((!that.props.isPublicPost && (this.props.friendRecipients.length !== 0)) || that.props.isPublicPost) ? 'Confirm Selections' : ''}</Text>
         </TouchableHighlight>
       </View>
     );

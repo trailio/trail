@@ -130,7 +130,7 @@ class DropPin extends Component {
             latitude: this.props.latitude,
             longitude: this.props.longitude
           }}
-          radius={500}
+          radius={170}
           strokeWidth={3}
           strokeColor={'#cc3399'}
           zIndex={2}

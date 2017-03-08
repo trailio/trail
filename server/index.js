@@ -123,16 +123,16 @@ io.on('connection', function(socket) {
 
     if (action.type === 'socket/addFriend') {
       console.log('socket/addFriend payload ==== ', action.payload);
-      friends.add(action.payload.primaryID, action.payload.friendID, function(confirmation){
+      friends.add(action.payload.user.id, action.payload.friend.id, function(confirmation){
         if (confirmation === 'FRIENDSHIP CONFIRMED') {
-          socketEmit(action.payoad.primaryID, 'FRIEND_ADDED', action.payload.friendID);
-          if (socketClients[friendID]) {
-            socketEmit(action.payoad.friendID, 'FRIEND_ADDED', action.payload.primaryID);
+          socketEmit(action.payload.user.id, 'FRIEND_ADDED', action.payload.friend);
+          if (socketClients[action.payload.friend.id]) {
+            socketEmit(action.payload.friend.id, 'FRIEND_ADDED', action.payload.user);
           }
         } else if (confirmation === 'REQUEST SENT') {
-          socketEmit(action.payoad.primaryID, 'FRIEND_REQUEST_OUTGOING', action.payload.friendID);
-          if (socketClients[friendID]) {
-            socketEmit(action.payoad.friendID, 'FRIEND_REQUEST_INCOMING', action.payload.primaryID);
+          socketEmit(action.payload.user.id, 'FRIEND_REQUEST_OUTGOING', action.payload.friend);
+          if (socketClients[action.payload.friend.id]) {
+            socketEmit(action.payload.friend.id, 'FRIEND_REQUEST_INCOMING', action.payload.user);
           }
         }
       });
@@ -143,9 +143,9 @@ io.on('connection', function(socket) {
       console.log('socket/addFriend payload ==== ', action.payload);
       friends.remove(action.payload.primaryID, action.payload.friendID, function(confirmation){
         if (confirmation) {
-          socketEmit(action.payoad.primaryID, 'FRIEND_REMOVED', action.payload.friendID);
-          if (socketClients[friendID]) {
-            socketEmit(action.payoad.friendID, 'FRIEND_REMOVED', action.payload.primaryID);
+          socketEmit(action.payload.primaryID, 'FRIEND_REMOVED', action.payload.friendID);
+          if (socketClients[action.payload.friendID]) {
+            socketEmit(action.payload.friendID, 'FRIEND_REMOVED', action.payload.primaryID);
           }
         }
       });

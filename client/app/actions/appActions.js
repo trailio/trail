@@ -44,10 +44,10 @@ export function searchedUser (searchText, userID) {
   };
 }
 
-export function addedFriend(primaryID, friendID) {
+export function addedFriend(primaryUser, friend) {
   return {
     type: types.AddedFriend,
-    payload: {primaryID: primaryID, friendID: friendID}
+    payload: {user: primaryUser, friend: friend}
   }
 }
 

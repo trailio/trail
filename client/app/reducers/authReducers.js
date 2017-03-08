@@ -77,13 +77,6 @@ export default function reducer ( state = {
       passwordText: ''
     }
   }
-  case 'TESTING': {
-    console.log('user searched for !!!!!', action.data)
-    return {
-      ...state
-    }
-  }
-
   default:
     return state;
   }

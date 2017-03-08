@@ -1,4 +1,4 @@
-  export default function reducer ( state = {
+export default function reducer ( state = {
   isLoggedIn: false,
   username: '',
   id: '',
@@ -38,8 +38,23 @@
       }
     }
   }
+  case 'LOGOUT_CLICKED': {
+    return {
+      ...state,
+      isLoggedIn: false,
+      username: '',
+      id: '',
+      sentPosts: [],
+      receivedPosts: [],
+      friendList: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'xxoxoxaznxo23', id: 7}, {username: 'poofzie', id: 1}],
+      receivedFriendRequests: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'poofzie', id: 1}],
+      sentFriendRequests: [{username: 'xxoxoxaznxo23', id: 7}],
+      renderImageURL: '',
+      searchedFriends: []
+    }
+  }
   case 'USER_SEARCHED': {
-    console.log('user searched received from server', action.data);
+    // console.log('user searched received from server', action.data);
     return {
       ...state,
       searchedFriends: action.data  
@@ -71,21 +86,56 @@
       renderLongitude: action.payload
     }
   }
-  case 'LOGOUT_CLICKED': {
+  case 'POST_RECEIVED': {
+    state.receivedPosts.push(action.data)
+    console.log('post received just now: ', action.data)
     return {
-      ...state,
-      isLoggedIn: false,
-      username: '',
-      id: '',
-      sentPosts: [],
-      receivedPosts: [],
-      friendList: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'xxoxoxaznxo23', id: 7}, {username: 'poofzie', id: 1}],
-      receivedFriendRequests: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'poofzie', id: 1}],
-      sentFriendRequests: [{username: 'xxoxoxaznxo23', id: 7}],
-      renderImageURL: '',
-      searchedFriends: []
+      ...state
     }
   }
+  case 'POST_SENT': {
+    state.sentPosts.push(action.data);
+    console.log('post sent just now: ', action.data)
+    return {
+      ...state
+    }
+  }  
+  case 'FRIEND_REMOVED': {
+    console.log('friend removed for id ', action.data)
+    var editedFriends = state.friendList.filter(function(friend){
+      return (!(friend.id === action.data));
+    })
+    return {
+      ...state,
+      friendList: editedFriends
+    }
+  }
+  case 'FRIEND_ADDED': {
+    state.friendList.push(action.data);
+    console.log('friend added: ', action.data.username)
+    console.log('new friend list => ', state.friendList)
+    return {
+      ...state
+    }
+  }
+  case 'FRIEND_REQUEST_OUTGOING': {
+    state.sentFriendRequests.push(action.data);
+    console.log('friend request sent to: ', action.data.username)
+    console.log('new sent requests list => ', state.sentFriendRequests)
+    return {
+      ...state
+    }
+  }
+
+  case 'FRIEND_REQUEST_INCOMING': {
+    state.receivedFriendRequests.push(action.data);
+    console.log('friend request sent to: ', action.data.username)
+    console.log('new sent requests list => ', state.receivedFriendRequests)
+    return {
+      ...state
+    }
+  }
+
   default:
     return state;
   }

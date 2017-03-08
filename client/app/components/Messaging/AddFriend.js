@@ -96,15 +96,17 @@ class AddFriend extends Component {
   }
 
   onFriendAdd(userID, username, friend){
-    console.log(`calling onFriendAdd for ${username} with ID of ${userID} to friend of`)
+    console.log(`calling onFriendAdd for`)
     console.log(JSON.stringify(friend));
-    this.props.addedFriend(userID, friend.id);
+    var primaryUser = {id: userID, username: username};
+    this.props.addedFriend(primaryUser, friend);
   }
 
   onFriendAccept(userID, username, friend) {
-    console.log(`calling onFriendAccept for ${username} with ID of ${userID} to friend of`)
+    console.log(`calling onFriendAdd for`)
     console.log(JSON.stringify(friend));
-    this.props.addedFriend(userID, friend.id);
+    var primaryUser = {id: userID, username: username};
+    this.props.addedFriend(primaryUser, friend);
   }
 
   onFriendRemove(userID, username, friend) {

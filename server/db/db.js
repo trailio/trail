@@ -17,6 +17,15 @@ var dbConfig = {
 
 var db = pgp(dbConfig);
 
+// var val = [1, [2, 3], 'longitude', 'latitude', 'http://kingofwallpapers.com/random-image/random-image-005.jpg', true];
+// db.one('INSERT INTO posts(userID, recipientUserID, longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4, $5, $6) returning *', val)
+//   .then(function(result) {
+//     console.log('TESTESTEST', result.recipientuserid)
+//   })
+//   .catch(function(error) {
+//     console.log('TESTTEST ERROR: ', error);
+//   });
+
 // values = ['Andrewregal', 'password', 'andrew.regal@gmail.com', [5, 3]];
 // db.query('insert into profile(username, password, email, friends) values ($1, $2, $3, $4)', values)
   // .then(function(result) {

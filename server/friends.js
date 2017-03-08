@@ -36,11 +36,11 @@ module.exports = {
       console.log("friend.js remove function -> exists => ", exists)
       if (exists.length === 0) {
         //if friends.exist returns no results, it means no friend connection is formed
-        cb('no friendship found, no need to delete friendship');
+        cb(false);
       } else {
         db.friends.remove(primaryID, friendID, function(friendshipDeletedConfirmation){
           console.log('friend.js -> friendship deleted -> ', friendshipDeletedConfirmation)
-          cb('friendship successfully deleted');
+          cb(true);
         })
       }
     })

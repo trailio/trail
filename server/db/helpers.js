@@ -41,15 +41,27 @@ module.exports = {
         noUserRecipients.splice(1, 1);
         db.one('INSERT INTO posts(userID, longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4, $5) returning id', noUserRecipients)
           .then(function(result) {
-            cb(result);
+            cb(null);
           })
           .catch(function(error) {
             console.log('posts.post ERROR: ', error);
           });
       } else {
-        db.one('INSERT INTO posts(userID, recipientUserID, longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4, $5, $6) returning id', values)
-          .then(function(result) {
-            cb(result);
+        db.one('INSERT INTO posts(userID, recipientUserID, longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4, $5, $6) returning *', values)
+          .then(function(post) {
+            db.query('SELECT username as recipientUsername FROM profile WHERE id = $1', post.recipientuserid)
+              .then(function(result){
+                if (result.length === 1) {
+                  console.log('posts.post helper: checking checking 123 for result[0].recipientUsername', result[0].recipientusername);
+                  post.recipientusername = result[0].recipientusername;
+                  cb(post)
+                } else {
+                  console.log(`posts.post username ERROR: username search returned ${result.length} results`)
+                }
+              })
+              .catch(function(error2){
+                console.log('posts.post username get ERROR: ', error2)
+              })
           })
           .catch(function(error) {
             console.log('posts.post ERROR: ', error);

@@ -89,13 +89,16 @@ export default function reducer ( state = {
   case 'POST_RECEIVED': {
     state.receivedPosts.push(action.data)
     console.log('post received just now: ', action.data)
+    // console.log('state.receivedPosts', state.receivedPosts);
     return {
-      ...state
+      ...state,
+      // receivedPosts: state.receivedPosts.concat(action.data)
     }
   }
   case 'POST_SENT': {
     state.sentPosts.push(action.data);
     console.log('post sent just now: ', action.data)
+    console.log('state.sentPosts', state.sentPosts);
     return {
       ...state
     }
@@ -112,10 +115,18 @@ export default function reducer ( state = {
   }
   case 'FRIEND_ADDED': {
     state.friendList.push(action.data);
+    var editedAcceptedFriends = state.receivedFriendRequests.filter(function(friend){
+      return (!(friend.id === action.data.id));
+    })
+    var editedSentFriends = state.sentFriendRequests.filter(function(friend){
+      return (!(friend.id === action.data.id));
+    })
     console.log('friend added: ', action.data.username)
     console.log('new friend list => ', state.friendList)
     return {
-      ...state
+      ...state,
+      receivedFriendRequests: editedAcceptedFriends,
+      sentFriendRequests: editedSentFriends
     }
   }
   case 'FRIEND_REQUEST_OUTGOING': {

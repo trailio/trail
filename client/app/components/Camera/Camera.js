@@ -65,7 +65,7 @@ class Camera extends Component {
             throw new Error('Failed to upload image to S3', response);
           }
           console.log('*** BODY ***', response.body);
-          this.props.postPhoto(this.props.id, this.props.friendRecipients, this.props.pinDropLat, this.props.pinDropLong, response.body.postResponse.location, this.props.isPublicPost);
+          this.props.postPhoto(this.props.id, this.props.username, this.props.friendRecipients, this.props.pinDropLat, this.props.pinDropLong, response.body.postResponse.location, this.props.isPublicPost);
           this.props.toggleUpload();
         });
     }
@@ -93,7 +93,7 @@ class Camera extends Component {
             throw new Error('Failed to upload image to S3', response);
           }
           console.log('*** BODY ***', response.body);
-          this.props.postPhoto(this.props.id, this.props.friendRecipients, this.props.pinDropLat, this.props.pinDropLong, response.body.postResponse.location, this.props.isPublicPost);
+          this.props.postPhoto(this.props.id, this.props.username, this.props.friendRecipients, this.props.pinDropLat, this.props.pinDropLong, response.body.postResponse.location, this.props.isPublicPost);
           this.props.toggleUpload();
         });
     }

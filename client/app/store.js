@@ -6,8 +6,8 @@ import ReduxPromise from 'redux-promise-middleware';
 
 import reducers from './reducers';
 
-let socket = io('http://localhost:8000');
-// let socket = io('http://5cc669df.ngrok.io');
+// let socket = io('http://localhost:8000');
+let socket = io('http://5cc669df.ngrok.io');
 
 let socketIoMiddleware = createSocketIoMiddleware(socket, 'socket/');
 

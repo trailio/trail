@@ -190,6 +190,7 @@ class Inbox extends Component {
       return (
         <View>
         { that.props.receivedPosts.map(function(post, i) {
+          console.log('inbox.js rendering messages for ', post.username);
           return (
             <TouchableHighlight
               onPress={that.onReceivedPostPress.bind(that, post.imageurl, post.latitude, post.longitude)}

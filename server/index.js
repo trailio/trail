@@ -103,10 +103,15 @@ io.on('connection', function(socket) {
       camera.post(action.payload, function(createdPost) {
         console.log('index.js Post photo return: ', createdPost);
         if (createdPost) {
-          socketEmit(createdPost.userid, 'POST_SENT', createdPost);
-          if(socketClients[createdPost.recipientuserid]) {
-            socketEmit(createdPost.recipientuserid, 'POST_RECEIVED', createdPost);
-          }
+          createdPost.username = action.payload.username;
+          socketEmit(createdPost.userid, 'POST_SENT', createdPost); 
+          createdPost.username = createdPost.recipientusername;
+          delete createdPost.recipientusername;
+          createdPost.recipientuserid.forEach(function(recipient) {
+            if(socketClients[recipient]) {
+              socketEmit(recipient, 'POST_RECEIVED', createdPost);
+            }
+          })
         } else {
           console.log('camera.js post - either public post was created or no post created');
         }

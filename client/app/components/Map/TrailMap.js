@@ -30,7 +30,8 @@ class TrailMap extends Component {
         longitude: null,
         latitudeDelta: null,
         longitudeDelta: null
-      }
+      },
+      trueSwitchIsOn: false,
     }
   };
 
@@ -55,11 +56,6 @@ class TrailMap extends Component {
 
   onImagePressed(){
     this.props.imageClosed();
-  }
-
-  onPublicPrivateSwitch() {
-    this.props.togglePublicPrivatePost();
-    console.log('CURRENTLY === ', this.props.isPublicPost);
   }
 
   componentWillMount() {
@@ -167,7 +163,7 @@ class TrailMap extends Component {
                       longitudeDelta: 0.015
                     }}
                     pinColor={'aqua'}
-                > {console.log('FSOEIHSIEHFISEHFOSIEFHESFSEOFIJE', that.props)}
+                >
                   <MapView.Callout style={styles.calloutStyle}>
                     <View>
                       <Text>
@@ -199,6 +195,10 @@ class TrailMap extends Component {
       }
     }
 
+    var showPublicPosts = function() {
+      console.log('ABCDEFGH!!!!!', that.state, that.props)
+    }
+
     var receivedMessages = function() {
       return that.props.receivedPosts.map( function(marker, i) {
           return (
@@ -217,11 +217,14 @@ class TrailMap extends Component {
                     </Text>
                   </View>
                 </MapView.Callout>
+                {showPublicPosts()}
               </MapView.Marker>
+            
         )})
     }
+
     if (this.props.renderImageURL && this.props.renderLatitude) {
-      console.log('this.props.renderImageURL!!!!!!', this.props.renderImageURL);
+      console.log('this.props.publicPosts', this.props.publicPosts);
       return checkPic();
     } else {
       return (
@@ -255,9 +258,9 @@ class TrailMap extends Component {
                 zIndex={2}
               />
               <Switch
-                onValueChange={() => that.onPublicPrivateSwitch()}
-                value={that.props.isPublicPost}
-                style={{alignSelf: 'center'}}
+                onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
+                style={{alignSelf: 'center', top: 20}}
+                value={this.state.trueSwitchIsOn}
               />
                 <MapView.Marker
                   coordinate={this.state.region}

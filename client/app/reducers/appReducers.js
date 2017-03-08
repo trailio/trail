@@ -4,6 +4,7 @@ export default function reducer ( state = {
   id: '',
   sentPosts: [],
   receivedPosts: [],
+  publicPosts: [],
   friendList: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'xxoxoxaznxo23', id: 7}, {username: 'poofzie', id: 1}],
   receivedFriendRequests: [{username: 'blobz341', id: 3}, {username: 'mamoize91', id: 5}, {username: 'poofzie', id: 1}],
   sentFriendRequests: [{username: 'xxoxoxaznxo23', id: 7}],
@@ -27,6 +28,7 @@ export default function reducer ( state = {
         id: action.payload.id,
         sentPosts: action.payload.posts.sent,
         receivedPosts: action.payload.posts.received,
+        publicPosts: action.payload.posts.publicPosts,
         friendList: action.payload.friendList,
         receivedFriendRequests: action.payload.receivedFriendRequests,
         sentFriendRequests: action.payload.sentFriendRequests
@@ -98,11 +100,19 @@ export default function reducer ( state = {
   case 'POST_SENT': {
     state.sentPosts.push(action.data);
     console.log('post sent just now: ', action.data)
-    console.log('state.sentPosts', state.sentPosts);
+    console.log('state.sentPosts', state.sentPosts)
     return {
       ...state
     }
-  }  
+  }
+  case 'PUBLIC_POST': {
+    state.publicPosts.push(action.data);
+    console.log('public post just now: ', action.data)
+    console.log('state.publicPosts', state.publicPosts)
+    return {
+      ...state
+    }
+  }    
   case 'FRIEND_REMOVED': {
     console.log('friend removed for id ', action.data)
     var editedFriends = state.friendList.filter(function(friend){

@@ -3,7 +3,8 @@ import {
   Image,
   Text,
   TouchableHighlight,
-  View
+  View,
+  Switch
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import MapView from 'react-native-maps';
@@ -54,6 +55,11 @@ class TrailMap extends Component {
 
   onImagePressed(){
     this.props.imageClosed();
+  }
+
+  onPublicPrivateSwitch() {
+    this.props.togglePublicPrivatePost();
+    console.log('CURRENTLY === ', this.props.isPublicPost);
   }
 
   componentWillMount() {
@@ -161,7 +167,7 @@ class TrailMap extends Component {
                       longitudeDelta: 0.015
                     }}
                     pinColor={'aqua'}
-                >
+                > {console.log('FSOEIHSIEHFISEHFOSIEFHESFSEOFIJE', that.props)}
                   <MapView.Callout style={styles.calloutStyle}>
                     <View>
                       <Text>
@@ -248,6 +254,11 @@ class TrailMap extends Component {
                 strokeColor={'#cc3399'}
                 zIndex={2}
               />
+              <Switch
+                onValueChange={() => that.onPublicPrivateSwitch()}
+                value={that.props.isPublicPost}
+                style={{alignSelf: 'center'}}
+              />
                 <MapView.Marker
                   coordinate={this.state.region}
                 >
@@ -272,11 +283,12 @@ class TrailMap extends Component {
 }
 
 const mapStateToProps = ({app}) => {
-  const { isLoggedIn, sentPosts, receivedPosts, renderImageURL, renderLatitude, renderLongitude } = app;
+  const { isLoggedIn, sentPosts, receivedPosts, publicPosts, renderImageURL, renderLatitude, renderLongitude } = app;
   return {
     isLoggedIn,
     sentPosts,
     receivedPosts,
+    publicPosts,
     renderImageURL,
     renderLatitude,
     renderLongitude

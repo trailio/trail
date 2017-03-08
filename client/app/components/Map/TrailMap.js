@@ -196,19 +196,18 @@ class TrailMap extends Component {
     }
 
     var showPublicPosts = function() {
-      console.log('ABCDEFGH!!!!!', that.state, that.props)
-    }
-
-    var receivedMessages = function() {
-      return that.props.receivedPosts.map( function(marker, i) {
-          return (
-            <MapView.Marker
+      // console.log('ABCDEFGH!!!!!', that.state, that.props);
+      if (that.state.trueSwitchIsOn) {
+        return (
+          that.props.publicPosts.map(function(marker, i) {
+            return (
+              <MapView.Marker
                 coordinate={{
                   latitude: Number(marker.latitude),
                   longitude: Number(marker.longitude)
                 }}
                 key={i}
-                pinColor={'aqua'}
+                pinColor={'orange'}
               >
                 <MapView.Callout onPress={that.onReceivedPostPress.bind(that, i)} style={styles.calloutStyle}>
                   <View>
@@ -217,10 +216,37 @@ class TrailMap extends Component {
                     </Text>
                   </View>
                 </MapView.Callout>
-                {showPublicPosts()}
               </MapView.Marker>
-            
-        )})
+            )
+          })
+        )
+      }
+    }
+
+    var receivedMessages = function() {
+      if (!that.state.trueSwitchIsOn) {
+        return (that.props.receivedPosts.map( function(marker, i) {
+            return (
+              <MapView.Marker
+                  coordinate={{
+                    latitude: Number(marker.latitude),
+                    longitude: Number(marker.longitude)
+                  }}
+                  key={i}
+                  pinColor={'aqua'}
+                >
+                <MapView.Callout onPress={that.onReceivedPostPress.bind(that, i)} style={styles.calloutStyle}>
+                  <View>
+                    <Text>
+                      {marker.username}
+                    </Text>
+                  </View>
+                </MapView.Callout>      
+              </MapView.Marker>
+            )
+          })
+        )
+      }
     }
 
     if (this.props.renderImageURL && this.props.renderLatitude) {
@@ -274,6 +300,7 @@ class TrailMap extends Component {
                   </MapView.Callout>
                 </MapView.Marker>
                 { receivedMessages() }
+                { showPublicPosts() }
               </MapView> : null}
           </View>
           <View style={styles.slide1}>

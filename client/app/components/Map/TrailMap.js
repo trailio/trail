@@ -41,8 +41,8 @@ class TrailMap extends Component {
       region: {
         latitude: lat,
         longitude: lon,
-        latitudeDelta: 0.015,
-        longitudeDelta: 0.015
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005
       },
     });
   }
@@ -140,7 +140,7 @@ class TrailMap extends Component {
                   latitudeDelta: 0.015,
                   longitudeDelta: 0.015}}
                 showsUserLocation={true}
-                followsUserLocation={true}
+
                 scrollEnabled={false}
                 provider={'google'}
                 customMapStyle={mapStyle}
@@ -205,12 +205,35 @@ class TrailMap extends Component {
     }
 
     var showPublicPosts = function() {
-      console.log('ABCDEFGH!!!!!', that.state, that.props);
+      // console.log('ABCDEFGH!!!!!', that.state, that.props);
+      return (
+        that.props.publicPosts.map(function(marker, i) {
+          return (
+            <MapView.Marker
+              coordinate={{
+                latitude: Number(marker.latitude),
+                longitude: Number(marker.longitude)
+              }}
+              key={i}
+              image={require('./TrailPin.png')}
+            >
+              <MapView.Callout onPress={that.onPublicPostPress.bind(that, i)} style={styles.calloutStyle}>
+                <View>
+                  <Text>
+                    {marker.username}
+                  </Text>
+                </View>
+              </MapView.Callout>
+            </MapView.Marker>
+          )
+        })
+      )   
+    }
 
-        return (
-          that.props.publicPosts.map(function(marker, i) {
-            return (
-              <MapView.Marker
+    var receivedMessages = function() {
+      return (that.props.receivedPosts.map(function(marker, i) {
+          return (
+            <MapView.Marker
                 coordinate={{
                   latitude: Number(marker.latitude),
                   longitude: Number(marker.longitude)
@@ -218,44 +241,17 @@ class TrailMap extends Component {
                 key={i}
                 image={require('./TrailPin.png')}
               >
-                <MapView.Callout onPress={that.onPublicPostPress.bind(that, i)} style={styles.calloutStyle}>
-                  <View>
-                    <Text>
-                      {marker.username}
-                    </Text>
-                  </View>
-                </MapView.Callout>
-              </MapView.Marker>
-            )
-          })
-        )
-      
-    }
-
-    var receivedMessages = function() {
-  
-        return (that.props.receivedPosts.map(function(marker, i) {
-            return (
-              <MapView.Marker
-                  coordinate={{
-                    latitude: Number(marker.latitude),
-                    longitude: Number(marker.longitude)
-                  }}
-                  key={i}
-                  image={require('./TrailPin.png')}
-                >
-                <MapView.Callout onPress={that.onReceivedPostPress.bind(that, i)} style={styles.calloutStyle}>
-                  <View>
-                    <Text>
-                      {marker.username}
-                    </Text>
-                  </View>
-                </MapView.Callout>      
-              </MapView.Marker>
-            )
-          })
-        )
-      
+              <MapView.Callout onPress={that.onReceivedPostPress.bind(that, i)} style={styles.calloutStyle}>
+                <View>
+                  <Text>
+                    {marker.username}
+                  </Text>
+                </View>
+              </MapView.Callout>      
+            </MapView.Marker>
+          )
+        })
+      ) 
     }
 
     if (this.props.renderImageURL && this.props.renderLatitude) {
@@ -275,7 +271,7 @@ class TrailMap extends Component {
                 style={styles.map}
                 initialRegion={this.state.region}
                 showsUserLocation={true}
-                followsUserLocation={true}
+
                 scrollEnabled={false}
                 provider={'google'}
                 customMapStyle={mapStyle}
@@ -287,8 +283,8 @@ class TrailMap extends Component {
                   longitude: this.state.region.longitude
                 }}
                 radius={170}
-                strokeWidth={0}
-                strokeColor={'rgb(236, 199, 189)'}
+                strokeWidth={3}
+                strokeColor={'rgba(234, 75, 75, 0.8)'}
                 fillColor={'rgba(236, 199, 189, 0.8)'}
                 zIndex={2}
               />
@@ -297,18 +293,6 @@ class TrailMap extends Component {
                 style={{alignSelf: 'center', top: 20}}
                 value={this.state.trueSwitchIsOn}
               />
-                <MapView.Marker
-                  coordinate={this.state.region}
-                >
-                  <MapView.Callout style={styles.calloutStyle}>
-                    <View>
-                      <Text>
-                        You are here
-                      </Text>
-                    </View>
-                  </MapView.Callout>
-                </MapView.Marker>
-
                 {that.state.trueSwitchIsOn ? showPublicPosts() : receivedMessages()}
               </MapView> : null}
           </View>

@@ -126,8 +126,8 @@ class DropPin extends Component {
           initialRegion={{
             latitude: this.props.latitude,
             longitude: this.props.longitude,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.015
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005
           }}
           followsUserLocation={true}
           scrollEnabled={true}
@@ -140,8 +140,8 @@ class DropPin extends Component {
             longitude: this.props.longitude
           }}
           radius={170}
-          strokeWidth={0}
-          strokeColor={'#ECC7BD'}
+          strokeWidth={3}
+          strokeColor={'rgba(234, 75, 75, 0.8)'}
           fillColor={'rgba(236, 199, 189, 0.8)'}
           zIndex={2}
         />

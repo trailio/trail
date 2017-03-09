@@ -54,6 +54,12 @@ class TrailMap extends Component {
     this.props.longitudeChanged(this.props.receivedPosts[imageIndex].longitude);
   }
 
+  onPublicPostPress(imageIndex) {
+    this.props.imageURLChanged(this.props.publicPosts[imageIndex].imageurl);
+    this.props.latitudeChanged(this.props.publicPosts[imageIndex].latitude);
+    this.props.longitudeChanged(this.props.publicPosts[imageIndex].longitude);
+  }
+
   onImagePressed(){
     this.props.imageClosed();
   }
@@ -93,6 +99,7 @@ class TrailMap extends Component {
     function checkPic () {
       if (that.props.renderLatitude && (getDistanceFromLatLonInMeters(that.state.region.latitude, that.state.region.longitude, that.props.renderLatitude, that.props.renderLongitude) <= 170)){
         if (that.props.renderImageURL.indexOf('.jpg') >= 0) {
+          console.log('that.props.renderImageURL', that.props.renderImageURL);
           return (
               <View>
                 <TouchableHighlight onPress={function() { that.onImagePressed(); }}>
@@ -196,8 +203,8 @@ class TrailMap extends Component {
     }
 
     var showPublicPosts = function() {
-      // console.log('ABCDEFGH!!!!!', that.state, that.props);
-      if (that.state.trueSwitchIsOn) {
+      console.log('ABCDEFGH!!!!!', that.state, that.props);
+
         return (
           that.props.publicPosts.map(function(marker, i) {
             return (
@@ -209,7 +216,7 @@ class TrailMap extends Component {
                 key={i}
                 pinColor={'orange'}
               >
-                <MapView.Callout onPress={that.onReceivedPostPress.bind(that, i)} style={styles.calloutStyle}>
+                <MapView.Callout onPress={that.onPublicPostPress.bind(that, i)} style={styles.calloutStyle}>
                   <View>
                     <Text>
                       {marker.username}
@@ -220,12 +227,12 @@ class TrailMap extends Component {
             )
           })
         )
-      }
+      
     }
 
     var receivedMessages = function() {
-      if (!that.state.trueSwitchIsOn) {
-        return (that.props.receivedPosts.map( function(marker, i) {
+  
+        return (that.props.receivedPosts.map(function(marker, i) {
             return (
               <MapView.Marker
                   coordinate={{
@@ -246,11 +253,10 @@ class TrailMap extends Component {
             )
           })
         )
-      }
+      
     }
 
     if (this.props.renderImageURL && this.props.renderLatitude) {
-      console.log('this.props.publicPosts', this.props.publicPosts);
       return checkPic();
     } else {
       return (
@@ -299,8 +305,8 @@ class TrailMap extends Component {
                     </View>
                   </MapView.Callout>
                 </MapView.Marker>
-                { receivedMessages() }
-                { showPublicPosts() }
+
+                {that.state.trueSwitchIsOn ? showPublicPosts() : receivedMessages()}
               </MapView> : null}
           </View>
           <View style={styles.slide1}>

@@ -63,7 +63,12 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     alignItems: 'center',
-  }
+  },
+  photo: {
+    flex: 1,
+    width: 375,
+    height: 675
+  },
 });
 
 export default styles;

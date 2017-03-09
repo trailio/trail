@@ -87,7 +87,7 @@ module.exports = {
       });
     },
     getPublicPosts: function(cb) {
-      db.query('SELECT * FROM posts WHERE publicpost = true')
+      db.query('SELECT p.userID as userID, u.username as username, p.longitude as longitude, p.latitude as latitude, p.imageURL as imageURL, p.publicPost as publicPost, p.timePosted as timePosted, p.timeExpired as timeExpired FROM posts p JOIN profile u on p.userID = u.id WHERE publicpost = true')
       .then(function(result) {
         cb(result);
       })

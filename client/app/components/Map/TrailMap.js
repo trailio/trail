@@ -10,7 +10,7 @@ import Swiper from 'react-native-swiper';
 import MapView from 'react-native-maps';
 import VideoPlayer from 'react-native-video';
 import getDirections from 'react-native-google-maps-directions';
-import TrailPin from './TrailPin.png';
+
 
 import store from '../../store.js';
 import mapStyle from './mapStyle';
@@ -292,6 +292,7 @@ class TrailMap extends Component {
                 onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
                 style={{alignSelf: 'center', top: 20}}
                 value={this.state.trueSwitchIsOn}
+                onTintColor={'rgb(234, 75, 75)'}
               />
                 {that.state.trueSwitchIsOn ? showPublicPosts() : receivedMessages()}
               </MapView> : null}

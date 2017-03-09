@@ -56,6 +56,7 @@ class FriendSelect extends Component {
             onValueChange={() => that.onPublicPrivateSwitch()}
             value={that.props.isPublicPost}
             style={{alignSelf: 'center'}}
+            onTintColor={'rgb(234, 75, 75)'}
           />
         <Text style={{alignSelf: 'center'}}>{that.props.isPublicPost ? 'Public' : 'Private'}</Text>
           { that.props.friendList.map(function(friend, i){

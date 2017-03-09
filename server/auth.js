@@ -80,40 +80,28 @@ module.exports = {
       db.posts.getReceivedPosts(user.id, function(receivedResults) {
         posts.received = receivedResults;
         db.friends.get(user.id, function(friends) {
+          db.posts.getPublicPosts(function(publicPosts) {
           // console.log(`${payload.usernameText}'s friends are ${JSON.stringify(friends)}`)
-          var friendList = [];
-          var receivedFriendRequests = [];
-          var sentFriendRequests = [];
-          friends.forEach(function(friend) {
-            if (friend.friendshipconfirmed === true) {
-              friendList.push({username: friend.username, id: friend.friendid});
-            } else if (friend.primaryidsentrequest === true) {
-              sentFriendRequests.push({username: friend.username, id: friend.friendid});
-            } else if (friend.primaryidreceivedrequest === true) {
-              receivedFriendRequests.push({username: friend.username, id: friend.friendid});
-            }
+            posts.publicPosts = publicPosts;
+            var friendList = [];
+            var receivedFriendRequests = [];
+            var sentFriendRequests = [];
+            friends.forEach(function(friend) {
+              if (friend.friendshipconfirmed === true) {
+                friendList.push({username: friend.username, id: friend.friendid});
+              } else if (friend.primaryidsentrequest === true) {
+                sentFriendRequests.push({username: friend.username, id: friend.friendid});
+              } else if (friend.primaryidreceivedrequest === true) {
+                receivedFriendRequests.push({username: friend.username, id: friend.friendid});
+              }
+            });
+            console.log(`found friends of ${user.id}: ${friendList}`);
+            console.log(`found friendReqsSent of ${user.id}: ${sentFriendRequests}`);
+            console.log(`found friendReqsReceived of ${user.id}: ${receivedFriendRequests}`);
+            cb(token, user.username, user.id, posts, friendList, receivedFriendRequests, sentFriendRequests);
           });
-          console.log(`found friends of ${user.id}: ${friendList}`);
-          console.log(`found friendReqsSent of ${user.id}: ${sentFriendRequests}`);
-          console.log(`found friendReqsReceived of ${user.id}: ${receivedFriendRequests}`);
-          cb(token, user.username, user.id, posts, friendList, receivedFriendRequests, sentFriendRequests);
         });
       });
     });
-    db.posts.getPublicPosts(function(publicPosts) {
-      posts.publicPosts = publicPosts;
-    });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,10 +1,10 @@
 {
-  "name": "server",
+  "name": "trail-server",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "docker build -t andrewregal/trail-server",
     "start": "node server.js"
   },
   "author": "",

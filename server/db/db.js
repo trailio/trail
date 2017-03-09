@@ -16,6 +16,7 @@ var dbConfig = {
 
 var db = pgp(dbConfig);
 
+module.exports = db;
 // var val = [1, [2, 3], 'longitude', 'latitude', 'http://kingofwallpapers.com/random-image/random-image-005.jpg', true];
 // db.one('INSERT INTO posts(userID, recipientUserID, longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4, $5, $6) returning *', val)
 //   .then(function(result) {
@@ -53,5 +54,3 @@ var db = pgp(dbConfig);
 //   .catch(function(error) {
 //     console.log('posts.post ERROR: ', error);
 //   });
-
-module.exports = db;

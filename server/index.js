@@ -29,15 +29,15 @@ var socketEmit = function(userID, actionType, data) {
   io.sockets.sockets[socketClients[userID].socketID].emit('action', {
     type: actionType,
     data: data
-  })
-}
+  });
+};
 
 io.on('connection', function(socket) {
   console.log('a client just joined', socket.id);
 
   // io.sockets.socket(socketClients[<userID>].socket).emit('testing', 'meowth!!!!!!/?????!?!?!?')
   socket.on('action', function(action) {
-    
+
     if (action.type === 'socket/autosignin') {
       auth.check(action.payload, function(token, user) {
         if (!(token)) {
@@ -163,9 +163,9 @@ module.exports = server;
 
 // sample socket code
       // if (socketClients[1]) {
-      //   io.sockets.sockets[socketClients[1].socket].emit('action', 
+      //   io.sockets.sockets[socketClients[1].socket].emit('action',
       //     {
-      //       type: 'TESTING', 
+      //       type: 'TESTING',
       //       data: action.payload.searchText
       //     })
       // }

@@ -50,18 +50,18 @@ module.exports = {
         db.one('INSERT INTO posts(userID, recipientUserID, longitude, latitude, imageURL, publicPost) VALUES($1, $2, $3, $4, $5, $6) returning *', values)
           .then(function(post) {
             db.query('SELECT username as recipientUsername FROM profile WHERE id = $1', post.recipientuserid)
-              .then(function(result){
+              .then(function(result) {
                 if (result.length === 1) {
                   console.log('posts.post helper: checking checking 123 for result[0].recipientUsername', result[0].recipientusername);
                   post.recipientusername = result[0].recipientusername;
-                  cb(post)
+                  cb(post);
                 } else {
-                  console.log(`posts.post username ERROR: username search returned ${result.length} results`)
+                  console.log(`posts.post username ERROR: username search returned ${result.length} results`);
                 }
               })
-              .catch(function(error2){
-                console.log('posts.post username get ERROR: ', error2)
-              })
+              .catch(function(error2) {
+                console.log('posts.post username get ERROR: ', error2);
+              });
           })
           .catch(function(error) {
             console.log('posts.post ERROR: ', error);
@@ -99,7 +99,7 @@ module.exports = {
   friends: {
     get: function(primaryID, cb) {
       db.query('SELECT f.friendID as friendID, p.username as username, f.friendshipConfirmed as friendshipConfirmed, f.primaryIDSentRequest as primaryIDSentRequest, f.primaryIDReceivedRequest as primaryIDReceivedRequest FROM friend f JOIN profile p on f.friendID =  p.id WHERE f.primaryID = $1', primaryID)
-      .then(function(result){
+      .then(function(result) {
         cb(result);
       })
       .catch(function(error) {
@@ -107,7 +107,7 @@ module.exports = {
       });
     },
     searchByString: function(string, userID, cb) {
-      db.manyOrNone("SELECT id, username FROM profile WHERE lower(username) LIKE '%$1#%' AND id != $2", [string, userID])
+      db.manyOrNone('SELECT id, username FROM profile WHERE lower(username) LIKE "%$1#%" AND id != $2', [string, userID])
         .then(function(result) {
           cb(result);
         })
@@ -115,20 +115,20 @@ module.exports = {
           console.log('friends.searchByString ERROR: ', error);
         });
     },
-    exist: function(primaryID, friendID, cb){
+    exist: function(primaryID, friendID, cb) {
       db.query('SELECT * FROM friend WHERE primaryID = $1 AND friendID = $2', [primaryID, friendID])
-        .then(function(result){
+        .then(function(result) {
           cb(result);
         })
         .catch(function(error) {
           console.log('friends.exist ERROR: ', error);
         });
     },
-    insert: function(primaryID, friendID, cb){
+    insert: function(primaryID, friendID, cb) {
       db.one('INSERT INTO friend(primaryID, friendID, friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) VALUES($1, $2, $3, $4, $5) returning friendID', [primaryID, friendID, false, true, false])
-        .then(function(confirmed){
+        .then(function(confirmed) {
           db.one('INSERT INTO friend(primaryID, friendID, friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) VALUES($1, $2, $3, $4, $5) returning friendID', [friendID, primaryID, false, false, true])
-          .then(function(confirmed2){
+          .then(function(confirmed2) {
             cb(confirmed2);
           })
           .catch(function(error2) {
@@ -141,30 +141,30 @@ module.exports = {
     },
     update: function(primaryID, friendID, cb) {
       db.one('UPDATE friend SET (friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) = (TRUE, FALSE, FALSE) WHERE primaryID = $1 AND friendID = $2 returning friendID', [primaryID, friendID])
-      .then(function(confirmed){
+      .then(function(confirmed) {
         db.one('UPDATE friend SET (friendshipConfirmed, primaryIDSentRequest, primaryIDReceivedRequest) = (TRUE, FALSE, FALSE) WHERE primaryID = $1 AND friendID = $2 returning friendID', [friendID, primaryID])
-          .then(function(confirmed2){
+          .then(function(confirmed2) {
             cb();
           })
           .catch(function(error2) {
             console.log('friends.update ERROR: ', error2);
           });
-        })
+      })
       .catch(function(error) {
         console.log('friends.update ERROR: ', error);
       });
     },
     remove: function(primaryID, friendID, cb) {
       db.one('DELETE FROM friend WHERE primaryID = $1 AND friendID = $2 returning friendID', [primaryID, friendID])
-      .then(function(confirmed){
+      .then(function(confirmed) {
         db.one('DELETE FROM friend WHERE primaryID = $1 AND friendID = $2 returning friendID', [friendID, primaryID])
-          .then(function(confirmed2){
+          .then(function(confirmed2) {
             cb(confirmed2);
           })
           .catch(function(error2) {
             console.log('friends.remove ERROR: ', error2);
           });
-        })
+      })
       .catch(function(error) {
         console.log('friends.remove ERROR: ', error);
       });

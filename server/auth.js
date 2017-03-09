@@ -2,7 +2,6 @@ var jwt = require('jwt-simple');
 var db = require('./db/helpers');
 var Promise = require('bluebird');
 var bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'));
-// require('body-parser');
 
 module.exports = {
   signup: function(payload, cb) {
@@ -79,13 +78,13 @@ module.exports = {
     db.posts.getSentPosts(user.id, function(sentResults) {
       posts.sent = sentResults;
       db.posts.getReceivedPosts(user.id, function(receivedResults) {
-        posts.received = receivedResults; 
-        db.friends.get(user.id, function(friends){
+        posts.received = receivedResults;
+        db.friends.get(user.id, function(friends) {
           // console.log(`${payload.usernameText}'s friends are ${JSON.stringify(friends)}`)
           var friendList = [];
           var receivedFriendRequests = [];
           var sentFriendRequests = [];
-          friends.forEach(function(friend){
+          friends.forEach(function(friend) {
             if (friend.friendshipconfirmed === true) {
               friendList.push({username: friend.username, id: friend.friendid});
             } else if (friend.primaryidsentrequest === true) {
@@ -93,12 +92,12 @@ module.exports = {
             } else if (friend.primaryidreceivedrequest === true) {
               receivedFriendRequests.push({username: friend.username, id: friend.friendid});
             }
-          })
+          });
           console.log(`found friends of ${user.id}: ${friendList}`);
           console.log(`found friendReqsSent of ${user.id}: ${sentFriendRequests}`);
           console.log(`found friendReqsReceived of ${user.id}: ${receivedFriendRequests}`);
           cb(token, user.username, user.id, posts, friendList, receivedFriendRequests, sentFriendRequests);
-        })  
+        });
       });
     });
     db.posts.getPublicPosts(function(publicPosts) {

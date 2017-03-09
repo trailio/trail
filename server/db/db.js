@@ -3,12 +3,11 @@ var options = {
   promiseLib: promise
 };
 var pgp = require('pg-promise')(options);
-var config = require('../config.js');
 
 var dbConfig = {
-  user: config.AWSRDSUser, //env var: PGUSER
-  password: config.AWSRDSPassword, //env var: PGPASSWORD
-  host: config.AWSRDSHost,
+  user: process.env.AWSRDSUser, //env var: PGUSER
+  password: process.env.AWSRDSPassword, //env var: PGPASSWORD
+  host: process.env.AWSRDSHost,
   database: 'trail', //env var: PGDATABASE
   port: 5432, //env var: PGPORT
   max: 10,

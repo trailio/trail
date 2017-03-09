@@ -32,7 +32,15 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    padding: 10
+    padding: 8,
+  },
+  send: {
+    position: 'absolute',
+    top: height - 150,
+    bottom: 0,
+    left: width - 120,
+    right: 0,
+    backgroundColor: 'rgba(0,0,0,0)',
   }
 });
 
@@ -100,7 +108,7 @@ class DropPin extends Component {
     var locationCheck = function(lat1, long1, lat2, long2) {
       if (lat1 && getDistanceFromLatLonInMeters(lat1, long1, lat2, long2) <= 170) {
         return (
-          <TouchableHighlight onPress={that.submitPinDrop.bind(that)}>
+          <TouchableHighlight onPress={that.submitPinDrop.bind(that)} style={styles.send}>
             <Image source={sendIcon}/>
           </TouchableHighlight>
         );
@@ -111,6 +119,7 @@ class DropPin extends Component {
 
     return (
     <View>
+      <Text style={styles.text}>Drop Pin</Text>
       {this.props.latitude ?
         <MapView
           style={styles.map}
@@ -131,8 +140,9 @@ class DropPin extends Component {
             longitude: this.props.longitude
           }}
           radius={170}
-          strokeWidth={3}
-          strokeColor={'#cc3399'}
+          strokeWidth={0}
+          strokeColor={'#ECC7BD'}
+          fillColor={'rgba(236, 199, 189, 0.8)'}
           zIndex={2}
         />
           <MapView.Marker
@@ -140,14 +150,12 @@ class DropPin extends Component {
             latitude: Number(this.props.latitude),
             longitude: Number(this.props.longitude)
             }}
-            title={"title"}
-            description={"description"}
+            image={require('../Map/TrailPin.png')}
             draggable
             onDragEnd={(e) => this.setState({ pinDropLong: e.nativeEvent.coordinate.longitude, pinDropLat: e.nativeEvent.coordinate.latitude})}
           />
         </MapView> : null
       }
-      <Text style={styles.text}>Drop Pin</Text>
       {locationCheck(this.state.pinDropLat, this.state.pinDropLong, this.props.latitude, this.props.longitude)}
     </View>
     );

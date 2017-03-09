@@ -10,6 +10,7 @@ import Swiper from 'react-native-swiper';
 import MapView from 'react-native-maps';
 import VideoPlayer from 'react-native-video';
 import getDirections from 'react-native-google-maps-directions';
+import TrailPin from './TrailPin.png';
 
 import store from '../../store.js';
 import mapStyle from './mapStyle';
@@ -153,6 +154,7 @@ class TrailMap extends Component {
                       latitudeDelta: 0.015,
                       longitudeDelta: 0.015
                     }}
+                  image={require('./TrailPin.png')}
                 >
                   <MapView.Callout style={styles.calloutStyle}>
                     <View>
@@ -169,7 +171,7 @@ class TrailMap extends Component {
                       latitudeDelta: 0.015,
                       longitudeDelta: 0.015
                     }}
-                    pinColor={'aqua'}
+                  image={require('./TrailPin.png')}
                 >
                   <MapView.Callout style={styles.calloutStyle}>
                     <View>
@@ -214,7 +216,7 @@ class TrailMap extends Component {
                   longitude: Number(marker.longitude)
                 }}
                 key={i}
-                pinColor={'orange'}
+                image={require('./TrailPin.png')}
               >
                 <MapView.Callout onPress={that.onPublicPostPress.bind(that, i)} style={styles.calloutStyle}>
                   <View>
@@ -240,7 +242,7 @@ class TrailMap extends Component {
                     longitude: Number(marker.longitude)
                   }}
                   key={i}
-                  pinColor={'aqua'}
+                  image={require('./TrailPin.png')}
                 >
                 <MapView.Callout onPress={that.onReceivedPostPress.bind(that, i)} style={styles.calloutStyle}>
                   <View>
@@ -285,8 +287,9 @@ class TrailMap extends Component {
                   longitude: this.state.region.longitude
                 }}
                 radius={170}
-                strokeWidth={3}
-                strokeColor={'#cc3399'}
+                strokeWidth={0}
+                strokeColor={'rgb(236, 199, 189)'}
+                fillColor={'rgba(236, 199, 189, 0.8)'}
                 zIndex={2}
               />
               <Switch

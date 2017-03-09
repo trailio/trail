@@ -1,4 +1,4 @@
-var port = process.env.PORT || 8000;
+var port = process.env.PORT || 8080;
 var server = require('./index');
 
 server.listen(port, function() {

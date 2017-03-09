@@ -38,7 +38,7 @@ class TrailApp extends Component {
           <View style={styles.slide1}>
             <Inbox />
           </View>
-  
+
           <Swiper
             style={styles.wrapper}
             showsButtons={true}
@@ -64,10 +64,11 @@ class TrailApp extends Component {
   }
 
   componentWillMount() {
+    // AsyncStorage.removeItem('STORAGE_KEY');
     AsyncStorage.getItem('STORAGE_KEY').then((token) => {
       AsyncStorage.getItem('USER').then((user) => {
         if (token && user) {
-          this.props.autoSignin(token)
+          this.props.autoSignin(token);
           this.props.loginUser(JSON.parse(user));
         }
       });

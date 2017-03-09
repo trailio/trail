@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "docker build -t andrewregal/trail-server",
+    "push": "docker push andrewregal/trail-server",
     "start": "node server.js"
   },
   "author": "",

@@ -288,9 +288,10 @@ class TrailMap extends Component {
                 fillColor={'rgba(236, 199, 189, 0.8)'}
                 zIndex={2}
               />
+              <Text style={styles.text}>{this.state.trueSwitchIsOn ? 'Public Posts' : 'Private Posts'}</Text>
               <Switch
                 onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
-                style={{alignSelf: 'center', top: 20}}
+                style={{alignSelf: 'center', top: 40}}
                 value={this.state.trueSwitchIsOn}
                 onTintColor={'rgb(234, 75, 75)'}
               />

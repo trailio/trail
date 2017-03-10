@@ -11,6 +11,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#537fbb',
   },
+  slide1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flex: 1,
+    height: height,
+    width: width
+  },
    header: {
     color: '#FDFDFB',
     fontSize: 30,

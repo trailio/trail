@@ -79,9 +79,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   confirmButton: {
-    flex: 1,
     alignSelf: 'center',
-    justifyContent: 'space-between'
   },
   confirmButtonText: {
     fontSize: 14

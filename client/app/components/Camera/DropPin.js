@@ -76,7 +76,7 @@ class DropPin extends Component {
   }
 
   submitPinDrop() {
-    console.log('PROPS == ', this.props);
+    console.log('PROPS == ', this.state.pinDropLat, this.state.pinDropLong);
     this.props.dropPin(this.state.pinDropLat, this.state.pinDropLong);
     this.props.toggleUpload();
   }

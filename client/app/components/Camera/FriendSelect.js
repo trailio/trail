@@ -86,19 +86,11 @@ class FriendSelect extends Component {
     };
     return (
       <View>
-        <View style={{padding: 80}}/>
+        <View style={{padding: 50}}/>
         <View style = {styles.heading}>
           <Text style={styles.header}>SELECT RECIPIENTS</Text>
         </View>
         <View style={{padding: 5}}/>
-        
-        <View style={styles.nav}>
-          <Text style={styles.toggleText}>{that.props.isPublicPost ? 'Public Post' : 'Private Post'}</Text>
-          <Switch
-            onValueChange={() => that.onPublicPrivateSwitch()}
-            value={that.props.isPublicPost}
-          />
-        </View>
 
         <View style={{padding: 5}}/>
 
@@ -113,9 +105,8 @@ class FriendSelect extends Component {
             </ScrollView>
         </View>
         <TouchableHighlight style={styles.confirmButton} onPress={this.onConfirmSelections.bind(this)}>
-            <Text style={styles.toggleText}>{((!that.props.isPublicPost && (this.props.friendRecipients.length !== 0)) || that.props.isPublicPost) ? 'Confirm Selection' : 'Please Select Recipients'}</Text>
+          <Text style={styles.toggleText}>{((!that.props.isPublicPost && (this.props.friendRecipients.length !== 0)) || that.props.isPublicPost) ? 'Confirm Selection' : 'Please Select Recipients'}</Text>
         </TouchableHighlight>
-        
       </View>
     );
   }

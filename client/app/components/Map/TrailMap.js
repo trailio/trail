@@ -269,7 +269,7 @@ class TrailMap extends Component {
                 initialRegion={this.state.region}
                 showsUserLocation={true}
 
-                scrollEnabled={false}
+                scrollEnabled={true}
                 provider={'google'}
                 customMapStyle={mapStyle}
                 showsScale={true}

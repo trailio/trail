@@ -22,7 +22,7 @@ const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   map: {
-    height: height - 100,
+    height: height,
     width: width,
     margin: 0,
     padding: 0
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     padding: 8,
+    position: 'absolute',
   },
   send: {
     position: 'absolute',
@@ -119,7 +120,7 @@ class DropPin extends Component {
 
     return (
     <View>
-      <Text style={styles.text}>Drop Pin</Text>
+  
       {this.props.latitude ?
         <MapView
           style={styles.map}
@@ -134,6 +135,15 @@ class DropPin extends Component {
           provider={'google'}
           customMapStyle={mapStyle}
         >
+            <Text style={{
+              color: '#fff',
+              fontSize: 60,
+              fontWeight: 'bold',
+              color: 'rgba(255, 255, 255, .5)',
+              textAlign: 'center',
+              top: height/2,
+              backgroundColor: 'rgba(0, 0, 0, 0)'
+            }}>Drop Pin</Text>
         <MapView.Circle
           center={{
             latitude: this.props.latitude,

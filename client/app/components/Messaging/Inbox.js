@@ -186,6 +186,56 @@ class Inbox extends Component {
       }
     }
 
+    var months = {
+      '01': 'January',
+      '02': 'February',
+      '03': 'March',
+      '04': 'April',
+      '05': 'May',
+      '06': 'June',
+      '07': 'July',
+      '08': 'August',
+      '09': 'September',
+      '10': 'October',
+      '11': 'November',
+      '12': 'December'
+    }
+
+    var getDate = function(unformattedDate) {
+      var dateArr = unformattedDate.split('T')[0].split('-').reverse();
+      var month = months[dateArr[1]];
+      var date = dateArr[0];
+      var year = dateArr[2];
+
+      var amPm;
+      var timeArr = unformattedDate.split('T')[1].split(':');
+      var hour;
+
+      var convertToPST = function(hour) {
+        var correctHour;
+        if (hour - 8 < 0) {
+          correctHour = 24 + (hour - 8)
+        } else {
+          correctHour = hour - 8
+        }
+        return correctHour
+      }
+
+      var newHour = convertToPST(timeArr[0])
+
+      if (newHour <= 12) {
+        amPm = 'AM';
+        hour = newHour;
+      } else if (newHour > 12) {
+        amPm = 'PM';
+        hour = newHour - 12;
+      }
+
+      var minutes = timeArr[1];
+
+      return month + ' ' + (Number(date) - 1)  + ', ' + year + ' ' + hour + ':' + minutes + ' ' + amPm;
+    }
+
     var receivedMessages = function() {
       return (
         <View>
@@ -203,7 +253,7 @@ class Inbox extends Component {
                     {post.username}
                   </Text>
                   <Text style={styles.postDate}>
-                    {post.timeposted}
+                    {getDate(post.timeposted)}
                   </Text>
                 </View>
               </View>

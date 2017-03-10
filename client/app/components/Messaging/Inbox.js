@@ -15,8 +15,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appActions from '../../actions/appActions';
 
-import styles from './styles';
-import pinImg from './Pin.png';
+import styles from './inboxStyles';
+import pinImg from './BluePin.png';
 import mapStyle from '../Map/mapStyle';
 import GetDirectionsIcon from '../Map/GetDirectionsIcon.png';
 
@@ -280,13 +280,19 @@ class Inbox extends Component {
           horizontal={false}
         >
           <View>
-            <AddFriend />
+            <AddFriend style={styles.slide}/>
           </View>
-          <View style={styles.heading}>
-            <Text style={styles.text}>Inbox</Text>
-            <ScrollView bounces={true}>
-              { receivedMessages() }
-            </ScrollView>
+          <View>
+            <View style={styles.heading}>
+              <Text style={styles.header}>INBOX</Text>
+            </View>
+            <View style={styles.scrollBox}>
+              <View style={styles.heading}/>
+              <ScrollView bounces={true}>
+                { receivedMessages() }
+                <View style={styles.fillPage}/>
+              </ScrollView>
+            </View> 
           </View>
         </Swiper>
       );

@@ -21,9 +21,8 @@ class AccountInfo extends Component {
   	var that = this;
   	return (
   		  <View style={styles.heading}>
-            <Text style={styles.text}>Inbox</Text>
           <TouchableHighlight onPress={that.onClickLogout.bind(that)} >
-              <Text style={styles.text}>LOGOUT</Text>
+              <Text style={styles.loginText}>LOGOUT</Text>
           </TouchableHighlight>
         </View>
     )

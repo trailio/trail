@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import searchImg from './search.png';
+import continueImg from './continueImg.png';
 import selectFriendUnchecked from './ic_radio_button_unchecked.png';
 import selectFriendChecked from './ic_radio_button_checked.png';
 
@@ -85,19 +86,36 @@ class FriendSelect extends Component {
     };
     return (
       <View>
+        <View style={{padding: 80}}/>
         <View style = {styles.heading}>
-          <Text style={styles.text}>Friend Select</Text>
+          <Text style={styles.header}>SELECT RECIPIENTS</Text>
         </View>
-        <View style={styles.searchBox}>
-          <Image source={searchImg}/>
-          <TextInput  style={styles.textInput} onChangeText={(text)=>this.setState({text})} value={this.state.text}/>
+        <View style={{padding: 5}}/>
+        
+        <View style={styles.nav}>
+          <Text style={styles.toggleText}>{that.props.isPublicPost ? 'Public Post' : 'Private Post'}</Text>
+          <Switch
+            onValueChange={() => that.onPublicPrivateSwitch()}
+            value={that.props.isPublicPost}
+          />
         </View>
-        <ScrollView bounces={true}>
-          { displayFriends() }
-        </ScrollView>
+
+        <View style={{padding: 5}}/>
+
+        <View style={styles.scrollBox}>
+          <View style={styles.heading}/>
+          <View style={styles.searchBox}>
+            <Image source={searchImg}/>
+            <TextInput  style={styles.textInput} onChangeText={(text)=>this.setState({text})} value={this.state.text}/>
+          </View>
+            <ScrollView bounces={true}>
+              { displayFriends() }
+            </ScrollView>
+        </View>
         <TouchableHighlight style={styles.confirmButton} onPress={this.onConfirmSelections.bind(this)}>
-          <Text style={{alignSelf: 'center'}}>{((!that.props.isPublicPost && (this.props.friendRecipients.length !== 0)) || that.props.isPublicPost) ? 'Confirm Selections' : ''}</Text>
+            <Text style={styles.toggleText}>{((!that.props.isPublicPost && (this.props.friendRecipients.length !== 0)) || that.props.isPublicPost) ? 'Confirm Selection' : 'Please Select Recipients'}</Text>
         </TouchableHighlight>
+        
       </View>
     );
   }

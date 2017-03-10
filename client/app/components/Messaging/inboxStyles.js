@@ -5,26 +5,43 @@ const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   wrapper: {
   },
-  text: {
-    color: '#fff',
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#537fbb',
+  },
+   header: {
+    color: '#FDFDFB',
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center'
-  },
+  }, 
   heading: {
-    padding: 20
+    paddingTop: 20
+  },
+  fillPage: {
+    padding: 100,
+    margin: 100
   },
   postBody: {
-    // margin: .25,
-    borderColor: '#81cbe5',
-    borderWidth: .25,
-    borderRadius: 5,
+    // flex: 1,
+    // borderBottomColor: '#333333',
+    borderBottomColor: '#d4d4d4',
+    // borderLeftColor: '#FDFDFB',
+    // borderRightColor: '#FDFDFB',
+    borderBottomWidth:  1,
     padding: 20,
-    backgroundColor: 'rgba(255,255,255,0.8)',
+    backgroundColor: '#FDFDFB',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderRadius: 30
+  },
+  scrollBox: {
+    backgroundColor: '#FDFDFB',
+    borderRadius: 20
   },
   pinImg: {
   },
@@ -51,19 +68,6 @@ const styles = StyleSheet.create({
   },
   map: {
     position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    flex: 1,
-    height: height,
-    width: width
-  },
-  slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 0,
     left: 0,
     right: 0,
     bottom: 0,

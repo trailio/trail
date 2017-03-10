@@ -11,66 +11,16 @@ import {
 import Tabs from 'react-native-tabs';
 import Swiper from 'react-native-swiper';
 import searchImg from './search.png'
-import addFriendImg from './addFriend.png'
+import addFriendImg from './addFriendIcon.png'
+import acceptFriendImg from './acceptFriendIcon.png'
+import removeFriendImg from './removeFriendIcon.png'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as appActions from '../../actions/appActions';
+import styles from './addFriendStyles';
 
 
-const styles = StyleSheet.create({
-  wrapper: {
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center'
-  },
-   heading: {
-    padding: 20
-  },
-  textInput: {
-    flex: 1,
-    fontSize: 22
-  },
-  searchBox: {
-    flexDirection:'row',
-    padding: 20,
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: '#d3d3d3'
-  },
-  searchButton: {
-    alignSelf: 'flex-end' 
-  },
-  searchButtonText: {
-    fontSize: 14
-  },
-  username:  {
-    color: '#54575C',
-    fontSize: 20
-  },
-  friendBody: {
-    padding: 20,
-    marginHorizontal: 30,
-    backgroundColor: 'rgba(255,255,255,0)',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  tabNav: {
-    backgroundColor:'white'
-  },
-  selectedIconStyle: {
-    backgroundColor: '#d3d3d3'
-  },
-  selectedStyle: {
-    color:'white',
-    fontWeight: 'bold'
-  },
-});
 
 
 class AddFriend extends Component {
@@ -118,9 +68,9 @@ class AddFriend extends Component {
   displayUsernames () {
     var that = this
     var interactionType = {
-      addFriends: {list: that.props.searchedFriends, onSubmit: that.onFriendAdd},
-      acceptFriends: {list: that.props.receivedFriendRequests, onSubmit: that.onFriendAccept},
-      removeFriends: {list: that.props.friendList, onSubmit: that.onFriendRemove}
+      addFriends: {list: that.props.searchedFriends, onSubmit: that.onFriendAdd, img: addFriendImg},
+      acceptFriends: {list: that.props.receivedFriendRequests, onSubmit: that.onFriendAccept, img: acceptFriendImg},
+      removeFriends: {list: that.props.friendList, onSubmit: that.onFriendRemove, img: removeFriendImg}
     }
     console.log('interactiontype!!', interactionType[that.state.page])
     
@@ -134,7 +84,7 @@ class AddFriend extends Component {
               { friend.username }
             </Text>
             <TouchableHighlight onPress={interactionType[that.state.page].onSubmit.bind(that, that.props.id, that.props.username, friend)} >
-              <Image source={addFriendImg}/>
+              <Image source={interactionType[that.state.page].img}/>
             </TouchableHighlight>
             </View>
           )
@@ -148,27 +98,45 @@ class AddFriend extends Component {
     var that = this;
     return (
       <View>
-        <View style = {styles.heading}>
-            <Text style={styles.text}>Goorl Friends</Text>
+        <View style={styles.heading}>
+          <Text style={styles.header}>FRIENDS</Text>
         </View>
-        <View style = {styles.heading}>
-          <Tabs selected={this.state.page} style={styles.tabNav}
-                selectedStyle={{color:'red'}} onSelect={el=>this.setState({page:el.props.name})}>
-              <Text name="addFriends" selectedIconStyle={styles.selectedIconStyle} selectedStyle={styles.selectedStyle}>Add</Text>
-              <Text name="acceptFriends" selectedIconStyle={styles.selectedIconStyle} selectedStyle={styles.selectedStyle}>Accept</Text>
-              <Text name="removeFriends" selectedIconStyle={styles.selectedIconStyle} selectedStyle={styles.selectedStyle}>Remove</Text>
-          </Tabs>
+        <View style={{padding: 5}}/>
+        <View style={styles.nav}>
+              <View style={styles.navInner}>
+                <View style={(this.state.page==='addFriends')? styles.navInnerAddFriendSelected : styles.navInnerAddFriend}>
+                  <TouchableHighlight onPress={()=>that.setState({page:'addFriends'})}><Text style={(this.state.page==='addFriends')? styles.navTextSelected : styles.navText}>Add</Text></TouchableHighlight>
+                </View>
+                <View style={(this.state.page==='acceptFriends')? styles.navInnerAcceptFriendSelected : styles.navInnerAcceptFriend}> 
+                  <TouchableHighlight onPress={()=>that.setState({page:'acceptFriends'})}><Text style={(this.state.page==='acceptFriends')? styles.navTextSelected : styles.navText}>Accept</Text></TouchableHighlight>
+                </View>
+                <View style={(this.state.page==='removeFriends')? styles.navInnerRemoveFriendSelected : styles.navInnerRemoveFriend}>
+                  <TouchableHighlight onPress={()=>that.setState({page:'removeFriends'})}><Text style={(this.state.page==='removeFriends')? styles.navTextSelected : styles.navText}>Remove</Text></TouchableHighlight>
+                </View>
+             </View>
         </View>
-        <View style={styles.searchBox}>
-          <Image source={searchImg}/>
-          <TextInput  style={styles.textInput} onChangeText={(text)=>this.setState({text})} value={this.state.text}/>
+        <View style={{padding: 10}}/>
+        <View style={styles.scrollBox}>
+        <View style={styles.heading}/>
+          <View style={styles.searchBox}>
+            <Image source={searchImg}/>
+            <TextInput  style={styles.textInput} onChangeText={(text)=>this.setState({text})} value={this.state.text}/>
+          </View>  
+
+          <View style={{padding: 5}}/>
+          <View style={styles.searchButtonBox}>
+            <TouchableHighlight style={styles.searchButton} onPress={this.onFindUser.bind(this)}>
+              <Text style={styles.searchButtonText}>Find User</Text>
+            </TouchableHighlight>
+          </View>
+
+          <View style={styles.heading}>
+            <ScrollView bounces={true}>
+              { this.displayUsernames.call(this, this.state.page) }
+              <View style={{padding: 230}}/>
+            </ScrollView>
+          </View>
         </View>
-        <TouchableHighlight style={styles.searchButton} onPress={this.onFindUser.bind(this)}>
-          <Text style={styles.searchButtonText}>Find User</Text>
-        </TouchableHighlight>
-        <ScrollView bounces={true}>
-          { this.displayUsernames.call(this, this.state.page) }
-        </ScrollView>
       </View>
     );
   }

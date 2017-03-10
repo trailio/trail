@@ -10,10 +10,11 @@ export default function reducer ( state = {
 }, action) {
   switch (action.type) {
   case 'LOGIN_CLICKED': {
-    return Object.assign({}, state, {
+    return {
+      ...state,
       loginClicked: true,
       signupClicked: false
-    });
+    };
   }
   case 'SIGNUP_CLICKED': {
     return {

@@ -6,6 +6,7 @@ import ReduxThunk from 'redux-thunk';
 import ReduxPromise from 'redux-promise-middleware';
 import reducers from './reducers';
 
+
 let socket = io('http://trail-server.us-west-2.elasticbeanstalk.com/');
 // let socket = io('http://localhost:8080');
 // let socket = io('http://5cc669df.ngrok.io');

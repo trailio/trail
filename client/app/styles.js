@@ -7,19 +7,36 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#9DD6EB',
+    backgroundColor: '#537fbb',
   },
   slide2: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#97CAE5',
+    backgroundColor: '#537fbb',
   },
-  slide3: {
+  loginSlide: {
+    backgroundColor: '#537fbb',
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9',
+    flexDirection: 'row',
+    alignItems: 'center'  
+  },
+  loginSpace: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  loginBox: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#333333'
+  },
+  imagePadLeftRight: {
+    paddingLeft: 80,
+    paddingRight: 80
+  },
+  imagePadTopBottom: {
+    paddingBottom: 10,
+    paddingTop: 5
   },
   slide4: {
     flex: 1,
@@ -27,13 +44,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#92BBD9',
   },
+  loginHeader: {
+    color: '#333333',
+    fontSize: 40,
+    fontWeight: 'bold',
+  },
+  loginText: {
+    color: '#FDFDFB',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  loginText2: {
+    color: '#333333',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
   text: {
-    color: '#fff',
+    color: '#FDFDFB',
     fontSize: 30,
     fontWeight: 'bold',
   },
   text2: {
-    color: '#000',
+    color: '#333333',
     fontSize: 20,
     fontWeight: 'bold',
   },

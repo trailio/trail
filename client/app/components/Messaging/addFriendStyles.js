@@ -1,4 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+
+const { height, width } = Dimensions.get('window');
+
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -49,11 +52,13 @@ const styles = StyleSheet.create({
     borderColor: '#d3d3d3',
     borderRadius: 30
   },
+
   searchButtonBox: {
     // flex: 1,
     borderRadius: 30,
     // borderBottomWidth: 1,
     borderColor: '#d3d3d3',
+    
   },
   searchButton: {
     flexDirection: 'row',
@@ -62,8 +67,7 @@ const styles = StyleSheet.create({
   searchButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#cb3131',
-    alignSelf: 'center'
+    color: '#cb3131'
   },
   username:  {
     color: '#54575C',
@@ -78,35 +82,75 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  confirmButton: {
-    flex: 1,
-    alignSelf: 'center',
-    justifyContent: 'space-between'
+  nav: {
+    paddingLeft: 80,
+    paddingRight: 80,
   },
-  confirmButtonText: {
-    fontSize: 14
-  },
-    switchButton: {
-    alignSelf: 'center',
-    fontSize: 20,
+  navInner: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
-    textInput: {
+  navInnerAddFriend: {
     flex: 1,
-    fontSize: 22
+    // borderColor: '#d4d4d4',
+    // borderWidth: 1,
+    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 10,
+    backgroundColor: '#FDFDFB',
   },
-    toggleText: {
-    color: '#FDFDFB',
-    fontSize: 15,
+  navInnerAddFriendSelected: {
+    flex: 1,
+    // borderColor: '#d4d4d4',
+    // borderWidth: 1,
+    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 10,
+    backgroundColor: '#cb3131',
+  },
+  navInnerAcceptFriend: {
+    flex: 1,
+    // borderColor: '#d4d4d4',
+    // borderWidth: 1,
+    backgroundColor: '#FDFDFB',
+  },
+  navInnerAcceptFriendSelected: {
+    flex: 1,
+    // borderColor: '#d4d4d4',
+    // borderWidth: 1,
+    backgroundColor: '#cb3131',
+  },
+  navInnerRemoveFriend: {
+    flex: 1,
+    // borderColor: '#d4d4d4',
+    // borderWidth: 1,
+    borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
+    backgroundColor: '#FDFDFB',
+  },
+  navInnerRemoveFriendSelected: {
+    flex: 1,
+    // borderColor: '#d4d4d4',
+    // borderWidth: 1,
+    borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
+    backgroundColor: '#cb3131',
+  },
+  navText: {
+    margin: 5,
     fontWeight: 'bold',
-    margin: 10
+    color: '#cb3131',
+    textAlign: 'center'
   },
-   nav: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-end'
+  navTextSelected : {
+    margin: 5,
+    fontWeight: 'bold',
+    color: '#FDFDFB',
+    textAlign: 'center'
   },
+  navButton: {
+
+
+  }
 });
+
+
 export default styles;

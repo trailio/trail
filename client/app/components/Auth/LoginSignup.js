@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableHighlight, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableHighlight, AsyncStorage, Image, Dimensions } from 'react-native';
 // import {Button from 'react-native-button'};
 import Swiper from 'react-native-swiper';
 
@@ -10,6 +10,8 @@ import { bindActionCreators } from 'redux';
 import * as authActions from '../../actions/authActions';
 import * as appActions from '../../actions/appActions';
 import TrailApp from '../trailApp';
+import logo from './logo.png';
+var {height, width} = Dimensions.get('window');
 
 class Landing extends Component {
   constructor(props) {
@@ -49,63 +51,79 @@ class Landing extends Component {
     } else {
       if (this.props.loginClicked === true) {
         return (
-          <View>
-            <Text onPress={this.props.backClicked}>Back</Text>
+          <View style={styles.imagePadLeftRight}> 
+          <Text style={styles.loginText} onPress={this.props.backClicked}>Back</Text>
             <Text/>
-            <Text style={styles.text}>Login</Text>
-            <Text>Username</Text>
-            <TextInput
-              style={{height: 40, width: 150, borderColor: 'gray', borderWidth: 1}}
-              value={this.props.usernameText}
-              autoCapitalize={'none'}
-              onChangeText={this.onUsernameChange.bind(this)}
-            />
-            <Text>Password</Text>
-            <TextInput
-              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-              value={this.props.passwordText}
-              autoCapitalize={'none'}
-              secureTextEntry={true}
-              onChangeText={this.onPasswordChange.bind(this)}
-            />
+            <Text style={styles.loginText2}>Username</Text>
+            <View style={styles.loginBox}>
+              <TextInput
+                style={{height: 40, width: 150, color: '#333333'}}
+                value={this.props.usernameText}
+                autoCapitalize={'none'}
+                onChangeText={this.onUsernameChange.bind(this)}
+              />
+            </View>
+            <Text style={styles.loginText2}>Password</Text>
+            <View style={styles.loginBox}>
+              <TextInput
+                style={{height: 40, width: 150, color: '#333333'}}
+                value={this.props.passwordText}
+                autoCapitalize={'none'}
+                secureTextEntry={true}
+                onChangeText={this.onPasswordChange.bind(this)}
+              />
+            </View>
             <Text/>
-            <TouchableHighlight onPress={this.onSubmitSignin.bind(this)}><Text>Sign In</Text></TouchableHighlight>
+            <TouchableHighlight  onPress={this.onSubmitSignin.bind(this)}><Text style={styles.loginText}>Log In</Text></TouchableHighlight>
+            
           </View>
         );
       } else if (this.props.signupClicked === true) {
         return (
-          <View>
-            <Text onPress={this.props.backClicked}>Back</Text>
+          <View style={styles.imagePadLeftRight}>
+            <Text style={styles.loginText} onPress={this.props.backClicked}>Back</Text>
             <Text/>
-            <Text style={styles.text}>Signup</Text>
-            <Text>Username</Text>
-            <TextInput
-              style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
-              value={this.props.usernameText}
-              onChangeText={this.onUsernameChange.bind(this)}
-            />
-            <Text>Password</Text>
-            <TextInput
-              style={{height: 40, width: 100, borderColor: 'gray', borderWidth: 0.5}}
-              value={this.props.passwordText}
-              onChangeText={this.onPasswordChange.bind(this)}
-            />
-            <Text>Email</Text>
-            <TextInput
-              style={{height: 40, width: 200, borderColor: 'gray', borderWidth: 0.5}}
-              value={this.state.email}
-              onChangeText={this.onEmailChange.bind(this)}
-            />
+            <Text style={styles.loginText2}>Username</Text>
+            <View style={styles.loginBox}>
+              <TextInput
+                style={{height: 40, width: 150, color: '#333333'}}
+                value={this.props.usernameText}
+                autoCapitalize={'none'}
+                onChangeText={this.onUsernameChange.bind(this)}
+              />
+            </View>
+            <Text style={styles.loginText2}>Password</Text>
+            <View style={styles.loginBox}>
+              <TextInput
+                style={{height: 40, width: 150, color: '#333333'}}
+                value={this.props.passwordText}
+                autoCapitalize={'none'}
+                secureTextEntry={true}
+                onChangeText={this.onPasswordChange.bind(this)}
+              />
+            </View>
+            <Text style={styles.text2}>Email</Text>
+            <View style={styles.loginBox}>
+              <TextInput
+                style={{height: 40, width: 150, color: '#333333'}}
+                value={this.state.email}
+                autoCapitalize={'none'}
+                onChangeText={this.onEmailChange.bind(this)}
+              />
+            </View>
             <Text/>
-            <TouchableHighlight onPress={this.onSubmitSignup.bind(this)}><Text>Sign Up</Text></TouchableHighlight>
+            <TouchableHighlight onPress={this.onSubmitSignup.bind(this)}><Text style={styles.loginText}>Sign Up</Text></TouchableHighlight>
           </View>
         );
       } else {
         return (
-          <View>
-            <Text style={styles.text}>TRAIL</Text>
-            <Text style={styles.text2} onPress={this.props.handleLoginClick}>LOGIN</Text>
-            <Text style={styles.text2} onPress={this.props.handleSignupClick}>SIGNUP</Text>
+          <View style={styles.loginSpace}>
+
+                <Image source={logo} style={{width: 150, height: 150}}/>
+                <Text style={styles.loginHeader}>TRAIL</Text>
+                <Text style={styles.loginText} onPress={this.props.handleLoginClick}>LOGIN</Text>
+                <Text style={styles.loginText} onPress={this.props.handleSignupClick}>SIGNUP</Text>
+
           </View>
         );
       }

@@ -22,7 +22,7 @@ class TrailApp extends Component {
   render() {
     if (!this.props.isLoggedIn) {
       return (
-        <View style={styles.slide3}>
+        <View style={styles.loginSlide}>
           <LoginSignup />
         </View>
       );
@@ -47,7 +47,7 @@ class TrailApp extends Component {
             index={1}
             horizontal={false}
           >
-            <View style={styles.slide4}>
+            <View style={styles.slide1}>
               <AccountInfo />
             </View>
             <View style={styles.slide2}>

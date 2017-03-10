@@ -18,6 +18,7 @@ import * as appActions from '../../actions/appActions';
 import styles from './styles';
 import pinImg from './Pin.png';
 import mapStyle from '../Map/mapStyle';
+import GetDirectionsIcon from '../Map/GetDirectionsIcon.png';
 
 import AddFriend from './AddFriend';
 
@@ -132,36 +133,13 @@ class Inbox extends Component {
               >
                 <MapView.Marker
                   coordinate={{        
-                    latitude: that.state.latitude,
-                      longitude: that.state.longitude,
-                      latitudeDelta: 0.015,
-                      longitudeDelta: 0.015
-                    }}
+                    latitude: Number(that.props.renderLatitude),
+                    longitude: Number(that.props.renderLongitude),
+                    latitudeDelta: 0.015,
+                    longitudeDelta: 0.015
+                  }}
+                  image={require('../Map/TrailPin.png')}
                 >
-                  <MapView.Callout style={styles.calloutStyle}>
-                    <View>
-                      <Text>
-                        You are here
-                      </Text>
-                    </View>
-                  </MapView.Callout>
-                </MapView.Marker>
-                <MapView.Marker
-                  coordinate={{        
-                      latitude: Number(that.props.renderLatitude),
-                      longitude: Number(that.props.renderLongitude),
-                      latitudeDelta: 0.015,
-                      longitudeDelta: 0.015
-                    }}
-                    pinColor={'aqua'}
-                >
-                  <MapView.Callout style={styles.calloutStyle}>
-                    <View>
-                      <Text>
-                        Message is here
-                      </Text>
-                    </View>
-                  </MapView.Callout>
                 </MapView.Marker>
                 <TouchableHighlight 
                   style={styles.directions}
@@ -178,7 +156,29 @@ class Inbox extends Component {
                     })}
                   }
                 >
-                  <Text> Get directions </Text>
+                  <View>
+                    <Image source={GetDirectionsIcon} style={styles.icon}/>
+                    <Text 
+                    style={{
+                      color: '#fff',
+                      fontSize: 30,
+                      fontWeight: 'bold',
+                      top: 170,
+                      left: 90
+                    }}> 
+                    Get
+                  </Text>
+                  <Text 
+                    style={{
+                      color: '#fff',
+                      fontSize: 30,
+                      fontWeight: 'bold',
+                      top: 170,
+                      left: 90
+                    }}> 
+                    Directions
+                  </Text>
+                  </View>
                 </TouchableHighlight>
               </MapView> : null}
           </View>

@@ -76,13 +76,19 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   directions: {
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    top: height-100,
+    top: height-250,
     left: 0,
     right: 0,
     bottom: 0,
     alignItems: 'center',
-  }
+  },
+  icon: {
+    top: 130,
+    position: 'absolute',
+    bottom: 0,
+    left: 160,
+    right: 0,
+  },
 });
 
 export default styles;

@@ -10,6 +10,7 @@ import Swiper from 'react-native-swiper';
 import MapView from 'react-native-maps';
 import VideoPlayer from 'react-native-video';
 import getDirections from 'react-native-google-maps-directions';
+import GetDirectionsIcon from './GetDirectionsIcon.png';
 
 
 import store from '../../store.js';
@@ -139,31 +140,12 @@ class TrailMap extends Component {
                   longitude: that.state.region.longitude,
                   latitudeDelta: 0.015,
                   longitudeDelta: 0.015}}
-                showsUserLocation={true}
-
                 scrollEnabled={false}
                 provider={'google'}
                 customMapStyle={mapStyle}
                 showsScale={true}
                 onPress={function() { that.onImagePressed(); }}
               >
-                <MapView.Marker
-                  coordinate={{        
-                    latitude: that.state.region.latitude,
-                      longitude: that.state.region.longitude,
-                      latitudeDelta: 0.015,
-                      longitudeDelta: 0.015
-                    }}
-                  image={require('./TrailPin.png')}
-                >
-                  <MapView.Callout style={styles.calloutStyle}>
-                    <View>
-                      <Text>
-                        You are here
-                      </Text>
-                    </View>
-                  </MapView.Callout>
-                </MapView.Marker>
                 <MapView.Marker
                   coordinate={{        
                       latitude: Number(that.props.renderLatitude),
@@ -173,13 +155,6 @@ class TrailMap extends Component {
                     }}
                   image={require('./TrailPin.png')}
                 >
-                  <MapView.Callout style={styles.calloutStyle}>
-                    <View>
-                      <Text>
-                        Message is here
-                      </Text>
-                    </View>
-                  </MapView.Callout>
                 </MapView.Marker>
                 <TouchableHighlight 
                   style={styles.directions}
@@ -196,7 +171,29 @@ class TrailMap extends Component {
                     })}
                   }
                 >
-                  <Text> Get directions </Text>
+                  <View>
+                    <Image source={GetDirectionsIcon} style={styles.icon}/>
+                    <Text 
+                    style={{
+                      color: '#fff',
+                      fontSize: 30,
+                      fontWeight: 'bold',
+                      top: 170,
+                      left: 90
+                    }}> 
+                    Get
+                  </Text>
+                  <Text 
+                    style={{
+                      color: '#fff',
+                      fontSize: 30,
+                      fontWeight: 'bold',
+                      top: 170,
+                      left: 90
+                    }}> 
+                    Directions
+                  </Text>
+                  </View>
                 </TouchableHighlight>
               </MapView> : null}
           </View>
@@ -291,7 +288,7 @@ class TrailMap extends Component {
               <Text style={styles.text}>{this.state.trueSwitchIsOn ? 'Public Posts' : 'Private Posts'}</Text>
               <Switch
                 onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
-                style={{alignSelf: 'center', top: 40}}
+                style={{alignSelf: 'center', top: 55}}
                 value={this.state.trueSwitchIsOn}
                 onTintColor={'rgb(234, 75, 75)'}
               />
